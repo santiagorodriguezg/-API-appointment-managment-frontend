@@ -3,6 +3,10 @@
     margin: 0 auto;
 }
 
+.wrapper-form h2 {
+    text-align: center;
+}
+
 .wrapper-form .ant-form-item-explain-error > div {
     float: left;
 }
@@ -11,7 +15,9 @@
     margin-bottom: .75em;
 }
 
-.wrapper-form .login-form-button {
+.wrapper-form .login-form-button,
+.wrapper-form .login-form-button:hover,
+.wrapper-form .login-form-button:focus {
     width: 100%;
     background: #9D429F;
     border-color: #9D429F;
