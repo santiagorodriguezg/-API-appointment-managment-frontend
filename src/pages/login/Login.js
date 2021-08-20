@@ -3,6 +3,7 @@ import logo from '../../assets/logo.jpg'
 
 import { Button, Col, Form, Input, Layout, Row } from 'antd'
 import { LockOutlined, UserOutlined } from '@ant-design/icons'
+import { Link } from 'react-router-dom'
 
 const Login = () => {
   const onFinish = (values) => {
@@ -13,16 +14,15 @@ const Login = () => {
     <Layout.Content>
       <Row>
         <Col span={24}>
-          <img src={logo} alt='Casa de la Mujer Tunja' id='main-logo'
-               style={{ height: 200, display: 'block', margin: 'auto' }} />
+          <div style={{ margin: '20px 0' }}>
+            <img src={logo} alt='Casa de la Mujer Tunja' id='main-logo'
+                 style={{ height: 150, display: 'block', margin: 'auto' }} />
+          </div>
           <div className='wrapper-form'>
             <h2>Iniciar sesión</h2>
             <Form
               name='login'
               className='form-box'
-              initialValues={{
-                remember: true,
-              }}
               onFinish={onFinish}
             >
               <Form.Item
@@ -61,14 +61,13 @@ const Login = () => {
                 <Button type='primary' htmlType='submit' className='login-form-button'>
                   Iniciar sesión
                 </Button>
-                ¿No tiene una cuenta? <a href=''>Registrarme</a>
+                ¿No tienes una cuenta? <Link to='/signup'>Registrate</Link>
               </Form.Item>
             </Form>
           </div>
         </Col>
       </Row>
     </Layout.Content>
-
   )
 }
 
