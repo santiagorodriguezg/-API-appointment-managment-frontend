@@ -1,8 +1,8 @@
 import React from 'react'
 import { Button, Col, Form, Input, Layout, Row, Select } from 'antd'
-import logo from '../../assets/logo.jpg'
 import './Signup.css'
 import { Link } from 'react-router-dom'
+import Logo from '../../components/logo/Logo'
 
 const { Option } = Select
 
@@ -38,8 +38,12 @@ const tailFormItemLayout = {
   },
 }
 
+// const hasError = true
+// const errMsg = 'Su nombre solo debe tener letras'
+const hasError = false
+const errMsg = ''
 
-const SignUp = () => {
+const Signup = () => {
   const [form] = Form.useForm()
 
   const onFinish = (values) => {
@@ -61,15 +65,19 @@ const SignUp = () => {
               scrollToFirstError
             >
               <Form.Item {...tailFormItemLayout}>
-                <div style={{ margin: '20px 0' }}>
-                  <img src={logo} alt='Casa de la Mujer Tunja' id='main-logo'
-                       style={{ height: 150, display: 'block', margin: 'auto' }} />
-                </div>
+                {/*<div style={{ margin: '20px 0' }}>*/}
+                {/*  <img src={logo} alt='Casa de la Mujer Tunja' id='main-logo'*/}
+                {/*       style={{ height: 150, display: 'block', margin: 'auto' }} />*/}
+                {/*</div>*/}
+                <Logo />
+
                 <h2 style={{ margin: '0' }}>Crear cuenta</h2>
               </Form.Item>
               <Form.Item
                 name='first_name'
                 label='Nombre'
+                validateStatus={hasError ? 'error' : null}
+                help={errMsg !== '' ? errMsg : null}
                 rules={[
                   {
                     required: true,
@@ -231,4 +239,4 @@ const SignUp = () => {
   )
 }
 
-export default SignUp
+export default Signup

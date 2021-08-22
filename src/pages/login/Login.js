@@ -1,9 +1,9 @@
 import './Login.css'
-import logo from '../../assets/logo.jpg'
 
 import { Button, Col, Form, Input, Layout, Row } from 'antd'
 import { LockOutlined, UserOutlined } from '@ant-design/icons'
 import { Link } from 'react-router-dom'
+import Logo from '../../components/logo/Logo'
 
 const Login = () => {
   const onFinish = (values) => {
@@ -14,10 +14,7 @@ const Login = () => {
     <Layout.Content>
       <Row>
         <Col span={24}>
-          <div style={{ margin: '20px 0' }}>
-            <img src={logo} alt='Casa de la Mujer Tunja' id='main-logo'
-                 style={{ height: 150, display: 'block', margin: 'auto' }} />
-          </div>
+          <Logo />
           <div className='wrapper-form'>
             <h2>Iniciar sesión</h2>
             <Form
