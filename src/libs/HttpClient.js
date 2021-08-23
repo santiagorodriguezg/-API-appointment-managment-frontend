@@ -15,7 +15,7 @@ export const HttpClient = () => {
     if (!options.body) delete options.body
 
     console.log('OPTIONS', options)
-    setTimeout(() => controller.abort(), 4000)
+    setTimeout(() => controller.abort(), 10000)
 
     const response = await fetch(`${process.env.REACT_APP_API_URL}/${endpoint}`, options)
     const body = await response.json()

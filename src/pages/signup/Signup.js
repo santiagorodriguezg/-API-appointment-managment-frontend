@@ -1,8 +1,12 @@
-import React from 'react'
-import { Button, Col, Form, Input, Layout, Row, Select } from 'antd'
+import React, { useState } from 'react'
+import { Col, Form, Input, Layout, Row, Select } from 'antd'
 import './Signup.css'
 import { Link } from 'react-router-dom'
 import Logo from '../../components/logo/Logo'
+import { SignupService } from '../../services/auth/AuthService'
+import useLocalStorage from '../../libs/storage'
+import { getFieldErrors } from '../../utils/utils'
+import Button from '../../components/button/Button'
 
 const { Option } = Select
 
@@ -38,18 +42,25 @@ const tailFormItemLayout = {
   },
 }
 
-// const hasError = true
-// const errMsg = 'Su nombre solo debe tener letras'
-const hasError = false
-const errMsg = ''
-
 const Signup = () => {
   const [form] = Form.useForm()
+  const [loading, setLoading] = useState(false)
+  const [token, setToken] = useLocalStorage('token', '')
 
-  const onFinish = (values) => {
+  const onFinish = async (values) => {
     console.log('Received values of form: ', values)
-  }
+    setLoading(true)
+    const res = await SignupService(values)
 
+    if (!res.err) {
+      console.log('USER CREATED', res)
+      setLoading(false)
+      setToken(res.data.access)
+    } else {
+      setLoading(false)
+      form.setFields(getFieldErrors(res))
+    }
+  }
 
   return (
     <Layout.Content>
@@ -65,22 +76,19 @@ const Signup = () => {
               scrollToFirstError
             >
               <Form.Item {...tailFormItemLayout}>
-                {/*<div style={{ margin: '20px 0' }}>*/}
-                {/*  <img src={logo} alt='Casa de la Mujer Tunja' id='main-logo'*/}
-                {/*       style={{ height: 150, display: 'block', margin: 'auto' }} />*/}
-                {/*</div>*/}
                 <Logo />
-
                 <h2 style={{ margin: '0' }}>Crear cuenta</h2>
               </Form.Item>
               <Form.Item
                 name='first_name'
                 label='Nombre'
-                validateStatus={hasError ? 'error' : null}
-                help={errMsg !== '' ? errMsg : null}
                 rules={[
                   {
                     required: true,
+                    message: 'Ingrese su nombre',
+                  },
+                  {
+                    whitespace: true,
                     message: 'Ingrese su nombre',
                   },
                 ]}
@@ -96,6 +104,10 @@ const Signup = () => {
                     required: true,
                     message: 'Ingrese sus apellidos',
                   },
+                  {
+                    whitespace: true,
+                    message: 'Ingrese sus apellidos',
+                  },
                 ]}
               >
                 <Input />
@@ -107,6 +119,10 @@ const Signup = () => {
                 rules={[
                   {
                     required: true,
+                    message: 'Ingrese su usuario',
+                  },
+                  {
+                    whitespace: true,
                     message: 'Ingrese su usuario',
                   },
                 ]}
@@ -198,18 +214,30 @@ const Signup = () => {
                     required: true,
                     message: 'Ingrese su contraseña',
                   },
+                  {
+                    min: 8,
+                    message: 'Asegúrese de que este campo tenga al menos 8 caracteres',
+                  },
+                  {
+                    pattern: /(?=.*\d)(?=.*[a-z]).*/,
+                    message: 'La contraseña debe contener letras y números',
+                  },
                 ]}
               >
                 <Input.Password />
               </Form.Item>
 
               <Form.Item
-                name='confirm'
+                name='password2'
                 label='Confirm Password'
                 dependencies={['password']}
                 rules={[
                   {
                     required: true,
+                    message: 'Confirme su contraseña',
+                  },
+                  {
+                    whitespace: true,
                     message: 'Confirme su contraseña',
                   },
                   ({ getFieldValue }) => ({
@@ -226,9 +254,7 @@ const Signup = () => {
               </Form.Item>
 
               <Form.Item  {...tailFormItemLayout}>
-                <Button type='primary' htmlType='submit' className='login-form-button'>
-                  Registrarme
-                </Button>
+                <Button text={'Registrarme'} type='primary' htmlType='submit' loading={loading} />
                 ¿Ya tienes cuenta? <Link to='/login'>Ingresa aquí</Link>
               </Form.Item>
             </Form>
