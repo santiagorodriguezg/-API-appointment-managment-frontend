@@ -1,33 +1,35 @@
-import './Header.css'
-import React from 'react'
+import { Component } from 'react';
+import { Button, Drawer, Layout, Radio, Space } from 'antd';
+import './Header.css';
 
-import { Button, Drawer, Layout, Radio, Space } from 'antd'
+const { Content } = Layout;
 
-const { Content } = Layout
-
-class HeaderC extends React.Component {
-  state = { visible: false, placement: 'left' }
+class HeaderC extends Component {
+  state = {
+    visible: false,
+    placement: 'left',
+  };
 
   showDrawer = () => {
     this.setState({
       visible: true,
-    })
-  }
+    });
+  };
 
   onClose = () => {
     this.setState({
       visible: false,
-    })
-  }
+    });
+  };
 
   onChange = e => {
     this.setState({
-      placement: e.target.value,
-    })
-  }
+      placement: e.target.vaue,
+    });
+  };
 
   render() {
-    const { placement, visible } = this.state
+    const { placement, visible } = this.state;
     return (
       <Layout>
         <Content>
@@ -35,14 +37,14 @@ class HeaderC extends React.Component {
         </Content>
         <Space>
           <Radio.Group defaultValue={placement} onChange={this.onChange}>
-            <Radio value='left'>left</Radio>
+            <Radio value="left">left</Radio>
           </Radio.Group>
-          <Button type='primary' onClick={this.showDrawer}>
+          <Button type="primary" onClick={this.showDrawer}>
             Open
           </Button>
         </Space>
         <Drawer
-          title='Basic Drawer'
+          title="Basic Drawer"
           placement={placement}
           closable={false}
           onClose={this.onClose}
@@ -54,8 +56,8 @@ class HeaderC extends React.Component {
           <p>Some contents...</p>
         </Drawer>
       </Layout>
-    )
+    );
   }
 }
 
-export default HeaderC
+export default HeaderC;
