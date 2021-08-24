@@ -1,6 +1,6 @@
 import { StyledButton } from './styles';
 
-const Button = ({ props, text }) => {
+const Button = ({ text, ...props }) => {
   return <StyledButton {...props}>{text}</StyledButton>;
 };
 

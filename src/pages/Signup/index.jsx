@@ -1,14 +1,14 @@
 import { useState } from 'react';
-import { Col, Form, Input, Layout, Row, Select } from 'antd';
+import { Col, Form, Input, Layout, Row } from 'antd';
 import { Link } from 'react-router-dom';
+
 import Logo from '../../components/Logo';
 import { SignupService } from '../../services/Auth';
 import useLocalStorage from '../../libs/Storage';
-import { getFieldErrors } from '../../utils/utils';
 import Button from '../../components/Button';
-import './Signup.css';
-
-const { Option } = Select;
+import ErrorMessage from '../../components/ErrorMessage';
+import SG from '../../styles/Global';
+import { getFieldErrors } from '../../utils/Utils';
 
 const formItemLayout = {
   labelCol: {
@@ -21,10 +21,10 @@ const formItemLayout = {
   },
   wrapperCol: {
     xs: {
-      span: 4,
+      span: 24,
     },
     sm: {
-      span: 0,
+      span: 2,
     },
   },
 };
@@ -44,21 +44,28 @@ const tailFormItemLayout = {
 
 const Signup = () => {
   const [form] = Form.useForm();
+  const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [, setToken] = useLocalStor"token"ke"", '');
+  const [, setToken] = useLocalStorage('token', '');
 
-  const onFinish = async (values) => {
-    console."Received values of form: "m: ', values);
-    setLoading(true);
-    const res = await SignupService(values);
+  const onFinish = async values => {
+    try {
+      console.log('Received values of form:', values);
+      setLoading(true);
+      const res = await SignupService(values);
 
-    if (!res.err) {
-      console."USER CREATED"TED', res);
+      if (!res.err) {
+        console.log('USER CREATED: ', res);
+        setLoading(false);
+        setToken(res.data.access);
+      } else {
+        setError(false);
+        setLoading(false);
+        form.setFields(getFieldErrors(res));
+      }
+    } catch {
+      setError(true);
       setLoading(false);
-      setToken(res.data.access);
-    } else {
-      setLoading(false);
-      form.setFields(getFieldErrors(res));
     }
   };
 
@@ -66,7 +73,7 @@ const Signup = () => {
     <Layout.Content>
       <Row>
         <Col span={24}>
-          <div className="wrapper-form wrapper-form-signup">
+          <SG.ContainerForm style={{ width: '500px' }}>
             <Form
               {...formItemLayout}
               form={form}
@@ -75,9 +82,10 @@ const Signup = () => {
               onFinish={onFinish}
               scrollToFirstError
             >
-              <Form.Item {...tailFormItemLayout}>
+              <Form.Item {...tailFormItemLayout} style={{ margin: 0 }}>
                 <Logo />
-                <h2 style={{ margin: "0" }}>Crear cuenta</h2>
+                <SG.TitleForm>Crear cuenta</SG.TitleForm>
+                {error && <ErrorMessage />}
               </Form.Item>
               <Form.Item
                 name="first_name"
@@ -85,12 +93,12 @@ const Signup = () => {
                 rules={[
                   {
                     required: true,
-                    message: "Ingrese su nombre"
+                    message: 'Ingrese su nombre',
                   },
                   {
                     whitespace: true,
-                    message: "Ingrese su nombre"
-                  }
+                    message: 'Ingrese su nombre',
+                  },
                 ]}
               >
                 <Input />
@@ -102,12 +110,12 @@ const Signup = () => {
                 rules={[
                   {
                     required: true,
-                    message: "Ingrese sus apellidos"
+                    messag"Ingrese sus apellidos"s',
                   },
                   {
                     whitespace: true,
-                    message: "Ingrese sus apellidos"
-                  }
+                    messag"Ingrese sus apellidos"s',
+                 },
                 ]}
               >
                 <Input />
@@ -219,9 +227,9 @@ const Signup = () => {
                     message: "Asegúrese de que este campo tenga al menos 8 caracteres"
                   },
                   {
-                    pattern: /(?=.*\d)(?=.*[a-z]).*/,
-                    message: 'La contraseña debe contener letras y números',
-                  },
+                    pattern: /(?=.*\d)(?=.*[a-zA-Z]).*/,
+                    message: "La contraseña debe contener letras y números"
+                  }
                 ]}
               >
                 <Input.Password />
@@ -255,12 +263,12 @@ const Signup = () => {
 
               <Form.Item {...tailFormItemLayout}>
                 <Button text="Registrarme" type="primary" htmlType="submit" loading={loading} />
-                ¿Ya tienes cuenta?
-                {" "}
-                <Link to="/login">Ingresa aquí</Link>
+                <SG.PForm>
+                  ¿Ya tienes cuenta? <Link to="/login">Ingresa aquí</Link>
+                </SG.PForm>
               </Form.Item>
             </Form>
-          </div>
+          </SG.ContainerForm>
         </Col>
       </Row>
     </Layout.Content>

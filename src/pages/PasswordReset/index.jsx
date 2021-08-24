@@ -1,29 +1,41 @@
-import { Alert, Col, Form, Input, Layout, Row } from 'antd';
+import { useState } from 'react';
 import { Link, Redirect } from 'react-router-dom';
-import React, { useState } from 'react';
+import { Alert, Col, Form, Input, Layout, Row } from 'antd';
+
 import { PasswordResetService } from '../../services/Auth';
 import Logo from '../../components/Logo';
 import Button from '../../components/Button';
+import ErrorMessage from '../../components/ErrorMessage';
+import SG from '../../styles/Global';
 
 const PasswordReset = () => {
+  const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [email, setEmail] = useState('');
   const [userNotFound, setUserNotFound] = useState('');
+  const [email, setEmail] = useState('');
   const [redirect, setRedirect] = useState(false);
 
   const onFinish = async values => {
-    console.log('VALUES', values);
-    setLoading(true);
-    const res = await PasswordResetService(values);
+    try {
+      console.log('VALUES', values);
+      setLoading(true);
 
-    if (!res.err) {
-      console.log('TODO BIEN', res);
-      setEmail(res.email);
-      setRedirect(true);
-    } else {
-      console.log('ERROR', res);
+      const res = await PasswordResetService(values);
+
+      if (!res.err) {
+        console.log('TODO BIEN', res);
+        setEmail(res.email);
+        setRedirect(true);
+      } else {
+        console.log('ERROR', res);
+        setError(false);
+        setLoading(false);
+        setUserNotFound(res.data.detail);
+      }
+    } catch (e) {
+      setError(true);
       setLoading(false);
-      setUserNotFound(res.data.detail);
+      setUserNotFound('');
     }
   };
 
@@ -32,8 +44,9 @@ const PasswordReset = () => {
       <Row>
         <Col span={24}>
           <Logo />
-          <div className="wrapper-form">
-            <h2>Recuperación de cuenta</h2>
+          <SG.ContainerForm>
+            <SG.TitleForm>Recuperación de cuenta</SG.TitleForm>
+            {error && <ErrorMessage />}
             {userNotFound !== '' && <Alert message={userNotFound} type="error" showIcon />}
             {redirect && (
               <Redirect
@@ -43,7 +56,7 @@ const PasswordReset = () => {
                 }}
               />
             )}
-            <Form layout="vertical" name="login" className="form-box" onFinish={onFinish} hideRequiredMark>
+            <Form layout="vertical" name="password-reset" className="form-box" onFinish={onFinish} hideRequiredMark>
               <Form.Item
                 name="username"
                 label="Usuario"
@@ -59,10 +72,12 @@ const PasswordReset = () => {
 
               <Form.Item>
                 <Button text="Restablecer contraseña" type="primary" htmlType="submit" loading={loading} />
-                <Link to="/login">Iniciar sesión</Link>
+                <SG.PForm>
+                  Regresar al <Link to="/login">inicio de sesión</Link>
+                </SG.PForm>
               </Form.Item>
             </Form>
-          </div>
+          </SG.ContainerForm>
         </Col>
       </Row>
     </Layout.Content>

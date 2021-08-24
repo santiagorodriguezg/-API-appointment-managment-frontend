@@ -1,11 +1,11 @@
 import { Card, Layout } from 'antd';
-import { Link } from 'react-router-dom';
-import React from 'react';
+
 import Logo from '../../components/Logo';
+import Button from '../../components/Button';
 import { Container, Text, Title } from './styles';
 
-const PasswordResetDone = props => {
-  const { email } = (props.location && props.location.state) || {};
+const PasswordResetDone = ({ location }) => {
+  const { email } = (location && location.state) || {};
   return (
     <Layout.Content>
       <Container>
@@ -13,14 +13,16 @@ const PasswordResetDone = props => {
           <Logo />
           <Title>Restablecimiento de contraseña enviado</Title>
           <Text>
-            Le hemos enviado un correo electrónico a<strong>{email}</strong> con las instrucciones para restablecer la
-            contraseña. Debería recibirlas en breve.
+            Le hemos enviado un correo electrónico a <strong>{email}</strong> con las instrucciones para restablecer la
+            contraseña.
           </Text>
           <Text>
             Si el correo electrónico no aparece en la bandeja de entrada, revisa las secciones de spam, importantes,
             entre otras.
           </Text>
-          Regresar al <Link to="/login">inicio de sesión</Link>.
+          <div style={{ textAlign: 'center' }}>
+            <Button type="primary" href="/login" text="Inicio de sesión" style={{ width: 'initial' }} />
+          </div>
         </Card>
       </Container>
     </Layout.Content>

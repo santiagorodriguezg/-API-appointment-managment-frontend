@@ -1,32 +1,43 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
-import { Alert, Col, Form, Input, Layout, Row } from 'antd';
+import { Col, Form, Input, Layout, Row } from 'antd';
 
 import useLocalStorage from '../../libs/Storage';
 import { LoginService } from '../../services/Auth';
 import Button from '../../components/Button';
 import Logo from '../../components/Logo';
-import './Login.css';
+import Alert from '../../components/Alert';
+import ErrorMessage from '../../components/ErrorMessage';
+import SG from '../../styles/Global';
 
 const Login = () => {
-  const [, setToken] = useLocalStorage('token', '');
+  const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
   const [loginError, setLoginError] = useState('');
+  const [, setToken] = useLocalStorage('token', '');
 
   const onFinish = async values => {
-    console.log('Received values of form: ', values);
-    setLoading(true);
+    try {
+      console.log('Received values of form: ', values);
+      setLoading(true);
 
-    const res = await LoginService(values);
-    if (!res.err) {
-      console.log('TODO BIEN', res);
-      setLoginError('');
-      setToken(res.access);
-    } else {
-      console.log('ERROR', res);
+      const res = await LoginService(values);
+
+      if (!res.err) {
+        console.log('TODO BIEN', res);
+        setLoginError('');
+        setToken(res.access);
+      } else {
+        console.log('ERROR', res);
+        setError(false);
+        setLoading(false);
+        setLoginError(res.data.detail);
+      }
+    } catch (e) {
+      setError(true);
       setLoading(false);
-      setLoginError(res.data.detail);
+      setLoginError('');
     }
   };
 
@@ -35,9 +46,10 @@ const Login = () => {
       <Row>
         <Col span={24}>
           <Logo />
-          <div className="wrapper-form">
-            <h2>Iniciar sesión</h2>
+          <SG.ContainerForm>
+            <SG.TitleForm>Iniciar sesión</SG.TitleForm>
             {loginError !== '' && <Alert message={loginError} type="error" showIcon />}
+            {error && <ErrorMessage />}
             <Form layout="vertical" name="login" className="form-box" onFinish={onFinish} hideRequiredMark>
               <Form.Item
                 name="username"
@@ -71,11 +83,12 @@ const Login = () => {
 
               <Form.Item>
                 <Button text="Iniciar sesión" type="primary" htmlType="submit" loading={loading} />
-                ¿No tienes una cuenta?
-                <Link to="/signup">Registrate</Link>
+                <SG.PForm>
+                  ¿No tienes una cuenta? <Link to="/signup">Registrate</Link>
+                </SG.PForm>
               </Form.Item>
             </Form>
-          </div>
+          </SG.ContainerForm>
         </Col>
       </Row>
     </Layout.Content>

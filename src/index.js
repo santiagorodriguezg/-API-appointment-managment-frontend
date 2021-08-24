@@ -1,5 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import "antd/dist/antd.css";
+
 import "./index.css";
 import AppRouter from "./routes/AppRouter";
 import reportWebVitals from "./reportWebVitals";
