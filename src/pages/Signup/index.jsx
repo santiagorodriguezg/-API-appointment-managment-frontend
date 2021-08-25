@@ -24,7 +24,7 @@ const formItemLayout = {
       span: 24,
     },
     sm: {
-      span: 2,
+      span: 20,
     },
   },
 };
@@ -59,13 +59,13 @@ const Signup = () => {
         setLoading(false);
         setToken(res.data.access);
       } else {
-        setError(false);
         setLoading(false);
+        setError(false);
         form.setFields(getFieldErrors(res));
       }
     } catch {
-      setError(true);
       setLoading(false);
+      setError(true);
     }
   };
 
@@ -73,7 +73,7 @@ const Signup = () => {
     <Layout.Content>
       <Row>
         <Col span={24}>
-          <SG.ContainerForm style={{ width: '500px' }}>
+          <SG.ContainerForm style={{ width: '550px' }}>
             <Form
               {...formItemLayout}
               form={form}
@@ -101,7 +101,7 @@ const Signup = () => {
                   },
                 ]}
               >
-                <Input />
+                <Input maxLength={50} />
               </Form.Item>
 
               <Form.Item
@@ -110,15 +110,15 @@ const Signup = () => {
                 rules={[
                   {
                     required: true,
-                    messag"Ingrese sus apellidos"s',
+                    message: 'Ingrese sus apellidos',
                   },
                   {
                     whitespace: true,
-                    messag"Ingrese sus apellidos"s',
-                 },
+                    message: 'Ingrese sus apellidos',
+                  },
                 ]}
               >
-                <Input />
+                <Input maxLength={50} />
               </Form.Item>
 
               <Form.Item
@@ -127,15 +127,15 @@ const Signup = () => {
                 rules={[
                   {
                     required: true,
-                    message: "Ingrese su usuario"
+                    message: 'Ingrese su usuario',
                   },
                   {
                     whitespace: true,
-                    message: "Ingrese su usuario"
-                  }
+                    message: 'Ingrese su usuario',
+                  },
                 ]}
               >
-                <Input />
+                <Input maxLength={40} />
               </Form.Item>
 
               {/* <Form.Item name='identification_type' label='Tipo de identificación'> */}
@@ -166,12 +166,12 @@ const Signup = () => {
                 label="Correo electrónico"
                 rules={[
                   {
-                    type: "email",
-                    message: "El correo electrónico ingresado no es válido"
-                  }
+                    type: 'email',
+                    message: 'El correo electrónico ingresado no es válido',
+                  },
                 ]}
               >
-                <Input />
+                <Input maxLength={60} />
               </Form.Item>
 
               {/* <Form.Item */}
@@ -216,44 +216,44 @@ const Signup = () => {
 
               <Form.Item
                 name="password"
-                label="Password"
+                label="Contraseña"
                 rules={[
                   {
                     required: true,
-                    message: "Ingrese su contraseña"
+                    message: 'Ingrese su contraseña',
                   },
                   {
                     min: 8,
-                    message: "Asegúrese de que este campo tenga al menos 8 caracteres"
+                    message: 'Asegúrese de que este campo tenga al menos 8 caracteres',
                   },
                   {
                     pattern: /(?=.*\d)(?=.*[a-zA-Z]).*/,
-                    message: "La contraseña debe contener letras y números"
-                  }
+                    message: 'La contraseña debe contener letras y números',
+                  },
                 ]}
               >
-                <Input.Password />
+                <Input.Password maxLength={25} />
               </Form.Item>
 
               <Form.Item
                 name="password2"
-                label="Confirm Password"
-                dependencies={["password"]}
+                label="Confirmar contraseña"
+                dependencies={['password']}
                 rules={[
                   {
                     required: true,
-                    message: "Confirme su contraseña"
+                    message: 'Confirme su contraseña',
                   },
                   {
                     whitespace: true,
-                    message: "Confirme su contraseña"
+                    message: 'Confirme su contraseña',
                   },
                   ({ getFieldValue }) => ({
                     validator(_, value) {
                       if (!value || getFieldValue('password') === value) {
                         return Promise.resolve();
                       }
-                      return Promise.reject(new Error("Las dos contraseñas ingresadas no coinciden"));
+                      return Promise.reject(new Error('Las dos contraseñas ingresadas no coinciden'));
                     },
                   }),
                 ]}

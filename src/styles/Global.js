@@ -18,6 +18,7 @@ SG.TitleForm = styled.h2`
 
 SG.PForm = styled.p`
   margin: 16px 0;
+  text-align: center;
 `;
 
 export default SG;

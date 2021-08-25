@@ -42,6 +42,11 @@ export const HttpClient = () => {
     return customFetch(url, options, authz);
   };
 
+  const patch = (url, options = {}, authz = false) => {
+    options.method = 'PATCH';
+    return customFetch(url, options, authz);
+  };
+
   const del = (url, options = {}, authz = false) => {
     options.method = 'DELETE';
     return customFetch(url, options, authz);
@@ -51,6 +56,7 @@ export const HttpClient = () => {
     get,
     post,
     put,
+    patch,
     del,
   };
 };

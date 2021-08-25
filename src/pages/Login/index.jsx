@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import { Col, Form, Input, Layout, Row } from 'antd';
 
-import useLocalStorage from '../../libs/Storage';
 import { LoginService } from '../../services/Auth';
+import useLocalStorage from '../../libs/Storage';
 import Button from '../../components/Button';
 import Logo from '../../components/Logo';
 import Alert from '../../components/Alert';
@@ -13,8 +13,8 @@ import SG from '../../styles/Global';
 
 const Login = () => {
   const [error, setError] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('');
   const [loading, setLoading] = useState(false);
-  const [loginError, setLoginError] = useState('');
   const [, setToken] = useLocalStorage('token', '');
 
   const onFinish = async values => {
@@ -26,18 +26,18 @@ const Login = () => {
 
       if (!res.err) {
         console.log('TODO BIEN', res);
-        setLoginError('');
+        setErrorMsg('');
         setToken(res.access);
       } else {
         console.log('ERROR', res);
-        setError(false);
         setLoading(false);
-        setLoginError(res.data.detail);
+        setError(false);
+        setErrorMsg(res.data.detail);
       }
     } catch (e) {
-      setError(true);
       setLoading(false);
-      setLoginError('');
+      setError(true);
+      setErrorMsg('');
     }
   };
 
@@ -48,7 +48,7 @@ const Login = () => {
           <Logo />
           <SG.ContainerForm>
             <SG.TitleForm>Iniciar sesión</SG.TitleForm>
-            {loginError !== '' && <Alert message={loginError} type="error" showIcon />}
+            {errorMsg !== '' && <Alert message={errorMsg} type="error" showIcon />}
             {error && <ErrorMessage />}
             <Form layout="vertical" name="login" className="form-box" onFinish={onFinish} hideRequiredMark>
               <Form.Item
@@ -61,7 +61,7 @@ const Login = () => {
                   },
                 ]}
               >
-                <Input />
+                <Input maxLength={40} />
               </Form.Item>
 
               <Form.Item
@@ -74,17 +74,20 @@ const Login = () => {
                   },
                 ]}
               >
-                <Input.Password iconRender={visible => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)} />
+                <Input.Password
+                  maxLength={25}
+                  iconRender={visible => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
+                />
               </Form.Item>
 
-              <Form.Item>
-                <Link to="/password-reset">¿Olvido su contraseña?</Link>
-              </Form.Item>
+              <SG.PForm>
+                <Link to="/password/reset">¿Olvido su contraseña?</Link>
+              </SG.PForm>
 
               <Form.Item>
                 <Button text="Iniciar sesión" type="primary" htmlType="submit" loading={loading} />
                 <SG.PForm>
-                  ¿No tienes una cuenta? <Link to="/signup">Registrate</Link>
+                  ¿No tienes una cuenta? <Link to="/signup">Regístrate</Link>
                 </SG.PForm>
               </Form.Item>
             </Form>

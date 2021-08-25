@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { Link, Redirect } from 'react-router-dom';
-import { Alert, Col, Form, Input, Layout, Row } from 'antd';
+import { Col, Form, Input, Layout, Row } from 'antd';
 
 import { PasswordResetService } from '../../services/Auth';
 import Logo from '../../components/Logo';
+import Alert from '../../components/Alert';
 import Button from '../../components/Button';
 import ErrorMessage from '../../components/ErrorMessage';
 import SG from '../../styles/Global';
@@ -17,24 +18,20 @@ const PasswordReset = () => {
 
   const onFinish = async values => {
     try {
-      console.log('VALUES', values);
       setLoading(true);
-
       const res = await PasswordResetService(values);
 
       if (!res.err) {
-        console.log('TODO BIEN', res);
         setEmail(res.email);
         setRedirect(true);
       } else {
-        console.log('ERROR', res);
-        setError(false);
         setLoading(false);
+        setError(false);
         setUserNotFound(res.data.detail);
       }
     } catch (e) {
-      setError(true);
       setLoading(false);
+      setError(true);
       setUserNotFound('');
     }
   };
@@ -51,7 +48,7 @@ const PasswordReset = () => {
             {redirect && (
               <Redirect
                 to={{
-                  pathname: '/password-reset/done',
+                  pathname: '/password/reset/done',
                   state: { email },
                 }}
               />
@@ -67,7 +64,7 @@ const PasswordReset = () => {
                   },
                 ]}
               >
-                <Input />
+                <Input maxLength={40} />
               </Form.Item>
 
               <Form.Item>
