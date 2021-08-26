@@ -9,7 +9,7 @@ import Button from '../../components/Button';
 import Logo from '../../components/Logo';
 import Alert from '../../components/Alert';
 import ErrorMessage from '../../components/ErrorMessage';
-import SG from '../../styles/Global';
+import StyledGlobal from '../../styles/Global';
 
 const Login = () => {
   const [error, setError] = useState(false);
@@ -45,9 +45,9 @@ const Login = () => {
     <Layout.Content>
       <Row>
         <Col span={24}>
-          <Logo />
-          <SG.ContainerForm>
-            <SG.TitleForm>Iniciar sesión</SG.TitleForm>
+          <StyledGlobal.ContainerForm>
+            <Logo />
+            <StyledGlobal.TitleForm>Iniciar sesión</StyledGlobal.TitleForm>
             {errorMsg !== '' && <Alert message={errorMsg} type="error" showIcon />}
             {error && <ErrorMessage />}
             <Form layout="vertical" name="login" className="form-box" onFinish={onFinish} hideRequiredMark>
@@ -80,18 +80,18 @@ const Login = () => {
                 />
               </Form.Item>
 
-              <SG.PForm>
+              <StyledGlobal.PForm>
                 <Link to="/password/reset">¿Olvido su contraseña?</Link>
-              </SG.PForm>
+              </StyledGlobal.PForm>
 
               <Form.Item>
-                <Button text="Iniciar sesión" type="primary" htmlType="submit" loading={loading} />
-                <SG.PForm>
+                <Button text="Iniciar sesión" type="primary" htmlType="submit" loading={loading} fullWidth />
+                <StyledGlobal.PForm>
                   ¿No tienes una cuenta? <Link to="/signup">Regístrate</Link>
-                </SG.PForm>
+                </StyledGlobal.PForm>
               </Form.Item>
             </Form>
-          </SG.ContainerForm>
+          </StyledGlobal.ContainerForm>
         </Col>
       </Row>
     </Layout.Content>

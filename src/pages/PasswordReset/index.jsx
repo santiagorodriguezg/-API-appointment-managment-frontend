@@ -7,7 +7,7 @@ import Logo from '../../components/Logo';
 import Alert from '../../components/Alert';
 import Button from '../../components/Button';
 import ErrorMessage from '../../components/ErrorMessage';
-import SG from '../../styles/Global';
+import StyledGlobal from '../../styles/Global';
 
 const PasswordReset = () => {
   const [error, setError] = useState(false);
@@ -40,9 +40,9 @@ const PasswordReset = () => {
     <Layout.Content>
       <Row>
         <Col span={24}>
-          <Logo />
-          <SG.ContainerForm>
-            <SG.TitleForm>Recuperación de cuenta</SG.TitleForm>
+          <StyledGlobal.ContainerForm>
+            <Logo />
+            <StyledGlobal.TitleForm>Recuperación de cuenta</StyledGlobal.TitleForm>
             {error && <ErrorMessage />}
             {userNotFound !== '' && <Alert message={userNotFound} type="error" showIcon />}
             {redirect && (
@@ -68,13 +68,13 @@ const PasswordReset = () => {
               </Form.Item>
 
               <Form.Item>
-                <Button text="Restablecer contraseña" type="primary" htmlType="submit" loading={loading} />
-                <SG.PForm>
+                <Button text="Restablecer contraseña" type="primary" htmlType="submit" loading={loading} fullWidth />
+                <StyledGlobal.PForm>
                   Regresar al <Link to="/login">inicio de sesión</Link>
-                </SG.PForm>
+                </StyledGlobal.PForm>
               </Form.Item>
             </Form>
-          </SG.ContainerForm>
+          </StyledGlobal.ContainerForm>
         </Col>
       </Row>
     </Layout.Content>

@@ -7,7 +7,7 @@ import { SignupService } from '../../services/Auth';
 import useLocalStorage from '../../libs/Storage';
 import Button from '../../components/Button';
 import ErrorMessage from '../../components/ErrorMessage';
-import SG from '../../styles/Global';
+import StyledGlobal from '../../styles/Global';
 import { getFieldErrors } from '../../utils/Utils';
 
 const formItemLayout = {
@@ -73,7 +73,7 @@ const Signup = () => {
     <Layout.Content>
       <Row>
         <Col span={24}>
-          <SG.ContainerForm style={{ width: '550px' }}>
+          <StyledGlobal.ContainerForm style={{ width: '550px' }}>
             <Form
               {...formItemLayout}
               form={form}
@@ -84,7 +84,7 @@ const Signup = () => {
             >
               <Form.Item {...tailFormItemLayout} style={{ margin: 0 }}>
                 <Logo />
-                <SG.TitleForm>Crear cuenta</SG.TitleForm>
+                <StyledGlobal.TitleForm>Crear cuenta</StyledGlobal.TitleForm>
                 {error && <ErrorMessage />}
               </Form.Item>
               <Form.Item
@@ -262,13 +262,13 @@ const Signup = () => {
               </Form.Item>
 
               <Form.Item {...tailFormItemLayout}>
-                <Button text="Registrarme" type="primary" htmlType="submit" loading={loading} />
-                <SG.PForm>
+                <Button text="Registrarme" type="primary" htmlType="submit" loading={loading} fullWidth />
+                <StyledGlobal.PForm>
                   ¿Ya tienes cuenta? <Link to="/login">Ingresa aquí</Link>
-                </SG.PForm>
+                </StyledGlobal.PForm>
               </Form.Item>
             </Form>
-          </SG.ContainerForm>
+          </StyledGlobal.ContainerForm>
         </Col>
       </Row>
     </Layout.Content>

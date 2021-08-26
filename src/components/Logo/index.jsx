@@ -1,10 +1,6 @@
 import logo from '../../assets/logo.jpg';
-import { Div, Img } from './styles';
+import { Img } from './styles';
 
-const Logo = () => (
-  <Div>
-    <Img src={logo} alt="Casa de la Mujer Tunja" id="main-logo" />
-  </Div>
-);
+const Logo = () => <Img src={logo} alt="Casa de la Mujer Tunja" id="main-logo" />;
 
 export default Logo;

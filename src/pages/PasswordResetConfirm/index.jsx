@@ -7,7 +7,7 @@ import Logo from '../../components/Logo';
 import Button from '../../components/Button';
 import ErrorMessage from '../../components/ErrorMessage';
 import Alert from '../../components/Alert';
-import SG from '../../styles/Global';
+import StyledGlobal from '../../styles/Global';
 
 const PasswordResetConfirm = () => {
   const params = useParams();
@@ -40,9 +40,9 @@ const PasswordResetConfirm = () => {
     <Layout.Content>
       <Row>
         <Col span={24}>
-          <Logo />
-          <SG.ContainerForm>
-            <SG.TitleForm>Cambiar contraseña</SG.TitleForm>
+          <StyledGlobal.ContainerForm>
+            <Logo />
+            <StyledGlobal.TitleForm>Cambiar contraseña</StyledGlobal.TitleForm>
             {errorMsg !== '' && <Alert message={errorMsg} type="error" showIcon />}
             {error && <ErrorMessage />}
             {redirect && <Redirect to="/password/reset/complete" />}
@@ -95,13 +95,13 @@ const PasswordResetConfirm = () => {
               </Form.Item>
 
               <Form.Item>
-                <Button text="Cambiar mi contraseña" type="primary" htmlType="submit" loading={loading} />
-                <SG.PForm>
+                <Button text="Cambiar mi contraseña" type="primary" htmlType="submit" loading={loading} fullWidth />
+                <StyledGlobal.PForm>
                   <Link to="/password/reset">Solicitar un nuevo enlace</Link>
-                </SG.PForm>
+                </StyledGlobal.PForm>
               </Form.Item>
             </Form>
-          </SG.ContainerForm>
+          </StyledGlobal.ContainerForm>
         </Col>
       </Row>
     </Layout.Content>

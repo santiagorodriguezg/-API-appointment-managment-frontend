@@ -1,24 +1,25 @@
 import styled from 'styled-components';
 
-const SG = {};
+const StyledGlobal = {};
 
-SG.Container = styled.div`
+StyledGlobal.Container = styled.div`
   padding: 0 12px;
   box-sizing: border-box;
 `;
 
-SG.ContainerForm = styled(SG.Container)`
-  margin: 0 auto;
+StyledGlobal.ContainerForm = styled(StyledGlobal.Container)`
+  margin: 50px auto;
   width: 400px;
 `;
 
-SG.TitleForm = styled.h2`
+StyledGlobal.TitleForm = styled.h2`
   text-align: center;
+  margin: 1em 0;
 `;
 
-SG.PForm = styled.p`
+StyledGlobal.PForm = styled.p`
   margin: 16px 0;
   text-align: center;
 `;
 
-export default SG;
+export default StyledGlobal;

@@ -2,29 +2,29 @@ import { Card, Layout } from 'antd';
 
 import Logo from '../../components/Logo';
 import Button from '../../components/Button';
-import { Container, Text, Title } from './styles';
+import StyledCard from '../../styles/Card';
 
 const PasswordResetDone = ({ location }) => {
   const { email } = (location && location.state) || {};
   return (
     <Layout.Content>
-      <Container>
+      <StyledCard.Container>
         <Card>
           <Logo />
-          <Title>Restablecimiento de contraseña enviado</Title>
-          <Text>
+          <StyledCard.Title>Restablecimiento de contraseña enviado</StyledCard.Title>
+          <StyledCard.Text>
             Le hemos enviado un correo electrónico a <strong>{email}</strong> con las instrucciones para restablecer la
             contraseña.
-          </Text>
-          <Text>
+          </StyledCard.Text>
+          <StyledCard.Text>
             Si el correo electrónico no aparece en la bandeja de entrada, revisa las secciones de spam, importantes,
             entre otras.
-          </Text>
+          </StyledCard.Text>
           <div style={{ textAlign: 'center' }}>
-            <Button type="primary" href="/login" text="Inicio de sesión" style={{ width: 'initial' }} />
+            <Button type="primary" href="/login" text="Inicio de sesión" />
           </div>
         </Card>
-      </Container>
+      </StyledCard.Container>
     </Layout.Content>
   );
 };
