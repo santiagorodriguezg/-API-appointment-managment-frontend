@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import { Col, Form, Input, Layout, Row } from 'antd';
 
 import { LoginService } from '../../services/Auth';
@@ -74,10 +73,7 @@ const Login = () => {
                   },
                 ]}
               >
-                <Input.Password
-                  maxLength={25}
-                  iconRender={visible => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
-                />
+                <Input.Password maxLength={25} />
               </Form.Item>
 
               <StyledGlobal.PForm>

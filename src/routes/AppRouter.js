@@ -7,6 +7,7 @@ import PasswordReset from '../pages/PasswordReset';
 import PasswordResetDone from '../pages/PasswordResetDone';
 import PasswordResetConfirm from '../pages/PasswordResetConfirm';
 import PasswordResetConfirmDone from '../pages/PasswordResetConfirmDone';
+import Home from '../pages/Home/Home';
 
 const AppRouter = () => {
   return (
@@ -19,6 +20,8 @@ const AppRouter = () => {
           <Route exact path="/password/reset/done" component={PasswordResetDone} />
           <Route path="/password/reset/:uid/:token" component={PasswordResetConfirm} />
           <Route exact path="/password/reset/complete" component={PasswordResetConfirmDone} />
+
+          <Route exact path="/home" component={Home} />
         </Switch>
       </Router>
     </AuthProvider>
