@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import { Layout } from 'antd';
-import NavBar from '../../components/NavBar';
-import SideBar from '../../components/SideBar';
+import NavBar from '../NavBar';
+import SideBar from '../SideBar';
+import S from './styles';
 
-const { Footer, Content } = Layout;
+const { Footer } = Layout;
 
-const Home = () => {
+const Dashboard = ({ children }) => {
   const [collapsed, setCollapsed] = useState(false);
   const [visible, setVisible] = useState(false);
 
@@ -23,18 +24,17 @@ const Home = () => {
   };
 
   return (
-    <Layout style={{ height: '100vh' }}>
+    <Layout>
       <NavBar collapsed={collapsed} toggle={toggle} showDrawer={showDrawer} />
-      <Layout>
+      <S.Layout iscollapsed={collapsed ? 1 : 0}>
         <SideBar collapsed={collapsed} onClose={onClose} visible={visible} />
-
-        <Layout>
-          <Content>Content</Content>
-          <Footer>Footer</Footer>
-        </Layout>
-      </Layout>
+        <S.Container>
+          <S.Content>{children}</S.Content>
+          <Footer style={{ textAlign: 'center' }}>Casa de la Mujer ©2021 Created by Ant UED</Footer>
+        </S.Container>
+      </S.Layout>
     </Layout>
   );
 };
 
-export default Home;
+export default Dashboard;

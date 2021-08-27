@@ -7,7 +7,8 @@ import PasswordReset from '../pages/PasswordReset';
 import PasswordResetDone from '../pages/PasswordResetDone';
 import PasswordResetConfirm from '../pages/PasswordResetConfirm';
 import PasswordResetConfirmDone from '../pages/PasswordResetConfirmDone';
-import Home from '../pages/Home/Home';
+import Home from '../pages/Home';
+import Profile from '../pages/Profile';
 
 const AppRouter = () => {
   return (
@@ -22,6 +23,7 @@ const AppRouter = () => {
           <Route exact path="/password/reset/complete" component={PasswordResetConfirmDone} />
 
           <Route exact path="/home" component={Home} />
+          <Route exact path="/profile" component={Profile} />
         </Switch>
       </Router>
     </AuthProvider>

@@ -1,5 +1,6 @@
 import { Avatar, Col, Dropdown, Row } from 'antd';
 import { DownOutlined, MenuOutlined, MoreOutlined, UserOutlined } from '@ant-design/icons';
+
 import { MobileAndBelow, Tablet } from '../../styles/MediaQuery';
 import { MenuItems, UserMenu } from './Items';
 import S from './styles';

@@ -1,16 +1,16 @@
-import { Drawer, Layout, Menu } from 'antd';
+import { Drawer, Menu } from 'antd';
 import { DiffOutlined, MessageOutlined, UploadOutlined, UserOutlined, VideoCameraOutlined } from '@ant-design/icons';
 
 import { MobileAndBelow, Tablet } from '../../styles/MediaQuery';
+import S from './styles';
 
-const { Sider } = Layout;
 const { SubMenu } = Menu;
 
 const SideBar = ({ collapsed, onClose, visible }) => {
   return (
     <>
       <Tablet>
-        <Sider trigger={null} collapsible collapsed={collapsed} theme="light" breakpoint="xl" width={250}>
+        <S.Sider trigger={null} collapsible collapsed={collapsed} theme="light" breakpoint="xl" width={250}>
           <div className="logo" />
           <Menu theme="light" mode="inline" defaultSelectedKeys={['1']}>
             <SubMenu key="appointment" icon={<DiffOutlined />} title="Citas">
@@ -27,7 +27,7 @@ const SideBar = ({ collapsed, onClose, visible }) => {
               Contacto
             </Menu.Item>
           </Menu>
-        </Sider>
+        </S.Sider>
       </Tablet>
 
       <MobileAndBelow>

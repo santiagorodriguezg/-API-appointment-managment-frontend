@@ -1,14 +1,16 @@
+import { Link } from 'react-router-dom';
 import { Menu } from 'antd';
 import { DiffOutlined, LogoutOutlined, UserOutlined } from '@ant-design/icons';
+
 import S from './styles';
 
 export const MenuItems = props => {
   return (
     <S.DropdownMenu {...props}>
       <Menu.Item key="mail">
-        <a target="_blank" rel="noopener noreferrer" href="https://www.antgroup.com">
+        <Link to="/profile">
           <DiffOutlined /> Solicitar cita
-        </a>
+        </Link>
       </Menu.Item>
     </S.DropdownMenu>
   );
@@ -16,6 +18,8 @@ export const MenuItems = props => {
 
 export const UserMenu = (
   <S.DropdownMenu>
+    <Menu.Item key="3">Luis Guillermo Gómez Galeano</Menu.Item>
+    <Menu.Divider />
     <Menu.Item key="1">
       <a target="_blank" rel="noopener noreferrer" href="https://www.antgroup.com">
         <UserOutlined /> Perfil

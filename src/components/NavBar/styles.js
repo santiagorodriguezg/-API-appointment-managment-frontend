@@ -7,12 +7,22 @@ const { Header } = Layout;
 const S = {};
 
 S.Header = styled(Header)`
-  position: relative;
   background: #fff;
   box-shadow: 0 1px 5px #c9c9c9;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  right: 0;
+  left: 0;
+  padding: 0 12px;
+  z-index: 1;
 
   .ant-row {
     height: 100%;
+  }
+
+  @media (min-width: 992px) {
+    padding: 0 50px;
   }
 `;
 
@@ -44,6 +54,7 @@ S.IconMenu = styled(Button)`
 
   span {
     font-size: 20px;
+    float: left;
   }
 `;
 
@@ -67,6 +78,7 @@ S.UserMenu = styled(Button)`
   border: none;
   border-radius: 0;
   background: white;
+  padding-right: 0;
 
   &:hover,
   &:focus {
