@@ -15,6 +15,7 @@ const Login = () => {
   const [errorMsg, setErrorMsg] = useState('');
   const [loading, setLoading] = useState(false);
   const [, setToken] = useLocalStorage('token', '');
+  const [, setUsername] = useLocalStorage('username', '');
 
   const onFinish = async values => {
     try {
@@ -27,6 +28,7 @@ const Login = () => {
         console.log('TODO BIEN', res);
         setErrorMsg('');
         setToken(res.access);
+        setUsername(res.user.username);
       } else {
         console.log('ERROR', res);
         setLoading(false);

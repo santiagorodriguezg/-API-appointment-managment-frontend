@@ -1,24 +1,34 @@
 import styled from 'styled-components';
-import { Layout } from 'antd';
+import Colors from '../../styles/Colors';
 
-const { Content } = Layout;
 const S = {};
 
-S.Layout = styled(Layout)`
-  position: absolute;
+S.Container = styled.div`
+  min-width: 100%;
+  position: relative;
   top: 64px;
+  left: 0;
   right: 0;
-  display: block;
+  bottom: 0;
+  width: 100%;
+  height: calc(100% - 64px);
+`;
+
+S.LeftContent = styled.div`
+  float: right;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 
   @media (min-width: 992px) {
     width: calc(100% - ${props => (props.iscollapsed ? '80px' : '250px')}) !important;
   }
 `;
 
-S.Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  height: 100%;
+S.Content = styled.div`
+  flex-grow: 1;
+  background: ${Colors.bgBody};
   padding: 24px 12px 0 12px;
 
   @media (min-width: 768px) {
@@ -27,12 +37,6 @@ S.Container = styled.div`
   @media (min-width: 992px) {
     padding: 24px 48px 0 48px;
   }
-`;
-
-S.Content = styled(Content)`
-  min-height: auto;
-  //overflow: initial;
-  //flex-grow: 1;
 `;
 
 export default S;
