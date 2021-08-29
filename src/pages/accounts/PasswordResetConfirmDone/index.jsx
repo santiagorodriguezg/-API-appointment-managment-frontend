@@ -1,8 +1,8 @@
 import { Card, Layout } from 'antd';
 
-import Logo from '../../components/Logo';
-import Button from '../../components/Button';
-import StyledCard from '../../styles/Card';
+import Logo from '../../../components/Logo';
+import Button from '../../../components/Button';
+import StyledCard from '../../../styles/Card';
 
 const PasswordResetConfirmDone = () => {
   return (
@@ -15,7 +15,7 @@ const PasswordResetConfirmDone = () => {
             Tu contraseña ha sido cambiada. Ahora puedes seguir adelante e iniciar sesión.
           </StyledCard.Text>
           <div style={{ textAlign: 'center' }}>
-            <Button type="primary" href="/login" text="Iniciar sesión" style={{ width: 'initial' }} />
+            <Button type="primary" href="/login" text="Iniciar sesión" />
           </div>
         </Card>
       </StyledCard.Container>

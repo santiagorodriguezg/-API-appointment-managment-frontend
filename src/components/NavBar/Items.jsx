@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Menu } from 'antd';
 import { DiffOutlined, LogoutOutlined, UserOutlined } from '@ant-design/icons';
-
 import S from './styles';
 
 export const MenuItems = props => {
@@ -17,8 +16,8 @@ export const MenuItems = props => {
 };
 
 export const UserMenu = (
-  <S.DropdownMenu>
-    <Menu.Item key="3">Luis Guillermo Gómez Galeano</Menu.Item>
+  <S.DropdownUserMenu>
+    <Menu.Item key="3">Luis Guillermo</Menu.Item>
     <Menu.Divider />
     <Menu.Item key="1">
       <a target="_blank" rel="noopener noreferrer" href="https://www.antgroup.com">
@@ -30,5 +29,5 @@ export const UserMenu = (
         <LogoutOutlined /> Salir
       </a>
     </Menu.Item>
-  </S.DropdownMenu>
+  </S.DropdownUserMenu>
 );

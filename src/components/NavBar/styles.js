@@ -1,6 +1,7 @@
 import { Button, Layout, Menu } from 'antd';
-import styled from 'styled-components';
+import { MenuOutlined } from '@ant-design/icons';
 
+import styled from 'styled-components';
 import Colors from '../../styles/Colors';
 
 const { Header } = Layout;
@@ -9,13 +10,8 @@ const S = {};
 S.Header = styled(Header)`
   background: #fff;
   box-shadow: 0 1px 5px #c9c9c9;
-  position: fixed;
-  width: 100%;
-  top: 0;
-  right: 0;
-  left: 0;
   padding: 0 12px;
-  z-index: 1;
+  width: 100%;
 
   .ant-row {
     height: 100%;
@@ -49,13 +45,9 @@ S.Logo = styled.h1`
   }
 `;
 
-S.IconMenu = styled(Button)`
-  margin-top: 5px;
-
-  span {
-    font-size: 20px;
-    float: left;
-  }
+S.IconMenu = styled(MenuOutlined)`
+  font-size: 20px;
+  padding-right: 10px;
 `;
 
 S.Menu = styled(Menu)`
@@ -64,12 +56,31 @@ S.Menu = styled(Menu)`
 `;
 
 S.DropdownMenu = styled(Menu)`
-  width: 200px;
+  width: 300px;
 
   .ant-menu-horizontal,
   .ant-menu-item::after,
   .ant-menu-submenu::after {
     border: none !important;
+  }
+
+  @media (min-width: 992px) {
+    width: auto !important;
+  }
+`;
+
+S.DropdownUserMenu = styled(Menu)`
+  width: 250px;
+
+  li:first-of-type {
+    background: none;
+    cursor: default;
+    pointer-events: none;
+
+    span {
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
   }
 `;
 
@@ -85,11 +96,16 @@ S.UserMenu = styled(Button)`
     background: white;
     color: ${Colors.primary};
   }
+
+  .anticon-caret-down {
+    font-size: 13px;
+    vertical-align: sub;
+  }
 `;
 
 S.ButtonMoreOutlined = styled(S.UserMenu)`
   span {
-    font-size: 24px;
+    font-size: 28px;
   }
 `;
 

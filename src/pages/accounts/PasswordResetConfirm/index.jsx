@@ -2,12 +2,12 @@ import { useState } from 'react';
 import { Link, Redirect, useParams } from 'react-router-dom';
 import { Col, Form, Input, Layout, Row } from 'antd';
 
-import { PasswordResetCompleteService } from '../../services/Auth';
-import Logo from '../../components/Logo';
-import Button from '../../components/Button';
-import ErrorMessage from '../../components/ErrorMessage';
-import Alert from '../../components/Alert';
-import StyledGlobal from '../../styles/Global';
+import { PasswordResetCompleteService } from '../../../services/Auth';
+import Logo from '../../../components/Logo';
+import Button from '../../../components/Button';
+import ErrorMessage from '../../../components/ErrorMessage';
+import Alert from '../../../components/Alert';
+import StyledGlobal from '../../../styles/Global';
 
 const PasswordResetConfirm = () => {
   const params = useParams();
@@ -40,7 +40,7 @@ const PasswordResetConfirm = () => {
     <Layout.Content>
       <Row>
         <Col span={24}>
-          <StyledGlobal.ContainerForm>
+          <StyledGlobal.ContainerForm width={400} center margin>
             <Logo />
             <StyledGlobal.TitleForm>Cambiar contraseña</StyledGlobal.TitleForm>
             {errorMsg !== '' && <Alert message={errorMsg} type="error" showIcon />}
@@ -95,7 +95,7 @@ const PasswordResetConfirm = () => {
               </Form.Item>
 
               <Form.Item>
-                <Button text="Cambiar mi contraseña" type="primary" htmlType="submit" loading={loading} fullWidth />
+                <Button block text="Cambiar mi contraseña" type="primary" htmlType="submit" loading={loading} />
                 <StyledGlobal.PForm>
                   <Link to="/password/reset">Solicitar un nuevo enlace</Link>
                 </StyledGlobal.PForm>

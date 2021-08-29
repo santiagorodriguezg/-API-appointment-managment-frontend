@@ -2,13 +2,13 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Col, Form, Input, Layout, Row } from 'antd';
 
-import { LoginService } from '../../services/Auth';
-import useLocalStorage from '../../libs/Storage';
-import Button from '../../components/Button';
-import Logo from '../../components/Logo';
-import Alert from '../../components/Alert';
-import ErrorMessage from '../../components/ErrorMessage';
-import StyledGlobal from '../../styles/Global';
+import { LoginService } from '../../../services/Auth';
+import useLocalStorage from '../../../libs/Storage';
+import Button from '../../../components/Button';
+import Logo from '../../../components/Logo';
+import Alert from '../../../components/Alert';
+import ErrorMessage from '../../../components/ErrorMessage';
+import StyledGlobal from '../../../styles/Global';
 
 const Login = () => {
   const [error, setError] = useState(false);
@@ -46,7 +46,7 @@ const Login = () => {
     <Layout.Content>
       <Row>
         <Col span={24}>
-          <StyledGlobal.ContainerForm>
+          <StyledGlobal.ContainerForm width={400} center margin>
             <Logo />
             <StyledGlobal.TitleForm>Iniciar sesión</StyledGlobal.TitleForm>
             {errorMsg !== '' && <Alert message={errorMsg} type="error" showIcon />}
@@ -83,7 +83,7 @@ const Login = () => {
               </StyledGlobal.PForm>
 
               <Form.Item>
-                <Button text="Iniciar sesión" type="primary" htmlType="submit" loading={loading} fullWidth />
+                <Button block text="Iniciar sesión" type="primary" htmlType="submit" loading={loading} />
                 <StyledGlobal.PForm>
                   ¿No tienes una cuenta? <Link to="/signup">Regístrate</Link>
                 </StyledGlobal.PForm>

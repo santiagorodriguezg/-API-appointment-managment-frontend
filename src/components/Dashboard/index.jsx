@@ -1,16 +1,13 @@
 import { useState } from 'react';
-import Footer from '../Footer';
+import { Affix } from 'antd';
 import NavBar from '../NavBar';
 import SideBar from '../SideBar';
+import Footer from '../Footer';
 import S from './styles';
 
 const Dashboard = ({ children }) => {
   const [collapsed, setCollapsed] = useState(false);
   const [visible, setVisible] = useState(false);
-
-  const showDrawer = () => {
-    setVisible(true);
-  };
 
   const onClose = () => {
     setVisible(false);
@@ -23,16 +20,17 @@ const Dashboard = ({ children }) => {
 
   return (
     <>
-      <NavBar collapsed={collapsed} toggle={toggle} showDrawer={showDrawer} />
-      <S.Container>
-        <SideBar collapsed={collapsed} onClose={onClose} visible={visible} />
-        <S.LeftContent iscollapsed={collapsed ? 1 : 0}>
-          <S.Content>{children}</S.Content>
-          <Footer />
-        </S.LeftContent>
-      </S.Container>
+      <Affix>
+        <NavBar toggle={toggle} />
+      </Affix>
+      <SideBar collapsed={collapsed} onClose={onClose} visible={visible} />
+      <S.LeftContent $isCollapsed={collapsed}>
+        <S.Content>{children}</S.Content>
+        <Footer />
+      </S.LeftContent>
     </>
   );
 };
 
+export { default as DashboardPageEdit } from './DashboardPageEdit';
 export default Dashboard;

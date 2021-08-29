@@ -2,13 +2,13 @@ import { useState } from 'react';
 import { Col, Form, Input, Layout, Row } from 'antd';
 import { Link } from 'react-router-dom';
 
-import Logo from '../../components/Logo';
-import { SignupService } from '../../services/Auth';
-import useLocalStorage from '../../libs/Storage';
-import Button from '../../components/Button';
-import ErrorMessage from '../../components/ErrorMessage';
-import StyledGlobal from '../../styles/Global';
-import { getFieldErrors } from '../../utils/Utils';
+import Logo from '../../../components/Logo';
+import { SignupService } from '../../../services/Auth';
+import useLocalStorage from '../../../libs/Storage';
+import Button from '../../../components/Button';
+import ErrorMessage from '../../../components/ErrorMessage';
+import StyledGlobal from '../../../styles/Global';
+import { getFieldErrors } from '../../../utils/Utils';
 
 const formItemLayout = {
   labelCol: {
@@ -16,7 +16,7 @@ const formItemLayout = {
       span: 24,
     },
     sm: {
-      span: 7,
+      span: 8,
     },
   },
   wrapperCol: {
@@ -37,7 +37,7 @@ const tailFormItemLayout = {
     },
     sm: {
       span: 20,
-      offset: 7,
+      offset: 8,
     },
   },
 };
@@ -73,7 +73,7 @@ const Signup = () => {
     <Layout.Content>
       <Row>
         <Col span={24}>
-          <StyledGlobal.ContainerForm style={{ width: '550px' }}>
+          <StyledGlobal.ContainerForm width={550} center margin>
             <Form
               {...formItemLayout}
               form={form}
@@ -262,7 +262,7 @@ const Signup = () => {
               </Form.Item>
 
               <Form.Item {...tailFormItemLayout}>
-                <Button text="Registrarme" type="primary" htmlType="submit" loading={loading} fullWidth />
+                <Button block text="Registrarme" type="primary" htmlType="submit" loading={loading} />
                 <StyledGlobal.PForm>
                   ¿Ya tienes cuenta? <Link to="/login">Ingresa aquí</Link>
                 </StyledGlobal.PForm>

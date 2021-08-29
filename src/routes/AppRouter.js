@@ -1,14 +1,18 @@
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import { AuthProvider } from '../context/Auth';
-import Login from '../pages/Login';
-import Signup from '../pages/Signup';
-import PasswordReset from '../pages/PasswordReset';
-import PasswordResetDone from '../pages/PasswordResetDone';
-import PasswordResetConfirm from '../pages/PasswordResetConfirm';
-import PasswordResetConfirmDone from '../pages/PasswordResetConfirmDone';
-import Home from '../pages/Home';
+
+import Login from '../pages/accounts/Login';
+import Signup from '../pages/accounts/Signup';
+import PasswordReset from '../pages/accounts/PasswordReset';
+import PasswordResetDone from '../pages/accounts/PasswordResetDone';
+import PasswordResetConfirm from '../pages/accounts/PasswordResetConfirm';
+import PasswordResetConfirmDone from '../pages/accounts/PasswordResetConfirmDone';
+
 import Profile from '../pages/Profile';
+import ProfileName from '../pages/Profile/ProfileName';
+
+import Home from '../pages/Home';
 
 const AppRouter = () => {
   return (
@@ -24,6 +28,7 @@ const AppRouter = () => {
 
           <Route exact path="/home" component={Home} />
           <Route exact path="/profile" component={Profile} />
+          <Route exact path="/profile/name" component={ProfileName} />
         </Switch>
       </Router>
     </AuthProvider>

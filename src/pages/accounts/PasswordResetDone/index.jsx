@@ -1,8 +1,8 @@
 import { Card, Layout } from 'antd';
 
-import Logo from '../../components/Logo';
-import Button from '../../components/Button';
-import StyledCard from '../../styles/Card';
+import Logo from '../../../components/Logo';
+import Button from '../../../components/Button';
+import StyledCard from '../../../styles/Card';
 
 const PasswordResetDone = ({ location }) => {
   const { email } = (location && location.state) || {};
