@@ -11,6 +11,7 @@ import PasswordResetConfirmDone from '../pages/accounts/PasswordResetConfirmDone
 
 import Profile from '../pages/Profile';
 import ProfileName from '../pages/Profile/ProfileName';
+import ProfileIdentification from '../pages/Profile/ProfileIdentification';
 
 import Home from '../pages/Home';
 
@@ -29,6 +30,7 @@ const AppRouter = () => {
           <Route exact path="/home" component={Home} />
           <Route exact path="/profile" component={Profile} />
           <Route exact path="/profile/name" component={ProfileName} />
+          <Route exact path="/profile/identification" component={ProfileIdentification} />
         </Switch>
       </Router>
     </AuthProvider>
