@@ -1,8 +1,8 @@
 import { Form, Input } from 'antd';
-import { DashboardPageEdit } from '../../components/Dashboard';
-import { ButtonCancelAndSave } from '../../components/Button';
+import { DashboardPageEdit } from '../../../components/Dashboard';
+import { AccountsButtonCancelAndSave } from '../../../components/Button';
 
-const ProfileName = () => {
+const Name = () => {
   const initialValues = {
     first_name: 'Luis Guillermo',
     last_name: 'Gómez Galeano',
@@ -13,7 +13,7 @@ const ProfileName = () => {
   };
 
   return (
-    <DashboardPageEdit>
+    <DashboardPageEdit title="Nombre">
       <Form layout="vertical" name="updateName" initialValues={initialValues} onFinish={onFinish} hideRequiredMark>
         <Form.Item
           name="first_name"
@@ -50,10 +50,10 @@ const ProfileName = () => {
         </Form.Item>
 
         <Form.Item>
-          <ButtonCancelAndSave href="/profile" />
+          <AccountsButtonCancelAndSave />
         </Form.Item>
       </Form>
     </DashboardPageEdit>
   );
 };
-export default ProfileName;
+export default Name;

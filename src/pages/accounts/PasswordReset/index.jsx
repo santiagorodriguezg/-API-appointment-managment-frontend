@@ -40,7 +40,7 @@ const PasswordReset = () => {
     <Layout.Content>
       <Row>
         <Col span={24}>
-          <StyledGlobal.ContainerForm width={400} center margin>
+          <StyledGlobal.ContainerForm width={400} center>
             <Logo />
             <StyledGlobal.TitleForm>Recuperación de cuenta</StyledGlobal.TitleForm>
             {error && <ErrorMessage />}
@@ -48,7 +48,7 @@ const PasswordReset = () => {
             {redirect && (
               <Redirect
                 to={{
-                  pathname: '/password/reset/done',
+                  pathname: '/accounts/password/reset/done',
                   state: { email },
                 }}
               />
@@ -70,7 +70,7 @@ const PasswordReset = () => {
               <Form.Item>
                 <Button block text="Restablecer contraseña" type="primary" htmlType="submit" loading={loading} />
                 <StyledGlobal.PForm>
-                  Regresar al <Link to="/login">inicio de sesión</Link>
+                  Regresar al <Link to="/accounts/login">inicio de sesión</Link>
                 </StyledGlobal.PForm>
               </Form.Item>
             </Form>

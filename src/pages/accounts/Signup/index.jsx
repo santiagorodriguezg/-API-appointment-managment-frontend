@@ -40,7 +40,7 @@ const Signup = () => {
     <Layout.Content>
       <Row>
         <Col span={24}>
-          <StyledGlobal.ContainerForm width={600} center margin>
+          <StyledGlobal.ContainerForm width={600} center>
             <Logo />
             <StyledGlobal.TitleForm>Crear cuenta</StyledGlobal.TitleForm>
             {error && <ErrorMessage />}
@@ -180,7 +180,7 @@ const Signup = () => {
                       <Button text="Registrarme" type="primary" htmlType="submit" loading={loading} />
                     </div>
                     <StyledGlobal.PForm>
-                      ¿Ya tienes cuenta? <Link to="/login">Ingresa aquí</Link>
+                      ¿Ya tienes cuenta? <Link to="/accounts/login">Ingresa aquí</Link>
                     </StyledGlobal.PForm>
                   </Form.Item>
                 </Col>

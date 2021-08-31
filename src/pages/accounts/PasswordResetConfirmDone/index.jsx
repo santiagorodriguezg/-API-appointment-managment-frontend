@@ -15,7 +15,7 @@ const PasswordResetConfirmDone = () => {
             Tu contraseña ha sido cambiada. Ahora puedes seguir adelante e iniciar sesión.
           </StyledCard.Text>
           <div style={{ textAlign: 'center' }}>
-            <Button type="primary" href="/login" text="Iniciar sesión" />
+            <Button type="primary" href="/accounts/login" text="Iniciar sesión" />
           </div>
         </Card>
       </StyledCard.Container>

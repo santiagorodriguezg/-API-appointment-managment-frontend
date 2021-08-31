@@ -5,6 +5,7 @@ import Colors from '../../styles/Colors';
 const S = {};
 
 S.PageHeader = styled(PageHeader)`
+  margin-top: 16px;
   padding-left: 0;
   padding-right: 0;
 

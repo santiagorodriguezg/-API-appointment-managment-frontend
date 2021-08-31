@@ -46,7 +46,7 @@ const Login = () => {
     <Layout.Content>
       <Row>
         <Col span={24}>
-          <StyledGlobal.ContainerForm width={400} center margin>
+          <StyledGlobal.ContainerForm width={400} center>
             <Logo />
             <StyledGlobal.TitleForm>Iniciar sesión</StyledGlobal.TitleForm>
             {errorMsg !== '' && <Alert message={errorMsg} type="error" showIcon />}
@@ -79,13 +79,13 @@ const Login = () => {
               </Form.Item>
 
               <StyledGlobal.PForm>
-                <Link to="/password/reset">¿Olvido su contraseña?</Link>
+                <Link to="/accounts/password/reset">¿Has olvidado tu contraseña?</Link>
               </StyledGlobal.PForm>
 
               <Form.Item>
                 <Button block text="Iniciar sesión" type="primary" htmlType="submit" loading={loading} />
                 <StyledGlobal.PForm>
-                  ¿No tienes una cuenta? <Link to="/signup">Regístrate</Link>
+                  ¿No tienes una cuenta? <Link to="/accounts/signup">Regístrate</Link>
                 </StyledGlobal.PForm>
               </Form.Item>
             </Form>

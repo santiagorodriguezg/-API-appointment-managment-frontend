@@ -45,7 +45,7 @@ const PasswordResetConfirm = () => {
             <StyledGlobal.TitleForm>Cambiar contraseña</StyledGlobal.TitleForm>
             {errorMsg !== '' && <Alert message={errorMsg} type="error" showIcon />}
             {error && <ErrorMessage />}
-            {redirect && <Redirect to="/password/reset/complete" />}
+            {redirect && <Redirect to="/accounts/password/reset/complete" />}
             <Form layout="vertical" name="login" className="form-box" onFinish={onFinish} hideRequiredMark>
               <Form.Item
                 name="password"
@@ -97,7 +97,7 @@ const PasswordResetConfirm = () => {
               <Form.Item>
                 <Button block text="Cambiar mi contraseña" type="primary" htmlType="submit" loading={loading} />
                 <StyledGlobal.PForm>
-                  <Link to="/password/reset">Solicitar un nuevo enlace</Link>
+                  <Link to="/accounts/password/reset">Solicitar un nuevo enlace</Link>
                 </StyledGlobal.PForm>
               </Form.Item>
             </Form>

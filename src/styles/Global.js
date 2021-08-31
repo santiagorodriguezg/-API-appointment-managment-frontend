@@ -28,7 +28,7 @@ StyledGlobal.WrapperContent840 = styled.div`
 StyledGlobal.ContainerForm = styled.div`
   padding: 0 12px;
   width: 100%;
-  margin-top: ${props => (props.margin ? '60px' : 'none')};
+  margin-top: ${props => (props.marginTop ? `${props.marginTop}px` : '60px')};
 
   @media (min-width: 576px) {
     width: ${props => (props.width ? `${props.width}px` : '500px')};

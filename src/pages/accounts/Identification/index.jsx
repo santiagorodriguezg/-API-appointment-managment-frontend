@@ -1,19 +1,19 @@
 import { Form, InputNumber, Select } from 'antd';
-import { DashboardPageEdit } from '../../components/Dashboard';
-import { ButtonCancelAndSave } from '../../components/Button';
+import { DashboardPageEdit } from '../../../components/Dashboard';
+import { AccountsButtonCancelAndSave } from '../../../components/Button';
 
 const { Option } = Select;
 
-const ProfileIdentification = () => {
+const Identification = () => {
   const onFinish = values => {
     console.log('Success:', values);
   };
 
   return (
-    <DashboardPageEdit>
-      <Form layout="vertical" name="updateName" onFinish={onFinish} hideRequiredMark>
+    <DashboardPageEdit title="Identificación">
+      <Form layout="vertical" name="updateIdentification" onFinish={onFinish} hideRequiredMark>
         <Form.Item name="identification_type" label="Tipo de identificación">
-          <Select placeholder="Seleccione un tipo de identificación" defaultValue="CC">
+          <Select placeholder="Seleccione un tipo de identificación">
             <Option value="CC">Cédula de ciudadanía</Option>
             <Option value="CE">Cédula de extranjería</Option>
             <Option value="NIT">Nit</Option>
@@ -34,10 +34,10 @@ const ProfileIdentification = () => {
         </Form.Item>
 
         <Form.Item>
-          <ButtonCancelAndSave href="/profile" />
+          <AccountsButtonCancelAndSave />
         </Form.Item>
       </Form>
     </DashboardPageEdit>
   );
 };
-export default ProfileIdentification;
+export default Identification;

@@ -8,6 +8,18 @@ export const AuthProvider = ({ children }) => {
   const [role, setRole] = useLocalStorage('role', '');
   const [username, setUsername] = useLocalStorage('username', '');
 
+  const logIn = data => {
+    setToken(data.token);
+    setRole(data.role);
+    setUsername(data.username);
+  };
+
+  const logOut = () => {
+    setToken(null);
+    setRole(null);
+    setUsername(null);
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -17,6 +29,8 @@ export const AuthProvider = ({ children }) => {
         setRole,
         username,
         setUsername,
+        logIn,
+        logOut,
       }}
     >
       {children}

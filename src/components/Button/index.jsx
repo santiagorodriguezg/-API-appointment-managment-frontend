@@ -17,5 +17,7 @@ const ButtonCancelAndSave = ({ href }) => {
   );
 };
 
-export { ButtonCancelAndSave };
+const AccountsButtonCancelAndSave = () => <ButtonCancelAndSave href="/accounts/profile" />;
+
+export { ButtonCancelAndSave, AccountsButtonCancelAndSave };
 export default Button;

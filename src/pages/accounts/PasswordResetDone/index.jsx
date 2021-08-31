@@ -21,7 +21,7 @@ const PasswordResetDone = ({ location }) => {
             entre otras.
           </StyledCard.Text>
           <div style={{ textAlign: 'center' }}>
-            <Button type="primary" href="/login" text="Inicio de sesión" />
+            <Button type="primary" href="/accounts/login" text="Inicio de sesión" />
           </div>
         </Card>
       </StyledCard.Container>
