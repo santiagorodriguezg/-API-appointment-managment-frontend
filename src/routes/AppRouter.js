@@ -16,7 +16,6 @@ import Name from '../pages/accounts/Name';
 import Email from '../pages/accounts/Email';
 import Phone from '../pages/accounts/Phone';
 import Location from '../pages/accounts/Location';
-import Username from '../pages/accounts/Username';
 import Identification from '../pages/accounts/Identification';
 
 import Home from '../pages/Home';
@@ -43,7 +42,6 @@ const AppRouter = () => {
           <PrivateRoute exact path="/accounts/email" component={Email} />
           <PrivateRoute exact path="/accounts/phone" component={Phone} />
           <PrivateRoute exact path="/accounts/location" component={Location} />
-          <PrivateRoute exact path="/accounts/username" component={Username} />
 
           <PrivateRoute exact path="/home" component={Home} />
         </Switch>

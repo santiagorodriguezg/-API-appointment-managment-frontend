@@ -3,7 +3,7 @@ import { Redirect } from 'react-router-dom';
 import { Form, Input, Skeleton } from 'antd';
 import { UpdateMyProfileService } from '../../../services/Users';
 import { DashboardPageEdit } from '../../../components/Dashboard';
-import { AccountsButtonCancelAndSave } from '../../../components/Button';
+import { ButtonCancelAndSave } from '../../../components/Button';
 import ErrorMessage from '../../../components/ErrorMessage';
 import { getFieldErrors } from '../../../utils/Utils';
 import useUserProfile from '../../../hooks/useUserProfile';
@@ -43,7 +43,7 @@ const Name = () => {
   return (
     <DashboardPageEdit title="Nombre">
       {loading && <Skeleton active />}
-      {errorMsg && <ErrorMessage />}
+      {errorMsg && <ErrorMessage retryBtn />}
       {redirect && (
         <Redirect
           to={{
@@ -98,7 +98,7 @@ const Name = () => {
           </Form.Item>
 
           <Form.Item>
-            <AccountsButtonCancelAndSave loading={btnLoading} />
+            <ButtonCancelAndSave loading={btnLoading} />
           </Form.Item>
         </Form>
       )}

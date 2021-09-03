@@ -42,7 +42,7 @@ const Profile = ({ location }) => {
     <Dashboard>
       <Title level={3}>Mi cuenta</Title>
       {loading && <Skeleton active />}
-      {errorMsg && <ErrorMessage />}
+      {errorMsg && <ErrorMessage retryBtn />}
       {!loading && !errorMsg && (
         <>
           <ProfileCard title="Datos básicos">
@@ -66,7 +66,7 @@ const Profile = ({ location }) => {
           </ProfileCard>
 
           <ProfileCard title="Datos de cuenta">
-            <ProfileCardItem href="/accounts/username" title="Usuario" content={user.username} />
+            <ProfileCardItem title="Usuario" content={user.username} showIcon={false} />
           </ProfileCard>
 
           <ProfileCard title="Seguridad">

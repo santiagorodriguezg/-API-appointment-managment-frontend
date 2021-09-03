@@ -4,7 +4,7 @@ import { Form, InputNumber, Select, Skeleton } from 'antd';
 import { UpdateMyProfileService } from '../../../services/Users';
 import useUserProfile from '../../../hooks/useUserProfile';
 import { DashboardPageEdit } from '../../../components/Dashboard';
-import { AccountsButtonCancelAndSave } from '../../../components/Button';
+import { ButtonCancelAndSave } from '../../../components/Button';
 import { getFieldErrors } from '../../../utils/Utils';
 import ErrorMessage from '../../../components/ErrorMessage';
 
@@ -45,7 +45,7 @@ const Identification = () => {
   return (
     <DashboardPageEdit title="Identificación">
       {loading && <Skeleton active />}
-      {errorMsg && <ErrorMessage />}
+      {errorMsg && <ErrorMessage retryBtn />}
       {redirect && (
         <Redirect
           to={{
@@ -87,7 +87,7 @@ const Identification = () => {
           </Form.Item>
 
           <Form.Item>
-            <AccountsButtonCancelAndSave loading={btnLoading} />
+            <ButtonCancelAndSave loading={btnLoading} />
           </Form.Item>
         </Form>
       )}

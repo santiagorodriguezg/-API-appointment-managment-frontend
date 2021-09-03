@@ -73,7 +73,7 @@ StyledGlobal.CancelAndSaveBtn = styled.div`
   justify-content: flex-end;
   margin-top: 24px;
 
-  a {
+  button.ant-btn-text {
     color: ${Colors.primary};
 
     &:hover {
