@@ -1,15 +1,15 @@
-import axiosInstance from '../../libs/NewHttpClient';
+import { axiosWithoutToken } from '../../libs/Axios';
 
-export const LoginService = data => axiosInstance.post('login/', data);
+export const LoginService = data => axiosWithoutToken.post('login/', data);
 
-export const LogoutService = data => axiosInstance.post('logout/', data);
+export const LogoutService = data => axiosWithoutToken.post('logout/', data);
 
-export const SignupService = data => axiosInstance.post('signup/', data);
+export const SignupService = data => axiosWithoutToken.post('signup/', data);
 
-export const PasswordResetService = data => axiosInstance.post('password/reset/', data);
+export const PasswordResetService = data => axiosWithoutToken.post('password/reset/', data);
 
-export const PasswordResetCompleteService = data => axiosInstance.patch('password/reset/complete/', data);
+export const PasswordResetCompleteService = data => axiosWithoutToken.patch('password/reset/complete/', data);
 
-export const VerifyTokenService = data => axiosInstance.post('token/verify/', data);
+export const VerifyTokenService = data => axiosWithoutToken.post('token/verify/', data);
 
-export const RefreshTokenService = data => axiosInstance.post('token/refresh/', data);
+export const RefreshTokenService = data => axiosWithoutToken.post('token/refresh/', data);

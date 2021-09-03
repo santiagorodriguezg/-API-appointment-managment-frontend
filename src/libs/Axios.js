@@ -1,11 +1,17 @@
 import axios from 'axios';
 
-const axiosInstance = axios.create({
-  baseURL: `${process.env.REACT_APP_API_URL}/`,
-  timeout: 8000,
-});
+const baseURL = `${process.env.REACT_APP_API_URL}/`;
 
-axiosInstance.interceptors.request.use(
+const conf = {
+  baseURL,
+  timeout: 8000,
+};
+
+const axiosWithoutToken = axios.create(conf);
+
+const axiosWithToken = axios.create(conf);
+
+axiosWithToken.interceptors.request.use(
   config => {
     const token = JSON.parse(localStorage.getItem('token')) || '';
     if (token) {
@@ -18,7 +24,7 @@ axiosInstance.interceptors.request.use(
   },
 );
 
-axiosInstance.interceptors.response.use(
+axiosWithToken.interceptors.response.use(
   response => {
     return response;
   },
@@ -35,14 +41,14 @@ axiosInstance.interceptors.response.use(
         originalConfig._retry = true;
 
         try {
-          const rs = await axiosInstance.post(`token/refresh/`, {
+          const rs = await axiosWithToken.post('token/refresh/', {
             refresh: refreshToken,
           });
 
           localStorage.setItem('token', JSON.stringify(rs.data.access));
           localStorage.setItem('rf', JSON.stringify(rs.data.refresh));
 
-          return axiosInstance(originalConfig);
+          return axiosWithToken(originalConfig);
         } catch (e) {
           localStorage.removeItem('token');
           localStorage.removeItem('rf');
@@ -57,4 +63,6 @@ axiosInstance.interceptors.response.use(
   },
 );
 
-export default axiosInstance;
+export { axiosWithoutToken };
+
+export default axiosWithToken;
