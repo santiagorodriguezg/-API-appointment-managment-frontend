@@ -10,7 +10,7 @@ import ErrorMessage from '../../../components/ErrorMessage';
 import StyledGlobal from '../../../styles/Global';
 
 const PasswordReset = () => {
-  const [error, setError] = useState(false);
+  const [errorMsg, setErrorMsg] = useState(false);
   const [loading, setLoading] = useState(false);
   const [userNotFound, setUserNotFound] = useState('');
   const [email, setEmail] = useState('');
@@ -19,20 +19,23 @@ const PasswordReset = () => {
   const onFinish = async values => {
     try {
       setLoading(true);
+      setErrorMsg(false);
+      setUserNotFound('');
+
       const res = await PasswordResetService(values);
 
-      if (!res.err) {
-        setEmail(res.email);
-        setRedirect(true);
+      setEmail(res.data.email);
+      setRedirect(true);
+    } catch (e) {
+      if (e.response) {
+        setLoading(false);
+        setErrorMsg(false);
+        setUserNotFound(e.response.data.detail);
       } else {
         setLoading(false);
-        setError(false);
-        setUserNotFound(res.data.detail);
+        setErrorMsg(true);
+        setUserNotFound('');
       }
-    } catch (e) {
-      setLoading(false);
-      setError(true);
-      setUserNotFound('');
     }
   };
 
@@ -43,7 +46,7 @@ const PasswordReset = () => {
           <StyledGlobal.ContainerForm width={400} center>
             <Logo />
             <StyledGlobal.TitleForm>Recuperación de cuenta</StyledGlobal.TitleForm>
-            {error && <ErrorMessage />}
+            {errorMsg && <ErrorMessage />}
             {userNotFound !== '' && <Alert message={userNotFound} type="error" showIcon />}
             {redirect && (
               <Redirect

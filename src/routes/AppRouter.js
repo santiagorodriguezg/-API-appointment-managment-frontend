@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import { AuthProvider } from '../context/Auth';
+import { PrivateRoute } from './PrivateRoute';
 
 import Login from '../pages/accounts/Login';
 import Signup from '../pages/accounts/Signup';
@@ -19,6 +20,7 @@ import Username from '../pages/accounts/Username';
 import Identification from '../pages/accounts/Identification';
 
 import Home from '../pages/Home';
+import Logout from '../pages/accounts/Logout';
 
 const AppRouter = () => {
   return (
@@ -31,17 +33,19 @@ const AppRouter = () => {
           <Route exact path="/accounts/password/reset/done" component={PasswordResetDone} />
           <Route path="/accounts/password/reset/:uid/:token" component={PasswordResetConfirm} />
           <Route exact path="/accounts/password/reset/complete" component={PasswordResetConfirmDone} />
-          <Route exact path="/accounts/password/change" component={PasswordChange} />
+          <PrivateRoute exact path="/accounts/logout" component={Logout} />
+          <PrivateRoute exact path="/accounts/password/change" component={PasswordChange} />
 
-          <Route exact path="/accounts/profile" component={Profile} />
-          <Route exact path="/accounts/name" component={Name} />
-          <Route exact path="/accounts/identification" component={Identification} />
-          <Route exact path="/accounts/email" component={Email} />
-          <Route exact path="/accounts/phone" component={Phone} />
-          <Route exact path="/accounts/location" component={Location} />
-          <Route exact path="/accounts/username" component={Username} />
+          <PrivateRoute exact path="/accounts/profile" component={Profile} />
+          <PrivateRoute exact path="/accounts/name" component={Name} />
 
-          <Route exact path="/home" component={Home} />
+          <PrivateRoute exact path="/accounts/identification" component={Identification} />
+          <PrivateRoute exact path="/accounts/email" component={Email} />
+          <PrivateRoute exact path="/accounts/phone" component={Phone} />
+          <PrivateRoute exact path="/accounts/location" component={Location} />
+          <PrivateRoute exact path="/accounts/username" component={Username} />
+
+          <PrivateRoute exact path="/home" component={Home} />
         </Switch>
       </Router>
     </AuthProvider>

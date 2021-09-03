@@ -1,38 +1,46 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useContext, useState } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 import { Col, Form, Input, Layout, Row } from 'antd';
+
+import AuthContext from '../../../context/Auth';
 import { SignupService } from '../../../services/Auth';
-import useLocalStorage from '../../../libs/Storage';
 import Logo from '../../../components/Logo';
 import Button from '../../../components/Button';
 import ErrorMessage from '../../../components/ErrorMessage';
-import { getFieldErrors } from '../../../utils/Utils';
 import StyledGlobal from '../../../styles/Global';
+import { getFieldErrors } from '../../../utils/Utils';
 
 const Signup = () => {
+  const history = useHistory();
   const [form] = Form.useForm();
-  const [error, setError] = useState(false);
+  const { logIn } = useContext(AuthContext);
+  const [errorMsg, setErrorMsg] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [, setToken] = useLocalStorage('token', '');
 
   const onFinish = async values => {
     try {
-      console.log('Received values of form:', values);
+      setErrorMsg(false);
       setLoading(true);
+
       const res = await SignupService(values);
 
-      if (!res.err) {
-        console.log('USER CREATED: ', res);
+      setLoading(false);
+      logIn({
+        token: res.data.access,
+        refresh: res.data.refresh,
+        role: res.data.user.role,
+        username: res.data.user.username,
+      });
+      history.push('/accounts/profile');
+    } catch (e) {
+      if (e.response) {
         setLoading(false);
-        setToken(res.data.access);
+        setErrorMsg(false);
+        form.setFields(getFieldErrors(e.response.data.errors));
       } else {
         setLoading(false);
-        setError(false);
-        form.setFields(getFieldErrors(res));
+        setErrorMsg(true);
       }
-    } catch {
-      setLoading(false);
-      setError(true);
     }
   };
 
@@ -43,8 +51,8 @@ const Signup = () => {
           <StyledGlobal.ContainerForm width={600} center>
             <Logo />
             <StyledGlobal.TitleForm>Crear cuenta</StyledGlobal.TitleForm>
-            {error && <ErrorMessage />}
-            <Form layout="vertical" onFinish={onFinish}>
+            {errorMsg && <ErrorMessage />}
+            <Form form={form} name="signup" layout="vertical" onFinish={onFinish}>
               <Row gutter={16}>
                 <Col xs={24} md={12}>
                   <Form.Item

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, Redirect, useParams } from 'react-router-dom';
+import { Link, useHistory, useParams } from 'react-router-dom';
 import { Col, Form, Input, Layout, Row } from 'antd';
 
 import { PasswordResetCompleteService } from '../../../services/Auth';
@@ -11,28 +11,29 @@ import StyledGlobal from '../../../styles/Global';
 
 const PasswordResetConfirm = () => {
   const params = useParams();
-  const [error, setError] = useState(false);
-  const [errorMsg, setErrorMsg] = useState('');
+  const history = useHistory();
+  const [errorMsg, setErrorMsg] = useState(false);
+  const [errorText, setErrorText] = useState('');
   const [loading, setLoading] = useState(false);
-  const [redirect, setRedirect] = useState(false);
 
   const onFinish = async values => {
     try {
       setLoading(true);
+      setErrorMsg(false);
+      setErrorText('');
 
-      const res = await PasswordResetCompleteService({ ...values, ...params });
-
-      if (!res.err) {
-        setRedirect(true);
+      await PasswordResetCompleteService({ ...values, ...params });
+      history.push('/accounts/password/reset/complete');
+    } catch (e) {
+      if (e.response) {
+        setLoading(false);
+        setErrorMsg(false);
+        setErrorText(e.response.data.detail);
       } else {
         setLoading(false);
-        setError(false);
-        setErrorMsg(res.data.detail);
+        setErrorMsg(true);
+        setErrorText('');
       }
-    } catch (e) {
-      setLoading(false);
-      setError(true);
-      setErrorMsg('');
     }
   };
 
@@ -43,9 +44,8 @@ const PasswordResetConfirm = () => {
           <StyledGlobal.ContainerForm width={400} center margin>
             <Logo />
             <StyledGlobal.TitleForm>Cambiar contraseña</StyledGlobal.TitleForm>
-            {errorMsg !== '' && <Alert message={errorMsg} type="error" showIcon />}
-            {error && <ErrorMessage />}
-            {redirect && <Redirect to="/accounts/password/reset/complete" />}
+            {errorText !== '' && <Alert message={errorText} type="error" showIcon />}
+            {errorMsg && <ErrorMessage />}
             <Form layout="vertical" name="login" className="form-box" onFinish={onFinish} hideRequiredMark>
               <Form.Item
                 name="password"

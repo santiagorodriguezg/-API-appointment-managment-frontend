@@ -1,11 +1,11 @@
-export const getFieldErrors = res => {
-  const keys = Object.keys(res.data.errors);
+export const getFieldErrors = errs => {
+  const keys = Object.keys(errs);
   const errors = [];
 
   keys.map(k =>
     errors.push({
       name: k,
-      errors: res.data.errors[k],
+      errors: errs[k],
     }),
   );
   return errors;

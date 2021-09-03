@@ -7,7 +7,7 @@ export const MenuItems = props => {
   return (
     <S.DropdownMenu {...props}>
       <Menu.Item key="mail">
-        <Link to="/profile">
+        <Link to="/accounts/profile">
           <DiffOutlined /> Solicitar cita
         </Link>
       </Menu.Item>
@@ -25,9 +25,9 @@ export const UserMenu = (
       </a>
     </Menu.Item>
     <Menu.Item key="2">
-      <a target="_blank" rel="noopener noreferrer" href="https://www.aliyun.com">
+      <Link to="/accounts/logout">
         <LogoutOutlined /> Salir
-      </a>
+      </Link>
     </Menu.Item>
   </S.DropdownUserMenu>
 );

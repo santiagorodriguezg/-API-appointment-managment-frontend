@@ -1,44 +1,50 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useContext, useState } from 'react';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 import { Col, Form, Input, Layout, Row } from 'antd';
 
+import AuthContext from '../../../context/Auth';
 import { LoginService } from '../../../services/Auth';
-import useLocalStorage from '../../../libs/Storage';
-import Button from '../../../components/Button';
 import Logo from '../../../components/Logo';
 import Alert from '../../../components/Alert';
+import Button from '../../../components/Button';
 import ErrorMessage from '../../../components/ErrorMessage';
 import StyledGlobal from '../../../styles/Global';
 
 const Login = () => {
-  const [error, setError] = useState(false);
-  const [errorMsg, setErrorMsg] = useState('');
+  const history = useHistory();
+  const location = useLocation();
+  const { logIn } = useContext(AuthContext);
+  const [errorText, setErrorText] = useState('');
+  const [errorMsg, setErrorMsg] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [, setToken] = useLocalStorage('token', '');
-  const [, setUsername] = useLocalStorage('username', '');
+
+  const { from } = location.state || { from: { pathname: '/accounts/profile' } };
 
   const onFinish = async values => {
     try {
-      console.log('Received values of form: ', values);
       setLoading(true);
+      setErrorText('');
+      setErrorMsg(false);
 
       const res = await LoginService(values);
 
-      if (!res.err) {
-        console.log('TODO BIEN', res);
-        setErrorMsg('');
-        setToken(res.access);
-        setUsername(res.user.username);
-      } else {
-        console.log('ERROR', res);
-        setLoading(false);
-        setError(false);
-        setErrorMsg(res.data.detail);
-      }
+      logIn({
+        token: res.data.access,
+        refresh: res.data.refresh,
+        role: res.data.user.role,
+        username: res.data.user.username,
+      });
+      history.replace(from);
     } catch (e) {
-      setLoading(false);
-      setError(true);
-      setErrorMsg('');
+      if (e.response) {
+        setLoading(false);
+        setErrorText(e.response.data.detail);
+        setErrorMsg(false);
+      } else {
+        setLoading(false);
+        setErrorText('');
+        setErrorMsg(true);
+      }
     }
   };
 
@@ -49,8 +55,8 @@ const Login = () => {
           <StyledGlobal.ContainerForm width={400} center>
             <Logo />
             <StyledGlobal.TitleForm>Iniciar sesión</StyledGlobal.TitleForm>
-            {errorMsg !== '' && <Alert message={errorMsg} type="error" showIcon />}
-            {error && <ErrorMessage />}
+            {errorText !== '' && <Alert message={errorText} type="error" showIcon />}
+            {errorMsg && <ErrorMessage />}
             <Form layout="vertical" name="login" className="form-box" onFinish={onFinish} hideRequiredMark>
               <Form.Item
                 name="username"
