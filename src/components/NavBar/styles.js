@@ -57,6 +57,7 @@ S.Menu = styled(Menu)`
 
 S.DropdownMenu = styled(Menu)`
   width: 300px;
+  border: none !important;
 
   .ant-menu-horizontal,
   .ant-menu-item::after,

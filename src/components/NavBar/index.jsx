@@ -24,14 +24,14 @@ const NavBar = ({ toggle }) => {
               <MenuItems mode="horizontal" />
             </Tablet>
             <MobileAndBelow>
-              <Dropdown overlay={MenuItems} trigger={['click']} placement="bottomRight">
+              <Dropdown arrow overlay={<MenuItems />} trigger={['click']} placement="bottomRight">
                 <S.ButtonMoreOutlined type="text">
                   <MoreOutlined />
                 </S.ButtonMoreOutlined>
               </Dropdown>
             </MobileAndBelow>
 
-            <Dropdown overlay={UserMenu} trigger={['click']} placement="bottomRight">
+            <Dropdown arrow overlay={<UserMenu />} trigger={['click']} placement="bottomRight">
               <S.UserMenu type="text">
                 <Avatar icon={<UserOutlined />} /> <CaretDownOutlined />
               </S.UserMenu>

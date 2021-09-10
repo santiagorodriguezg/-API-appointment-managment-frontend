@@ -1,13 +1,15 @@
+import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { Menu } from 'antd';
 import { DiffOutlined, LogoutOutlined, UserOutlined } from '@ant-design/icons';
+import AuthContext from '../../context/Auth';
 import S from './styles';
 
 export const MenuItems = props => {
   return (
     <S.DropdownMenu {...props}>
-      <Menu.Item key="mail">
-        <Link to="/accounts/profile">
+      <Menu.Item key="/appointments/create">
+        <Link to="/appointments/create">
           <DiffOutlined /> Solicitar cita
         </Link>
       </Menu.Item>
@@ -15,19 +17,23 @@ export const MenuItems = props => {
   );
 };
 
-export const UserMenu = (
-  <S.DropdownUserMenu>
-    <Menu.Item key="3">Luis Guillermo</Menu.Item>
-    <Menu.Divider />
-    <Menu.Item key="1">
-      <a target="_blank" rel="noopener noreferrer" href="https://www.antgroup.com">
-        <UserOutlined /> Perfil
-      </a>
-    </Menu.Item>
-    <Menu.Item key="2">
-      <Link to="/accounts/logout">
-        <LogoutOutlined /> Salir
-      </Link>
-    </Menu.Item>
-  </S.DropdownUserMenu>
-);
+export const UserMenu = () => {
+  const { name } = useContext(AuthContext);
+
+  return (
+    <S.DropdownUserMenu>
+      <Menu.Item key="3">{name}</Menu.Item>
+      <Menu.Divider />
+      <Menu.Item key="/accounts/profile">
+        <Link to="/accounts/profile">
+          <UserOutlined /> Mi cuenta
+        </Link>
+      </Menu.Item>
+      <Menu.Item key="/accounts/logout">
+        <Link to="/accounts/logout">
+          <LogoutOutlined /> Salir
+        </Link>
+      </Menu.Item>
+    </S.DropdownUserMenu>
+  );
+};

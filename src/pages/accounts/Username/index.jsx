@@ -45,8 +45,6 @@ const Username = () => {
 
   return (
     <DashboardPageEdit title="Usuario">
-      {loading && <Skeleton active />}
-      {errorMsg && <ErrorMessage retryBtn />}
       {redirect && (
         <Redirect
           to={{
@@ -57,8 +55,11 @@ const Username = () => {
           }}
         />
       )}
-      {!loading && !errorMsg && (
-        <>
+
+      {errorMsg ? (
+        <ErrorMessage retryBtn />
+      ) : (
+        <Skeleton active loading={loading}>
           <Title level={5}>Para tener en cuenta</Title>
           <Paragraph>
             El usuario <strong>No</strong> debe tener palabras inapropiadas o vulgares.
@@ -68,7 +69,7 @@ const Username = () => {
             form={form}
             initialValues={initialValues}
             layout="vertical"
-            name="updateUsername"
+            name="username"
             onFinish={onFinish}
             hideRequiredMark
           >
@@ -93,7 +94,7 @@ const Username = () => {
               <ButtonCancelAndSave loading={btnLoading} />
             </Form.Item>
           </Form>
-        </>
+        </Skeleton>
       )}
     </DashboardPageEdit>
   );

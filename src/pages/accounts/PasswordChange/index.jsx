@@ -57,7 +57,7 @@ const PasswordChange = () => {
             de otros sitios.
           </Paragraph>
           <Divider />
-          <Form form={form} layout="vertical" name="passwordChange" onFinish={onFinish} hideRequiredMark>
+          <Form form={form} layout="vertical" name="password_change" onFinish={onFinish} hideRequiredMark>
             <Form.Item
               name="password_old"
               label="Contraseña actual"

@@ -56,7 +56,7 @@ const PasswordReset = () => {
                 }}
               />
             )}
-            <Form layout="vertical" name="password-reset" className="form-box" onFinish={onFinish} hideRequiredMark>
+            <Form layout="vertical" name="password_reset" onFinish={onFinish} hideRequiredMark>
               <Form.Item
                 name="username"
                 label="Usuario"

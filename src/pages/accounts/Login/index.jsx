@@ -33,6 +33,7 @@ const Login = () => {
         refresh: res.data.refresh,
         role: res.data.user.role,
         username: res.data.user.username,
+        fullName: `${res.data.user.first_name} ${res.data.user.last_name}`,
       });
       history.replace(from);
     } catch (e) {
@@ -84,9 +85,11 @@ const Login = () => {
                 <Input.Password maxLength={25} />
               </Form.Item>
 
-              <StyledGlobal.PForm>
-                <Link to="/accounts/password/reset">¿Has olvidado tu contraseña?</Link>
-              </StyledGlobal.PForm>
+              <Form.Item noStyle>
+                <StyledGlobal.PForm>
+                  <Link to="/accounts/password/reset">¿Has olvidado tu contraseña?</Link>
+                </StyledGlobal.PForm>
+              </Form.Item>
 
               <Form.Item>
                 <Button block text="Iniciar sesión" type="primary" htmlType="submit" loading={loading} />

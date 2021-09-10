@@ -1,5 +1,5 @@
 import { createContext } from 'react';
-import useLocalStorage from '../../libs/Storage';
+import useLocalStorage from '../../hooks/useLocalStorage';
 
 const AuthContext = createContext({});
 
@@ -8,12 +8,14 @@ export const AuthProvider = ({ children }) => {
   const [refreshToken, setRefreshToken] = useLocalStorage('rf', '');
   const [role, setRole] = useLocalStorage('role', '');
   const [username, setUsername] = useLocalStorage('username', '');
+  const [name, setName] = useLocalStorage('name', '');
 
   const logIn = data => {
     setToken(data.token);
     setRefreshToken(data.refresh);
     setRole(data.role);
     setUsername(data.username);
+    setName(data.fullName);
   };
 
   const logOut = () => {
@@ -21,11 +23,13 @@ export const AuthProvider = ({ children }) => {
     setRefreshToken(null);
     setRole(null);
     setUsername(null);
+    setName(null);
 
     localStorage.removeItem('token');
     localStorage.removeItem('rf');
     localStorage.removeItem('role');
     localStorage.removeItem('username');
+    localStorage.removeItem('name');
   };
 
   return (
@@ -39,6 +43,8 @@ export const AuthProvider = ({ children }) => {
         setRole,
         username,
         setUsername,
+        name,
+        setName,
         logIn,
         logOut,
       }}

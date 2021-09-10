@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import { Form, Input, Skeleton } from 'antd';
+import AuthContext from '../../../context/Auth';
 import { UpdateMyProfileService } from '../../../services/Users';
 import { DashboardPageEdit } from '../../../components/Dashboard';
 import { ButtonCancelAndSave } from '../../../components/Button';
@@ -10,6 +11,7 @@ import useUserProfile from '../../../hooks/useUserProfile';
 
 const Name = () => {
   const [form] = Form.useForm();
+  const { setName } = useContext(AuthContext);
   const [btnLoading, setBtnLoading] = useState(false);
   const [initialValues, setInitialValues] = useState({});
   const [{ loading, user, errorMsg, redirect, setRedirect }, setErrorMsg] = useUserProfile();
@@ -26,6 +28,7 @@ const Name = () => {
       setBtnLoading(true);
 
       await UpdateMyProfileService(values);
+      setName(`${values.first_name} ${values.last_name}`);
 
       setRedirect(true);
     } catch (e) {
@@ -42,8 +45,6 @@ const Name = () => {
 
   return (
     <DashboardPageEdit title="Nombre">
-      {loading && <Skeleton active />}
-      {errorMsg && <ErrorMessage retryBtn />}
       {redirect && (
         <Redirect
           to={{
@@ -54,53 +55,58 @@ const Name = () => {
           }}
         />
       )}
-      {!loading && !errorMsg && (
-        <Form
-          form={form}
-          layout="vertical"
-          name="updateName"
-          initialValues={initialValues}
-          onFinish={onFinish}
-          hideRequiredMark
-        >
-          <Form.Item
-            name="first_name"
-            label="Nombre"
-            rules={[
-              {
-                required: true,
-                message: 'Ingrese su nombre',
-              },
-              {
-                whitespace: true,
-                message: 'Ingrese su nombre',
-              },
-            ]}
-          >
-            <Input maxLength={50} />
-          </Form.Item>
 
-          <Form.Item
-            name="last_name"
-            label="Apellidos"
-            rules={[
-              {
-                required: true,
-                message: 'Ingrese sus apellidos',
-              },
-              {
-                whitespace: true,
-                message: 'Ingrese sus apellidos',
-              },
-            ]}
+      {errorMsg ? (
+        <ErrorMessage retryBtn />
+      ) : (
+        <Skeleton active loading={loading}>
+          <Form
+            form={form}
+            layout="vertical"
+            name="name"
+            initialValues={initialValues}
+            onFinish={onFinish}
+            hideRequiredMark
           >
-            <Input maxLength={50} />
-          </Form.Item>
+            <Form.Item
+              name="first_name"
+              label="Nombre"
+              rules={[
+                {
+                  required: true,
+                  message: 'Ingrese su nombre',
+                },
+                {
+                  whitespace: true,
+                  message: 'Ingrese su nombre',
+                },
+              ]}
+            >
+              <Input maxLength={50} />
+            </Form.Item>
 
-          <Form.Item>
-            <ButtonCancelAndSave loading={btnLoading} />
-          </Form.Item>
-        </Form>
+            <Form.Item
+              name="last_name"
+              label="Apellidos"
+              rules={[
+                {
+                  required: true,
+                  message: 'Ingrese sus apellidos',
+                },
+                {
+                  whitespace: true,
+                  message: 'Ingrese sus apellidos',
+                },
+              ]}
+            >
+              <Input maxLength={50} />
+            </Form.Item>
+
+            <Form.Item>
+              <ButtonCancelAndSave loading={btnLoading} />
+            </Form.Item>
+          </Form>
+        </Skeleton>
       )}
     </DashboardPageEdit>
   );

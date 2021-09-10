@@ -1,7 +1,15 @@
-import { Layout } from 'antd';
+import { Divider } from 'antd';
+import S from './styles';
 
 const Footer = () => {
-  return <Layout.Footer style={{ textAlign: 'center' }}>Casa de la Mujer ©2021 Created by Ant UED</Layout.Footer>;
+  return (
+    <S.Footer>
+      <Divider />
+      <div>
+        <p>Casa de la Mujer ©2021 Created by Ant UED</p>
+      </div>
+    </S.Footer>
+  );
 };
 
 export default Footer;

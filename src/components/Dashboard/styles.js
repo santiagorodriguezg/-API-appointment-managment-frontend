@@ -1,6 +1,8 @@
-import styled from 'styled-components';
+import { Typography } from 'antd';
+import styled, { css } from 'styled-components';
 import Colors from '../../styles/Colors';
 
+const { Title } = Typography;
 const S = {};
 
 S.LeftContent = styled.div`
@@ -18,14 +20,23 @@ S.LeftContent = styled.div`
 S.Content = styled.div`
   flex-grow: 1;
   background: ${Colors.bgBody};
-  padding: 24px 12px 0 12px;
+  padding: 0 12px;
 
   @media (min-width: 768px) {
-    padding: 24px 24px 0 24px;
+    padding: 0 24px;
   }
   @media (min-width: 992px) {
-    padding: 24px 48px 0 48px;
+    padding: 0 48px;
   }
+`;
+
+S.Title = styled(Title)`
+  margin: 24px 0 !important;
+  ${props =>
+    props.$center &&
+    css`
+      text-align: center;
+    `};
 `;
 
 export default S;

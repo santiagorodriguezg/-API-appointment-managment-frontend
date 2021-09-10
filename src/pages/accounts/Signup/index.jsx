@@ -30,6 +30,7 @@ const Signup = () => {
         refresh: res.data.refresh,
         role: res.data.user.role,
         username: res.data.user.username,
+        fullName: `${res.data.user.first_name} ${res.data.user.last_name}`,
       });
       history.push('/accounts/profile');
     } catch (e) {

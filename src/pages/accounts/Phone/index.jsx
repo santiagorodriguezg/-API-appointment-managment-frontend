@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
 import { Redirect } from 'react-router-dom';
-import { Form, InputNumber, Skeleton } from 'antd';
+import { Form, Skeleton } from 'antd';
 import { DashboardPageEdit } from '../../../components/Dashboard';
 import { ButtonCancelAndSave } from '../../../components/Button';
 import useUserProfile from '../../../hooks/useUserProfile';
 import { UpdateMyProfileService } from '../../../services/Users';
 import { getFieldErrors } from '../../../utils/Utils';
 import ErrorMessage from '../../../components/ErrorMessage';
+import InputNumber from '../../../components/Input/InputNumber';
 
 const Phone = () => {
   const [form] = Form.useForm();
@@ -41,8 +42,6 @@ const Phone = () => {
 
   return (
     <DashboardPageEdit title="Teléfono">
-      {loading && <Skeleton active />}
-      {errorMsg && <ErrorMessage retryBtn />}
       {redirect && (
         <Redirect
           to={{
@@ -53,32 +52,37 @@ const Phone = () => {
           }}
         />
       )}
-      {!loading && !errorMsg && (
-        <Form
-          form={form}
-          initialValues={initialValues}
-          layout="vertical"
-          name="updatePhone"
-          onFinish={onFinish}
-          hideRequiredMark
-        >
-          <Form.Item
-            name="phone"
-            label="Teléfono"
-            rules={[
-              {
-                required: true,
-                message: 'Ingrese su número de teléfono',
-              },
-            ]}
-          >
-            <InputNumber min={1} style={{ width: '100%' }} />
-          </Form.Item>
 
-          <Form.Item>
-            <ButtonCancelAndSave loading={btnLoading} />
-          </Form.Item>
-        </Form>
+      {errorMsg ? (
+        <ErrorMessage retryBtn />
+      ) : (
+        <Skeleton active loading={loading}>
+          <Form
+            form={form}
+            initialValues={initialValues}
+            layout="vertical"
+            name="phone"
+            onFinish={onFinish}
+            hideRequiredMark
+          >
+            <Form.Item
+              name="phone"
+              label="Teléfono"
+              rules={[
+                {
+                  required: true,
+                  message: 'Ingrese su número de teléfono',
+                },
+              ]}
+            >
+              <InputNumber min={3} />
+            </Form.Item>
+
+            <Form.Item>
+              <ButtonCancelAndSave loading={btnLoading} />
+            </Form.Item>
+          </Form>
+        </Skeleton>
       )}
     </DashboardPageEdit>
   );

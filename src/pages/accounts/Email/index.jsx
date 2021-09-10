@@ -41,8 +41,6 @@ const Email = () => {
 
   return (
     <DashboardPageEdit title="Correo electrónico">
-      {loading && <Skeleton active />}
-      {errorMsg && <ErrorMessage retryBtn />}
       {redirect && (
         <Redirect
           to={{
@@ -53,36 +51,41 @@ const Email = () => {
           }}
         />
       )}
-      {!loading && !errorMsg && (
-        <Form
-          form={form}
-          initialValues={initialValues}
-          layout="vertical"
-          name="updateEmail"
-          onFinish={onFinish}
-          hideRequiredMark
-        >
-          <Form.Item
-            name="email"
-            label="Correo electrónico"
-            rules={[
-              {
-                required: true,
-                message: 'El correo electrónico es obligatorio',
-              },
-              {
-                type: 'email',
-                message: 'El correo electrónico ingresado no es válido',
-              },
-            ]}
-          >
-            <Input maxLength={60} />
-          </Form.Item>
 
-          <Form.Item>
-            <ButtonCancelAndSave loading={btnLoading} />
-          </Form.Item>
-        </Form>
+      {errorMsg ? (
+        <ErrorMessage retryBtn />
+      ) : (
+        <Skeleton active loading={loading}>
+          <Form
+            form={form}
+            initialValues={initialValues}
+            layout="vertical"
+            name="email"
+            onFinish={onFinish}
+            hideRequiredMark
+          >
+            <Form.Item
+              name="email"
+              label="Correo electrónico"
+              rules={[
+                {
+                  required: true,
+                  message: 'El correo electrónico es obligatorio',
+                },
+                {
+                  type: 'email',
+                  message: 'El correo electrónico ingresado no es válido',
+                },
+              ]}
+            >
+              <Input maxLength={60} />
+            </Form.Item>
+
+            <Form.Item>
+              <ButtonCancelAndSave loading={btnLoading} />
+            </Form.Item>
+          </Form>
+        </Skeleton>
       )}
     </DashboardPageEdit>
   );

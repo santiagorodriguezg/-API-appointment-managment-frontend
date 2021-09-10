@@ -52,8 +52,9 @@ axiosWithToken.interceptors.response.use(
         } catch (e) {
           localStorage.removeItem('token');
           localStorage.removeItem('rf');
-          localStorage.removeItem('username');
           localStorage.removeItem('role');
+          localStorage.removeItem('username');
+          localStorage.removeItem('name');
           window.location = '/accounts/login';
           return Promise.reject(e);
         }

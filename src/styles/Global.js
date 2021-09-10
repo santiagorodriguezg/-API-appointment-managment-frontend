@@ -15,24 +15,35 @@ StyledGlobal.Wrapper = styled.div`
   flex-direction: column;
 `;
 
-StyledGlobal.WrapperContent = styled.div`
-  flex-grow: 1;
-  padding: 0 12px;
-`;
-
 StyledGlobal.WrapperContent840 = styled.div`
   max-width: 840px;
   margin: auto;
 `;
 
 StyledGlobal.ContainerForm = styled.div`
-  padding: 0 12px;
+  padding: 12px;
   width: 100%;
   margin-top: ${props => (props.marginTop ? `${props.marginTop}px` : '60px')};
 
   @media (min-width: 576px) {
-    width: ${props => (props.width ? `${props.width}px` : '500px')};
+    width: 500px;
   }
+
+  ${props =>
+    props.width <= 480 &&
+    css`
+      @media (min-width: 480px) {
+        width: ${p => `${p.width}px`};
+      }
+    `}
+
+  ${props =>
+    props.width >= 600 &&
+    css`
+      @media (min-width: 615px) {
+        width: ${p => `${p.width}px`};
+      }
+    `}
 
   ${props =>
     props.center &&
@@ -46,11 +57,10 @@ StyledGlobal.ContainerForm = styled.div`
     css`
       background: #fff;
       border-radius: 6px;
-      padding: 0;
+      box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
 
       @media (min-width: 480px) {
         padding: 24px;
-        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
         //box-shadow: 0 1px 2px 0 rgb(0 0 0 / 12%);
         //border: 1px solid #dadce0;
       }
@@ -85,6 +95,10 @@ StyledGlobal.CancelAndSaveBtn = styled.div`
   button {
     margin: 0 0 0 24px;
   }
+`;
+
+StyledGlobal.TextSecondary = styled.p`
+  color: rgba(0, 0, 0, 0.65);
 `;
 
 export default StyledGlobal;

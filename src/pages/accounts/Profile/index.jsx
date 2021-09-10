@@ -1,11 +1,10 @@
 import { useEffect, useState } from 'react';
-import { message, Skeleton, Typography } from 'antd';
+import { message, Spin } from 'antd';
 import { GetMyProfileService } from '../../../services/Users';
 import Dashboard from '../../../components/Dashboard';
 import ProfileCard, { ProfileCardItem } from '../../../components/ProfileCard';
 import ErrorMessage from '../../../components/ErrorMessage';
-
-const { Title } = Typography;
+import S from '../../../components/Dashboard/styles';
 
 const Profile = ({ location }) => {
   const { successMsg } = (location && location.state) || {};
@@ -40,13 +39,17 @@ const Profile = ({ location }) => {
 
   return (
     <Dashboard>
-      <Title level={3}>Mi cuenta</Title>
-      {loading && <Skeleton active />}
-      {errorMsg && <ErrorMessage retryBtn />}
-      {!loading && !errorMsg && (
-        <>
+      <S.Title level={3}>Mi cuenta</S.Title>
+      {errorMsg ? (
+        <ErrorMessage retryBtn />
+      ) : (
+        <Spin spinning={loading} size="large">
           <ProfileCard title="Datos básicos">
-            <ProfileCardItem href="/accounts/name" title="Nombre" content={`${user.first_name} ${user.last_name}`} />
+            <ProfileCardItem
+              href="/accounts/name"
+              title="Nombre"
+              content={`${user.first_name || ''} ${user.last_name || ''}`}
+            />
             <ProfileCardItem
               href="/accounts/identification"
               title="Identificación"
@@ -72,7 +75,7 @@ const Profile = ({ location }) => {
           <ProfileCard title="Seguridad">
             <ProfileCardItem href="/accounts/password/change" title="Contraseña" content="********" />
           </ProfileCard>
-        </>
+        </Spin>
       )}
     </Dashboard>
   );

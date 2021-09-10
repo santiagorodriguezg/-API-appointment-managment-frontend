@@ -43,8 +43,6 @@ const Location = () => {
 
   return (
     <DashboardPageEdit title="Ubicación">
-      {loading && <Skeleton active />}
-      {errorMsg && <ErrorMessage retryBtn />}
       {redirect && (
         <Redirect
           to={{
@@ -55,40 +53,45 @@ const Location = () => {
           }}
         />
       )}
-      {!loading && !errorMsg && (
-        <Form
-          form={form}
-          initialValues={initialValues}
-          layout="vertical"
-          name="updateLocation"
-          onFinish={onFinish}
-          hideRequiredMark
-        >
-          <Form.Item
-            name="city"
-            label="Cuidad"
-            rules={[
-              {
-                required: true,
-                message: 'Ingrese el nombre de la ciudad',
-              },
-            ]}
+
+      {errorMsg ? (
+        <ErrorMessage retryBtn />
+      ) : (
+        <Skeleton active loading={loading}>
+          <Form
+            form={form}
+            initialValues={initialValues}
+            layout="vertical"
+            name="location"
+            onFinish={onFinish}
+            hideRequiredMark
           >
-            <Input maxLength={30} />
-          </Form.Item>
+            <Form.Item
+              name="city"
+              label="Cuidad"
+              rules={[
+                {
+                  required: true,
+                  message: 'Ingrese el nombre de la ciudad',
+                },
+              ]}
+            >
+              <Input maxLength={30} />
+            </Form.Item>
 
-          <Form.Item name="neighborhood" label="Barrio">
-            <Input maxLength={40} />
-          </Form.Item>
+            <Form.Item name="neighborhood" label="Barrio">
+              <Input maxLength={40} />
+            </Form.Item>
 
-          <Form.Item name="address" label="Dirección">
-            <Input maxLength={40} />
-          </Form.Item>
+            <Form.Item name="address" label="Dirección">
+              <Input maxLength={40} />
+            </Form.Item>
 
-          <Form.Item>
-            <ButtonCancelAndSave loading={btnLoading} />
-          </Form.Item>
-        </Form>
+            <Form.Item>
+              <ButtonCancelAndSave loading={btnLoading} />
+            </Form.Item>
+          </Form>
+        </Skeleton>
       )}
     </DashboardPageEdit>
   );

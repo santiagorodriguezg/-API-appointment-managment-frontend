@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
 import { Redirect } from 'react-router-dom';
-import { Form, InputNumber, Select, Skeleton } from 'antd';
+import { Form, Select, Skeleton } from 'antd';
 import { UpdateMyProfileService } from '../../../services/Users';
 import useUserProfile from '../../../hooks/useUserProfile';
 import { DashboardPageEdit } from '../../../components/Dashboard';
 import { ButtonCancelAndSave } from '../../../components/Button';
 import { getFieldErrors } from '../../../utils/Utils';
 import ErrorMessage from '../../../components/ErrorMessage';
+import InputNumber from '../../../components/Input/InputNumber';
 
 const { Option } = Select;
 
@@ -44,8 +45,6 @@ const Identification = () => {
 
   return (
     <DashboardPageEdit title="Identificación">
-      {loading && <Skeleton active />}
-      {errorMsg && <ErrorMessage retryBtn />}
       {redirect && (
         <Redirect
           to={{
@@ -56,40 +55,45 @@ const Identification = () => {
           }}
         />
       )}
-      {!loading && !errorMsg && (
-        <Form
-          form={form}
-          initialValues={initialValues}
-          layout="vertical"
-          name="updateIdentification"
-          onFinish={onFinish}
-          hideRequiredMark
-        >
-          <Form.Item name="identification_type" label="Tipo de identificación">
-            <Select placeholder="Seleccione un tipo de identificación">
-              <Option value="CC">Cédula de ciudadanía</Option>
-              <Option value="CE">Cédula de extranjería</Option>
-              <Option value="NIT">Nit</Option>
-            </Select>
-          </Form.Item>
 
-          <Form.Item
-            name="identification_number"
-            label="Número de identificación"
-            rules={[
-              {
-                required: true,
-                message: 'Ingrese su número de identificación',
-              },
-            ]}
+      {errorMsg ? (
+        <ErrorMessage retryBtn />
+      ) : (
+        <Skeleton active loading={loading}>
+          <Form
+            form={form}
+            initialValues={initialValues}
+            layout="vertical"
+            name="identification"
+            onFinish={onFinish}
+            hideRequiredMark
           >
-            <InputNumber min={1} style={{ width: '100%' }} />
-          </Form.Item>
+            <Form.Item name="identification_type" label="Tipo de identificación">
+              <Select placeholder="Seleccione un tipo de identificación">
+                <Option value="CC">Cédula de ciudadanía</Option>
+                <Option value="CE">Cédula de extranjería</Option>
+                <Option value="NIT">Nit</Option>
+              </Select>
+            </Form.Item>
 
-          <Form.Item>
-            <ButtonCancelAndSave loading={btnLoading} />
-          </Form.Item>
-        </Form>
+            <Form.Item
+              name="identification_number"
+              label="Número de identificación"
+              rules={[
+                {
+                  required: true,
+                  message: 'Ingrese su número de identificación',
+                },
+              ]}
+            >
+              <InputNumber min={1} />
+            </Form.Item>
+
+            <Form.Item>
+              <ButtonCancelAndSave loading={btnLoading} />
+            </Form.Item>
+          </Form>
+        </Skeleton>
       )}
     </DashboardPageEdit>
   );

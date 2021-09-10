@@ -46,7 +46,7 @@ const PasswordResetConfirm = () => {
             <StyledGlobal.TitleForm>Cambiar contraseña</StyledGlobal.TitleForm>
             {errorText !== '' && <Alert message={errorText} type="error" showIcon />}
             {errorMsg && <ErrorMessage />}
-            <Form layout="vertical" name="login" className="form-box" onFinish={onFinish} hideRequiredMark>
+            <Form layout="vertical" name="password_reset_confirm" onFinish={onFinish} hideRequiredMark>
               <Form.Item
                 name="password"
                 label="Contraseña"
