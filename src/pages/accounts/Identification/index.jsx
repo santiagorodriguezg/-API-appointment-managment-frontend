@@ -5,9 +5,10 @@ import { UpdateMyProfileService } from '../../../services/Users';
 import useUserProfile from '../../../hooks/useUserProfile';
 import { DashboardPageEdit } from '../../../components/Dashboard';
 import { ButtonCancelAndSave } from '../../../components/Button';
-import { getFieldErrors } from '../../../utils/Utils';
+import { getFieldErrors } from '../../../config/utils';
 import ErrorMessage from '../../../components/ErrorMessage';
 import InputNumber from '../../../components/Input/InputNumber';
+import { identificationTypes } from '../../../config/utils/enums';
 
 const { Option } = Select;
 
@@ -70,9 +71,11 @@ const Identification = () => {
           >
             <Form.Item name="identification_type" label="Tipo de identificación">
               <Select placeholder="Seleccione un tipo de identificación">
-                <Option value="CC">Cédula de ciudadanía</Option>
-                <Option value="CE">Cédula de extranjería</Option>
-                <Option value="NIT">Nit</Option>
+                {identificationTypes.map(obj => (
+                  <Option key={obj.value} value={obj.value}>
+                    {obj.text}
+                  </Option>
+                ))}
               </Select>
             </Form.Item>
 

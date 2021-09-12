@@ -1,4 +1,4 @@
-import { axiosWithoutToken } from '../../libs/Axios';
+import { axiosWithoutToken } from '../../config/client/Axios';
 
 export const LoginService = data => axiosWithoutToken.post('login/', data);
 

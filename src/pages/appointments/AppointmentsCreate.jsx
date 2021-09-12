@@ -7,7 +7,7 @@ import InputNumber from '../../components/Input/InputNumber';
 import ErrorMessage from '../../components/ErrorMessage';
 import S from '../../components/Dashboard/styles';
 import { AppointmentUserCreateService } from '../../services/Appointments';
-import { getFieldErrors } from '../../utils/Utils';
+import { getFieldErrors } from '../../config/utils';
 import StyledGlobal from '../../styles/Global';
 
 const AppointmentsCreate = () => {

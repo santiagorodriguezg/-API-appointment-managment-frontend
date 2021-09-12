@@ -4,14 +4,15 @@ import { PlayCircleOutlined } from '@ant-design/icons';
 import AuthContext from '../../context/Auth';
 import { AppointmentUserListService } from '../../services/Appointments';
 import Dashboard from '../../components/Dashboard';
-import { getFullDate } from '../../utils/Utils';
+import { getFullDate } from '../../config/utils';
+import { appointmentTypes, getAppointmentTypeColor, getAppointmentTypeName } from '../../config/utils/enums';
 import S from '../../components/Dashboard/styles';
 
 const AppointmentsHistoric = () => {
   const { username } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
-  const [pagination, setPagination] = useState({});
+  const [pagination, setPagination] = useState();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [modalInfo, setModalInfo] = useState({});
 
@@ -85,11 +86,9 @@ const AppointmentsHistoric = () => {
 
           <Descriptions.Item label={<strong>Tipo de cita</strong>}>
             {modalInfo.type.map(tag => {
-              const color = tag === 'PSY' ? 'green' : 'geekblue';
-              const tagValue = tag === 'PSY' ? 'Psicosocial' : 'Jurídica';
               return (
-                <Tag color={color} key={tag}>
-                  {tagValue}
+                <Tag color={getAppointmentTypeColor(tag)} key={tag}>
+                  {getAppointmentTypeName(tag)}
                 </Tag>
               );
             })}
@@ -151,27 +150,16 @@ const AppointmentsHistoric = () => {
     {
       title: 'Tipo de cita',
       dataIndex: 'type',
-      filters: [
-        {
-          text: 'Psicosocial',
-          value: 'PSY',
-        },
-        {
-          text: 'Jurídica',
-          value: 'LEG',
-        },
-      ],
+      filters: appointmentTypes,
       filterMultiple: false,
       render(tags) {
         return (
           <>
             {/* eslint-disable-next-line react/destructuring-assignment */}
             {tags.map(tag => {
-              const color = tag === 'PSY' ? 'green' : 'geekblue';
-              const tagValue = tag === 'PSY' ? 'Psicosocial' : 'Jurídica';
               return (
-                <Tag color={color} key={tag}>
-                  {tagValue}
+                <Tag color={getAppointmentTypeColor(tag)} key={tag}>
+                  {getAppointmentTypeName(tag)}
                 </Tag>
               );
             })}
@@ -236,6 +224,7 @@ const AppointmentsHistoric = () => {
         pagination={pagination}
         onChange={handleTableChange}
         scroll={{ x: true }}
+        sticky
       />
     </Dashboard>
   );

@@ -5,7 +5,7 @@ import { DashboardPageEdit } from '../../../components/Dashboard';
 import { ButtonCancelAndSave } from '../../../components/Button';
 import useUserProfile from '../../../hooks/useUserProfile';
 import { UpdateMyProfileService } from '../../../services/Users';
-import { getFieldErrors } from '../../../utils/Utils';
+import { getFieldErrors } from '../../../config/utils';
 import ErrorMessage from '../../../components/ErrorMessage';
 
 const Location = () => {

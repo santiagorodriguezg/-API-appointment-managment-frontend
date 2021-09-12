@@ -7,7 +7,7 @@ import { SignupService } from '../../../services/Auth';
 import Logo from '../../../components/Logo';
 import ErrorMessage from '../../../components/ErrorMessage';
 import StyledGlobal from '../../../styles/Global';
-import { getFieldErrors } from '../../../utils/Utils';
+import { getFieldErrors } from '../../../config/utils';
 
 const Signup = () => {
   const history = useHistory();

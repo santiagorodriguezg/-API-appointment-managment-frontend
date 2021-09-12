@@ -1,4 +1,4 @@
-import axiosWithToken from '../../libs/Axios';
+import axiosWithToken from '../../config/client/Axios';
 
 export const GetMyProfileService = () => axiosWithToken.get('users/me/');
 

@@ -4,7 +4,7 @@ import { Divider, Form, Input, Typography } from 'antd';
 import { DashboardPageEdit } from '../../../components/Dashboard';
 import { ButtonCancelAndSave } from '../../../components/Button';
 import { PasswordChangeService } from '../../../services/Users';
-import { getFieldErrors } from '../../../utils/Utils';
+import { getFieldErrors } from '../../../config/utils';
 import ErrorMessage from '../../../components/ErrorMessage';
 
 const { Title, Paragraph } = Typography;

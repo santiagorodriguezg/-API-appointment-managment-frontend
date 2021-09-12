@@ -1,4 +1,4 @@
-import axiosWithToken from '../../libs/Axios';
+import axiosWithToken from '../../config/client/Axios';
 
 export const AppointmentUserCreateService = (username, data) => {
   return axiosWithToken.post(`/users/${username}/appointments/`, data);

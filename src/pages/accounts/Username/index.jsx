@@ -4,7 +4,7 @@ import { Redirect } from 'react-router-dom';
 import { DashboardPageEdit } from '../../../components/Dashboard';
 import useUserProfile from '../../../hooks/useUserProfile';
 import { UpdateMyProfileService } from '../../../services/Users';
-import { getFieldErrors } from '../../../utils/Utils';
+import { getFieldErrors } from '../../../config/utils';
 import ErrorMessage from '../../../components/ErrorMessage';
 import { ButtonCancelAndSave } from '../../../components/Button';
 import AuthContext from '../../../context/Auth';

@@ -6,7 +6,7 @@ import { UpdateMyProfileService } from '../../../services/Users';
 import { DashboardPageEdit } from '../../../components/Dashboard';
 import { ButtonCancelAndSave } from '../../../components/Button';
 import ErrorMessage from '../../../components/ErrorMessage';
-import { getFieldErrors } from '../../../utils/Utils';
+import { getFieldErrors } from '../../../config/utils';
 import useUserProfile from '../../../hooks/useUserProfile';
 
 const Name = () => {

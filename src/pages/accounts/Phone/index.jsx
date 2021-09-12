@@ -7,7 +7,7 @@ import InputNumber from '../../../components/Input/InputNumber';
 import { DashboardPageEdit } from '../../../components/Dashboard';
 import { ButtonCancelAndSave } from '../../../components/Button';
 import { UpdateMyProfileService } from '../../../services/Users';
-import { getFieldErrors } from '../../../utils/Utils';
+import { getFieldErrors } from '../../../config/utils';
 
 const Phone = () => {
   const [form] = Form.useForm();
