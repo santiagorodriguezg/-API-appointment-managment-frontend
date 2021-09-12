@@ -1,20 +1,167 @@
-import { Space, Table, Tag } from 'antd';
+import { Fragment, useContext, useEffect, useState } from 'react';
+import { Button, Descriptions, Modal, Space, Table, Tag } from 'antd';
+import { PlayCircleOutlined } from '@ant-design/icons';
+import AuthContext from '../../context/Auth';
+import { AppointmentUserListService } from '../../services/Appointments';
 import Dashboard from '../../components/Dashboard';
+import { getFullDate } from '../../utils/Utils';
 import S from '../../components/Dashboard/styles';
 
 const AppointmentsHistoric = () => {
+  const { username } = useContext(AuthContext);
+  const [loading, setLoading] = useState(false);
+  const [data, setData] = useState([]);
+  const [pagination, setPagination] = useState({});
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [modalInfo, setModalInfo] = useState({});
+
+  const getAppointmentsData = async (params = {}) => {
+    try {
+      console.log('PARAMS', params);
+      setLoading(true);
+
+      const res = await AppointmentUserListService(username, params);
+      setPagination({
+        ...pagination,
+        total: res.data.count,
+      });
+
+      setLoading(false);
+      console.log('RES', res);
+      setData(res.data.results.appointments);
+    } catch (e) {
+      console.log('ERROR', e);
+    }
+  };
+
+  const handleTableChange = (pag, filters, sorter) => {
+    console.log('PAGINATION', pag);
+    console.log('FILTERS', filters);
+    console.log('SORTER', sorter);
+
+    const ordering = sorter.column ? `${sorter.order === 'descend' ? '-' : ''}${sorter.field}` : null;
+
+    getAppointmentsData({
+      limit: pag.pageSize,
+      offset: pag.current - 1,
+      type: filters.type?.[0],
+      ordering,
+    });
+  };
+
+  useEffect(() => {
+    getAppointmentsData();
+  }, []);
+
+  const showModal = record => {
+    setIsModalVisible(true);
+    setModalInfo(record);
+  };
+
+  const handleCancel = () => {
+    setIsModalVisible(false);
+  };
+
+  const ModalContent = () => {
+    return (
+      <Modal
+        footer={[
+          <Button type="primary" key="close" onClick={handleCancel}>
+            Cerrar
+          </Button>,
+        ]}
+        maskClosable={false}
+        visible={isModalVisible}
+        onCancel={handleCancel}
+      >
+        <Descriptions column={1} layout="vertical">
+          <Descriptions.Item label={<strong>Fecha de solicitud</strong>}>
+            {getFullDate(modalInfo.created_at)}
+          </Descriptions.Item>
+
+          <Descriptions.Item label={<strong>Fecha de actualización</strong>}>
+            {getFullDate(modalInfo.updated_at)}
+          </Descriptions.Item>
+
+          <Descriptions.Item label={<strong>Tipo de cita</strong>}>
+            {modalInfo.type.map(tag => {
+              const color = tag === 'PSY' ? 'green' : 'geekblue';
+              const tagValue = tag === 'PSY' ? 'Psicosocial' : 'Jurídica';
+              return (
+                <Tag color={color} key={tag}>
+                  {tagValue}
+                </Tag>
+              );
+            })}
+          </Descriptions.Item>
+
+          <Descriptions.Item label={<strong>Hijos</strong>}>
+            {modalInfo.children ? (
+              <Descriptions column={1} style={{ paddingLeft: 24 }}>
+                {modalInfo.children.map(child => {
+                  return (
+                    <Fragment key={modalInfo.id}>
+                      <Descriptions.Item label={<strong>Nombre</strong>}>{child.name}</Descriptions.Item>
+                      <Descriptions.Item label={<strong>Edad</strong>}>{child.age}</Descriptions.Item>
+                    </Fragment>
+                  );
+                })}
+              </Descriptions>
+            ) : (
+              <>No.</>
+            )}
+          </Descriptions.Item>
+
+          <Descriptions.Item label={<strong>Datos del posible agresor</strong>} span={1}>
+            {modalInfo.aggressor ? (
+              <Descriptions key={modalInfo.id} column={1} style={{ paddingLeft: 24 }}>
+                <Descriptions.Item label={<strong>Nombre</strong>}>{modalInfo.aggressor.name}</Descriptions.Item>
+                <Descriptions.Item label={<strong>Edad</strong>}>{modalInfo.aggressor.age}</Descriptions.Item>
+                <Descriptions.Item label={<strong>Teléfono</strong>}> {modalInfo.aggressor.phone}</Descriptions.Item>
+                <Descriptions.Item label={<strong>Dirección</strong>} style={{ paddingBottom: 0 }}>
+                  {modalInfo.aggressor.address}
+                </Descriptions.Item>
+              </Descriptions>
+            ) : (
+              <>No hay información.</>
+            )}
+          </Descriptions.Item>
+
+          {modalInfo.aggressor && (
+            <Descriptions.Item label={<strong>Información adicional</strong>} style={{ paddingLeft: 24 }}>
+              {modalInfo.aggressor.more_info}
+            </Descriptions.Item>
+          )}
+
+          <Descriptions.Item label={<strong>Datos adicionales</strong>}>
+            {modalInfo.description ? modalInfo.description : <>No hay información.</>}
+          </Descriptions.Item>
+
+          <Descriptions.Item label={<strong>Audio</strong>} style={{ paddingBottom: 0 }}>
+            <Button type="link" shape="circle" icon={<PlayCircleOutlined />} href={modalInfo.audio} target="_blank">
+              Escuchar
+            </Button>
+          </Descriptions.Item>
+        </Descriptions>
+      </Modal>
+    );
+  };
+
   const columns = [
-    {
-      title: 'Descripción',
-      dataIndex: 'description',
-      key: 'description',
-      // eslint-disable-next-line react/display-name
-      render: text => <p>{text}</p>,
-    },
     {
       title: 'Tipo de cita',
       dataIndex: 'type',
-      key: 'type',
+      filters: [
+        {
+          text: 'Psicosocial',
+          value: 'PSY',
+        },
+        {
+          text: 'Jurídica',
+          value: 'LEG',
+        },
+      ],
+      filterMultiple: false,
       render(tags) {
         return (
           <>
@@ -35,16 +182,21 @@ const AppointmentsHistoric = () => {
     {
       title: 'Fecha de solicitud',
       dataIndex: 'created_at',
-      key: 'created_at',
+      sorter: true,
       render(text) {
-        const d = new Date(text).toLocaleDateString('es-co', {
-          year: 'numeric',
-          month: 'long',
-          day: 'numeric',
-          hour: 'numeric',
-          minute: 'numeric',
-        });
-        return <p>{d}</p>;
+        return getFullDate(text);
+      },
+    },
+    {
+      title: 'Audio',
+      dataIndex: 'audio',
+      // eslint-disable-next-line react/display-name
+      render(text) {
+        return (
+          <Button type="link" shape="circle" icon={<PlayCircleOutlined />} href={text} target="_blank">
+            Escuchar
+          </Button>
+        );
       },
     },
     {
@@ -53,8 +205,7 @@ const AppointmentsHistoric = () => {
       // eslint-disable-next-line react/display-name
       render: (text, record) => (
         <Space size="middle">
-          <p>Invite {record.id}</p>
-          <p>Delete</p>
+          <Button onClick={() => showModal(record)}>Ver detalles</Button>
         </Space>
       ),
     },
@@ -72,105 +223,20 @@ const AppointmentsHistoric = () => {
   //   });
   // }
 
-  const data = [
-    {
-      id: 1,
-      user: {
-        first_name: 'Juan',
-        last_name: 'Moreno',
-        username: 'juan',
-        picture: null,
-      },
-      doctor: null,
-      type: ['PSY', 'LEG'],
-      children: [
-        {
-          age: 14,
-          name: 'Maria Hernandez',
-        },
-        {
-          age: 8,
-          name: 'Ana Hernandez',
-        },
-      ],
-      aggressor: [
-        {
-          name: 'Juan Moreno',
-          phone: 3143498163,
-          address: 'Tunja',
-          more_info: 'Lugar de trabajo: Claro',
-          identification_number: 1007143234,
-        },
-      ],
-      description: 'No tengo datos',
-      audio: null,
-      start_date: null,
-      end_date: null,
-      created_at: '2021-09-10 21:16:37.951541 +00:00',
-      updated_at: '2021-04-12T17:56:04.356851-05:00',
-    },
-    {
-      id: 2,
-      user: {
-        first_name: 'Juan',
-        last_name: 'Moreno',
-        username: 'juan',
-        picture: null,
-      },
-      doctor: {
-        first_name: 'Carlos',
-        last_name: 'Perez',
-        username: 'carlos',
-        picture: null,
-      },
-      type: ['LEG'],
-      children: null,
-      aggressor: null,
-      description: 'Violencia intrafamiliar',
-      audio: null,
-      start_date: null,
-      end_date: null,
-      created_at: '2021-04-11T10:48:40.920204-05:00',
-      updated_at: '2021-04-12T17:40:30.033680-05:00',
-    },
-    {
-      id: 3,
-      user: {
-        first_name: 'Luis Guillermo',
-        last_name: 'Gómez',
-        username: 'luis',
-        picture: null,
-      },
-      doctor: null,
-      type: ['LEG', 'PSY'],
-      children: [
-        {
-          age: '23',
-          name: 'Luis',
-        },
-      ],
-      aggressor: [
-        {
-          name: 'asda',
-          phone: '31434',
-          address: 'Tunja',
-          identification_number: '1007141532',
-        },
-      ],
-      description: 'Descripción',
-      audio: 'http://localhost:8000/media/appointments/audio/AUDIO-2021-09-10-09-44-03.m4a',
-      start_date: null,
-      end_date: null,
-      created_at: '2021-09-10T12:21:51.317411-05:00',
-      updated_at: '2021-09-10T12:21:51.317411-05:00',
-    },
-  ];
-
   return (
     <Dashboard>
       <S.Title level={3}>Histórico de citas</S.Title>
-
-      <Table columns={columns} dataSource={data} rowKey="id" childrenColumnName="childrenTable" />
+      {isModalVisible && <ModalContent />}
+      <Table
+        rowKey="id"
+        childrenColumnName="childrenTable"
+        loading={loading}
+        columns={columns}
+        dataSource={data}
+        pagination={pagination}
+        onChange={handleTableChange}
+        scroll={{ x: true }}
+      />
     </Dashboard>
   );
 };

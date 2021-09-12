@@ -1,7 +1,5 @@
-import { Card, Layout } from 'antd';
-
+import { Card, Layout, Button } from 'antd';
 import Logo from '../../../components/Logo';
-import Button from '../../../components/Button';
 import StyledCard from '../../../styles/Card';
 
 const PasswordResetDone = ({ location }) => {
@@ -20,9 +18,11 @@ const PasswordResetDone = ({ location }) => {
             Si el correo electrónico no aparece en la bandeja de entrada, revisa las secciones de spam, importantes,
             entre otras.
           </StyledCard.Text>
-          <div style={{ textAlign: 'center' }}>
-            <Button type="primary" href="/accounts/login" text="Inicio de sesión" />
-          </div>
+          <StyledCard.Button>
+            <Button type="primary" href="/accounts/login">
+              Inicio de sesión
+            </Button>
+          </StyledCard.Button>
         </Card>
       </StyledCard.Container>
     </Layout.Content>

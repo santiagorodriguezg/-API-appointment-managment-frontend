@@ -1,10 +1,9 @@
 import { useState } from 'react';
 import { Link, useHistory, useParams } from 'react-router-dom';
-import { Col, Form, Input, Layout, Row } from 'antd';
+import { Col, Form, Input, Layout, Row, Button } from 'antd';
 
 import { PasswordResetCompleteService } from '../../../services/Auth';
 import Logo from '../../../components/Logo';
-import Button from '../../../components/Button';
 import ErrorMessage from '../../../components/ErrorMessage';
 import Alert from '../../../components/Alert';
 import StyledGlobal from '../../../styles/Global';
@@ -95,7 +94,9 @@ const PasswordResetConfirm = () => {
               </Form.Item>
 
               <Form.Item>
-                <Button block text="Cambiar mi contraseña" type="primary" htmlType="submit" loading={loading} />
+                <Button block type="primary" htmlType="submit" loading={loading} style={{ marginTop: 16 }}>
+                  Cambiar mi contraseña
+                </Button>
                 <StyledGlobal.PForm>
                   <Link to="/accounts/password/reset">Solicitar un nuevo enlace</Link>
                 </StyledGlobal.PForm>

@@ -10,3 +10,13 @@ export const getFieldErrors = errs => {
   );
   return errors;
 };
+
+export const getFullDate = date => {
+  return new Date(date).toLocaleDateString('es-co', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+  });
+};

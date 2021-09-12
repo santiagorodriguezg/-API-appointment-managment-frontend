@@ -1,11 +1,10 @@
 import { useContext, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import { Col, Form, Input, Layout, Row } from 'antd';
+import { Button, Col, Form, Input, Layout, Row } from 'antd';
 
 import AuthContext from '../../../context/Auth';
 import { SignupService } from '../../../services/Auth';
 import Logo from '../../../components/Logo';
-import Button from '../../../components/Button';
 import ErrorMessage from '../../../components/ErrorMessage';
 import StyledGlobal from '../../../styles/Global';
 import { getFieldErrors } from '../../../utils/Utils';
@@ -184,9 +183,16 @@ const Signup = () => {
               </Row>
               <Row gutter={16}>
                 <Col span={24}>
-                  <Form.Item>
-                    <div style={{ textAlign: 'center' }}>
-                      <Button text="Registrarme" type="primary" htmlType="submit" loading={loading} />
+                  <Form.Item noStyle>
+                    <div
+                      style={{
+                        textAlign: 'center',
+                        marginTop: 16,
+                      }}
+                    >
+                      <Button type="primary" htmlType="submit" loading={loading}>
+                        Registrarme
+                      </Button>
                     </div>
                     <StyledGlobal.PForm>
                       ¿Ya tienes cuenta? <Link to="/accounts/login">Ingresa aquí</Link>

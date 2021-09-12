@@ -17,4 +17,9 @@ StyledCard.Text = styled.p`
   font-size: 1.2em;
 `;
 
+StyledCard.Button = styled.div`
+  text-align: center;
+  margin-top: 48px;
+`;
+
 export default StyledCard;

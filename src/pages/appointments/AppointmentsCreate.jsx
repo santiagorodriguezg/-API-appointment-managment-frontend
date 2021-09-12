@@ -1,14 +1,13 @@
 import { useContext, useState } from 'react';
-import { Button as ButtonAntd, Checkbox, Col, Divider, Form, Input, Result, Row, Upload } from 'antd';
+import { Button, Checkbox, Col, Divider, Form, Input, Result, Row, Upload } from 'antd';
 import { MinusCircleOutlined, PlusOutlined, UploadOutlined } from '@ant-design/icons';
 import AuthContext from '../../context/Auth';
-import Button from '../../components/Button';
 import Dashboard from '../../components/Dashboard';
 import InputNumber from '../../components/Input/InputNumber';
 import ErrorMessage from '../../components/ErrorMessage';
-import { AppointmentCreateService } from '../../services/Appointments';
-import { getFieldErrors } from '../../utils/Utils';
 import S from '../../components/Dashboard/styles';
+import { AppointmentUserCreateService } from '../../services/Appointments';
+import { getFieldErrors } from '../../utils/Utils';
 import StyledGlobal from '../../styles/Global';
 
 const AppointmentsCreate = () => {
@@ -35,12 +34,12 @@ const AppointmentsCreate = () => {
       const formData = new FormData();
 
       formData.append('type', values.type);
-      formData.append('description', values.description);
+      formData.append('description', values.description || '');
       formData.append('children', values.children ? JSON.stringify(values.children) : null);
-      formData.append('aggressor', values.aggressor ? JSON.stringify(values.aggressor) : null);
+      formData.append('aggressor', values.aggressor ? JSON.stringify(values.aggressor[0]) : null);
       formData.append('audio', values.audio ? values.audio[0].originFileObj : '');
 
-      await AppointmentCreateService(username, formData);
+      await AppointmentUserCreateService(username, formData);
 
       setLoading(false);
       setResult(true);
@@ -68,10 +67,10 @@ const AppointmentsCreate = () => {
             title="Solicitud enviada"
             subTitle="Gracias por comunicarte con nosotros!. Te contactáremos lo más pronto posible."
             extra={[
-              <ButtonAntd type="primary" key="historic" href="/appointments/historic">
+              <Button type="primary" key="historic" href="/appointments/historic">
                 Histórico de citas
-              </ButtonAntd>,
-              <ButtonAntd key="create">Solicitar nueva cita</ButtonAntd>,
+              </Button>,
+              <Button key="create">Solicitar nueva cita</Button>,
             ]}
           />
         ) : (
@@ -145,9 +144,9 @@ const AppointmentsCreate = () => {
                     </Row>
                   ))}
                   <Form.Item>
-                    <ButtonAntd type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
+                    <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
                       Agregar campo
-                    </ButtonAntd>
+                    </Button>
                   </Form.Item>
                 </>
               )}
@@ -236,7 +235,7 @@ const AppointmentsCreate = () => {
 
                       <Col xs={24}>
                         <Form.Item noStyle>
-                          <ButtonAntd
+                          <Button
                             id="btn_remove_aggressor_info"
                             type="dashed"
                             onClick={() => {
@@ -247,14 +246,14 @@ const AppointmentsCreate = () => {
                             icon={<MinusCircleOutlined />}
                           >
                             No tengo información
-                          </ButtonAntd>
+                          </Button>
                         </Form.Item>
                       </Col>
                     </Row>
                   ))}
                   {aggressorInfo && (
                     <Form.Item id="add_aggressor_info">
-                      <ButtonAntd
+                      <Button
                         type="dashed"
                         onClick={() => {
                           add();
@@ -264,7 +263,7 @@ const AppointmentsCreate = () => {
                         icon={<PlusOutlined />}
                       >
                         Agregar información
-                      </ButtonAntd>
+                      </Button>
                     </Form.Item>
                   )}
                 </>
@@ -287,7 +286,7 @@ const AppointmentsCreate = () => {
               ]}
             >
               <Upload accept=".mp3,.mp4,.ogg,.m4a" listType="picture" maxCount={1} beforeUpload={() => false}>
-                <ButtonAntd icon={<UploadOutlined />}>Seleccionar archivo</ButtonAntd>
+                <Button icon={<UploadOutlined />}>Seleccionar archivo</Button>
               </Upload>
             </Form.Item>
 
@@ -307,7 +306,9 @@ const AppointmentsCreate = () => {
             )}
 
             <Form.Item>
-              <Button block text="Enviar" type="primary" htmlType="submit" loading={loading} />
+              <Button block type="primary" htmlType="submit" loading={loading}>
+                Enviar
+              </Button>
             </Form.Item>
           </Form>
         )}

@@ -1,11 +1,10 @@
 import { useState } from 'react';
 import { Link, Redirect } from 'react-router-dom';
-import { Col, Form, Input, Layout, Row } from 'antd';
+import { Col, Form, Input, Layout, Row, Button } from 'antd';
 
 import { PasswordResetService } from '../../../services/Auth';
 import Logo from '../../../components/Logo';
 import Alert from '../../../components/Alert';
-import Button from '../../../components/Button';
 import ErrorMessage from '../../../components/ErrorMessage';
 import StyledGlobal from '../../../styles/Global';
 
@@ -71,7 +70,9 @@ const PasswordReset = () => {
               </Form.Item>
 
               <Form.Item>
-                <Button block text="Restablecer contraseña" type="primary" htmlType="submit" loading={loading} />
+                <Button block type="primary" htmlType="submit" loading={loading} style={{ marginTop: 16 }}>
+                  Restablecer contraseña
+                </Button>
                 <StyledGlobal.PForm>
                   Regresar al <Link to="/accounts/login">inicio de sesión</Link>
                 </StyledGlobal.PForm>

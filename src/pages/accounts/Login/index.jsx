@@ -1,12 +1,11 @@
 import { useContext, useState } from 'react';
 import { Link, useHistory, useLocation } from 'react-router-dom';
-import { Col, Form, Input, Layout, Row } from 'antd';
+import { Col, Form, Input, Layout, Row, Button } from 'antd';
 
 import AuthContext from '../../../context/Auth';
 import { LoginService } from '../../../services/Auth';
 import Logo from '../../../components/Logo';
 import Alert from '../../../components/Alert';
-import Button from '../../../components/Button';
 import ErrorMessage from '../../../components/ErrorMessage';
 import StyledGlobal from '../../../styles/Global';
 
@@ -89,10 +88,9 @@ const Login = () => {
                 <StyledGlobal.PForm>
                   <Link to="/accounts/password/reset">¿Has olvidado tu contraseña?</Link>
                 </StyledGlobal.PForm>
-              </Form.Item>
-
-              <Form.Item>
-                <Button block text="Iniciar sesión" type="primary" htmlType="submit" loading={loading} />
+                <Button block type="primary" htmlType="submit" loading={loading}>
+                  Iniciar sesión
+                </Button>
                 <StyledGlobal.PForm>
                   ¿No tienes una cuenta? <Link to="/accounts/signup">Regístrate</Link>
                 </StyledGlobal.PForm>

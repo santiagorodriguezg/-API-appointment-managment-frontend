@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import { Form, Skeleton } from 'antd';
-import { DashboardPageEdit } from '../../../components/Dashboard';
-import { ButtonCancelAndSave } from '../../../components/Button';
 import useUserProfile from '../../../hooks/useUserProfile';
-import { UpdateMyProfileService } from '../../../services/Users';
-import { getFieldErrors } from '../../../utils/Utils';
 import ErrorMessage from '../../../components/ErrorMessage';
 import InputNumber from '../../../components/Input/InputNumber';
+import { DashboardPageEdit } from '../../../components/Dashboard';
+import { ButtonCancelAndSave } from '../../../components/Button';
+import { UpdateMyProfileService } from '../../../services/Users';
+import { getFieldErrors } from '../../../utils/Utils';
 
 const Phone = () => {
   const [form] = Form.useForm();
