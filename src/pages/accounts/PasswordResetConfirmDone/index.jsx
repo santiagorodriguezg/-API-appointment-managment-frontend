@@ -1,6 +1,7 @@
-import { Card, Layout, Button } from 'antd';
+import { Card, Layout } from 'antd';
 
 import Logo from '../../../components/Logo';
+import Button from '../../../components/Button';
 import StyledCard from '../../../styles/Card';
 
 const PasswordResetConfirmDone = () => {

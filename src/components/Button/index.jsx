@@ -1,17 +1,28 @@
-import { Button as ButtonAntd } from 'antd';
 import StyledGlobal from '../../styles/Global';
+import { StyledButton, StyledButtonCenter } from './styles';
 
-const ButtonCancelAndSave = ({ loading }) => {
+const Button = ({ children, center, ...props }) => {
+  if (center) {
+    return (
+      <StyledButtonCenter>
+        <StyledButton {...props}>{children}</StyledButton>
+      </StyledButtonCenter>
+    );
+  }
+  return <StyledButton {...props}>{children}</StyledButton>;
+};
+
+export const ButtonCancelAndSave = ({ loading }) => {
   return (
     <StyledGlobal.CancelAndSaveBtn>
-      <ButtonAntd onClick={() => window.history.back()} size="large" type="text">
+      <StyledButton onClick={() => window.history.back()} size="large" type="text">
         Cancelar
-      </ButtonAntd>
-      <ButtonAntd type="primary" size="large" htmlType="submit" loading={loading}>
+      </StyledButton>
+      <StyledButton type="primary" size="large" htmlType="submit" loading={loading}>
         Guardar
-      </ButtonAntd>
+      </StyledButton>
     </StyledGlobal.CancelAndSaveBtn>
   );
 };
 
-export { ButtonCancelAndSave };
+export default Button;

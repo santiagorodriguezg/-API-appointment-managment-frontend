@@ -1,11 +1,12 @@
 import { useContext, useState } from 'react';
 import { Link, useHistory, useLocation } from 'react-router-dom';
-import { Col, Form, Input, Layout, Row, Button } from 'antd';
+import { Col, Form, Input, Layout, Row } from 'antd';
 
 import AuthContext from '../../../context/Auth';
 import { LoginService } from '../../../services/Auth';
 import Logo from '../../../components/Logo';
 import Alert from '../../../components/Alert';
+import Button from '../../../components/Button';
 import ErrorMessage from '../../../components/ErrorMessage';
 import StyledGlobal from '../../../styles/Global';
 

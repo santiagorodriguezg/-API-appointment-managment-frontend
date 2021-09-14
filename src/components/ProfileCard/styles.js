@@ -1,12 +1,13 @@
 import { Card } from 'antd';
 import styled from 'styled-components';
+import Variables from '../../styles/Variables';
 
 const S = {};
 
 S.Card = styled(Card)`
-  margin-bottom: 24px;
-  border-radius: 6px;
-  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 12%);
+  margin-bottom: ${Variables.marginBase};
+  border-radius: ${Variables.borderRadiusBase};
+  box-shadow: ${Variables.boxShadowBase};
 
   .ant-card-body a:last-of-type {
     border-bottom: none;

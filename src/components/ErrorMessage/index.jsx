@@ -1,4 +1,5 @@
-import { Alert, Button } from 'antd';
+import { Alert } from 'antd';
+import Button from '../Button';
 
 const ErrorMessage = ({ retryBtn }) => {
   return (
@@ -11,11 +12,9 @@ const ErrorMessage = ({ retryBtn }) => {
         style={{ margin: '16px 0' }}
       />
       {retryBtn && (
-        <div style={{ textAlign: 'center' }}>
-          <Button type="primary" htmlType="button" onClick={() => window.location.reload(false)}>
-            Reintentar
-          </Button>
-        </div>
+        <Button center type="primary" htmlType="button" onClick={() => window.location.reload(false)}>
+          Reintentar
+        </Button>
       )}
     </>
   );

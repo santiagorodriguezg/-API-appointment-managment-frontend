@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { PageHeader } from 'antd';
-import Colors from '../../styles/Colors';
+import { Colors } from '../../styles/Variables';
 
 const S = {};
 

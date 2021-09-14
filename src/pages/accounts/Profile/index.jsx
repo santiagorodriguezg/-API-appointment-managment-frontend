@@ -5,6 +5,7 @@ import Dashboard from '../../../components/Dashboard';
 import ProfileCard, { ProfileCardItem } from '../../../components/ProfileCard';
 import ErrorMessage from '../../../components/ErrorMessage';
 import S from '../../../components/Dashboard/styles';
+import StyledGlobal from '../../../styles/Global';
 
 const Profile = ({ location }) => {
   const { successMsg } = (location && location.state) || {};
@@ -39,44 +40,46 @@ const Profile = ({ location }) => {
 
   return (
     <Dashboard>
-      <S.Title level={3}>Mi cuenta</S.Title>
-      {errorMsg ? (
-        <ErrorMessage retryBtn />
-      ) : (
-        <Spin spinning={loading} size="large">
-          <ProfileCard title="Datos básicos">
-            <ProfileCardItem
-              href="/accounts/name"
-              title="Nombre"
-              content={`${user.first_name || ''} ${user.last_name || ''}`}
-            />
-            <ProfileCardItem
-              href="/accounts/identification"
-              title="Identificación"
-              content={user.identification_number || ''}
-            />
-          </ProfileCard>
+      <StyledGlobal.Wrapper800>
+        <S.Title level={3}>Mi cuenta</S.Title>
+        {errorMsg ? (
+          <ErrorMessage retryBtn />
+        ) : (
+          <Spin spinning={loading} size="large">
+            <ProfileCard title="Datos básicos">
+              <ProfileCardItem
+                href="/accounts/name"
+                title="Nombre"
+                content={`${user.first_name || ''} ${user.last_name || ''}`}
+              />
+              <ProfileCardItem
+                href="/accounts/identification"
+                title="Identificación"
+                content={user.identification_number || ''}
+              />
+            </ProfileCard>
 
-          <ProfileCard title="Datos de contacto">
-            <ProfileCardItem href="/accounts/email" title="Correo electrónico" content={user.email || ''} />
-            <ProfileCardItem href="/accounts/phone" title="Teléfono" content={user.phone || ''} />
+            <ProfileCard title="Datos de contacto">
+              <ProfileCardItem href="/accounts/email" title="Correo electrónico" content={user.email || ''} />
+              <ProfileCardItem href="/accounts/phone" title="Teléfono" content={user.phone || ''} />
 
-            <ProfileCardItem
-              href="/accounts/location"
-              title="Dirección"
-              content={`${user.address || ''} ${user.neighborhood || ''} ${user.city || ''}`}
-            />
-          </ProfileCard>
+              <ProfileCardItem
+                href="/accounts/location"
+                title="Dirección"
+                content={`${user.address || ''} ${user.neighborhood || ''} ${user.city || ''}`}
+              />
+            </ProfileCard>
 
-          <ProfileCard title="Datos de cuenta">
-            <ProfileCardItem title="Usuario" content={user.username} showIcon={false} />
-          </ProfileCard>
+            <ProfileCard title="Datos de cuenta">
+              <ProfileCardItem title="Usuario" content={user.username} showIcon={false} />
+            </ProfileCard>
 
-          <ProfileCard title="Seguridad">
-            <ProfileCardItem href="/accounts/password/change" title="Contraseña" content="********" />
-          </ProfileCard>
-        </Spin>
-      )}
+            <ProfileCard title="Seguridad">
+              <ProfileCardItem href="/accounts/password/change" title="Contraseña" content="********" />
+            </ProfileCard>
+          </Spin>
+        )}
+      </StyledGlobal.Wrapper800>
     </Dashboard>
   );
 };

@@ -10,12 +10,12 @@ const DashboardPageEdit = ({ title, children }) => {
       <NavBar />
       <StyledGlobal.Wrapper>
         <S.Content>
-          <StyledGlobal.WrapperContent840>
+          <StyledGlobal.Wrapper800>
             <PageHeader onBack={() => window.history.back()} title={title} />
             <StyledGlobal.ContainerForm shadow marginTop={16}>
               {children}
             </StyledGlobal.ContainerForm>
-          </StyledGlobal.WrapperContent840>
+          </StyledGlobal.Wrapper800>
         </S.Content>
         <Footer />
       </StyledGlobal.Wrapper>

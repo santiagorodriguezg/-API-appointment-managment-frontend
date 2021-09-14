@@ -1,6 +1,6 @@
 import { Typography } from 'antd';
 import styled, { css } from 'styled-components';
-import Colors from '../../styles/Colors';
+import { Colors } from '../../styles/Variables';
 
 const { Title } = Typography;
 const S = {};

@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import { Link, useHistory, useParams } from 'react-router-dom';
-import { Col, Form, Input, Layout, Row, Button } from 'antd';
+import { Col, Form, Input, Layout, Row } from 'antd';
 
 import { PasswordResetCompleteService } from '../../../services/Auth';
 import Logo from '../../../components/Logo';
-import ErrorMessage from '../../../components/ErrorMessage';
+import Button from '../../../components/Button';
 import Alert from '../../../components/Alert';
+import ErrorMessage from '../../../components/ErrorMessage';
 import StyledGlobal from '../../../styles/Global';
 
 const PasswordResetConfirm = () => {
@@ -94,7 +95,7 @@ const PasswordResetConfirm = () => {
               </Form.Item>
 
               <Form.Item>
-                <Button block type="primary" htmlType="submit" loading={loading} style={{ marginTop: 16 }}>
+                <Button block $marginTop type="primary" htmlType="submit" loading={loading}>
                   Cambiar mi contraseña
                 </Button>
                 <StyledGlobal.PForm>

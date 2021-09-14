@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components';
-import Colors from './Colors';
+import Variables, { Colors } from './Variables';
 
 const StyledGlobal = {};
 
@@ -15,9 +15,17 @@ StyledGlobal.Wrapper = styled.div`
   flex-direction: column;
 `;
 
-StyledGlobal.WrapperContent840 = styled.div`
-  max-width: 840px;
+StyledGlobal.Wrapper800 = styled.div`
+  max-width: 800px;
   margin: auto;
+`;
+
+StyledGlobal.WrapperInner840 = styled.div`
+  background: #fff;
+  border-radius: ${Variables.borderRadiusBase};
+  padding-top: ${Variables.paddingBase};
+  margin-bottom: ${Variables.marginBase};
+  box-shadow: ${Variables.boxShadowBase};
 `;
 
 StyledGlobal.ContainerForm = styled.div`
@@ -56,12 +64,12 @@ StyledGlobal.ContainerForm = styled.div`
     props.shadow &&
     css`
       background: #fff;
-      border-radius: 6px;
-      box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+      border-radius: ${Variables.borderRadiusBase};
+      box-shadow: ${Variables.boxShadowBase};
+      //box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
 
       @media (min-width: 480px) {
-        padding: 24px;
-        //box-shadow: 0 1px 2px 0 rgb(0 0 0 / 12%);
+        padding: ${Variables.paddingBase};
         //border: 1px solid #dadce0;
       }
     `};
@@ -81,7 +89,7 @@ StyledGlobal.PForm = styled.p`
 StyledGlobal.CancelAndSaveBtn = styled.div`
   display: flex;
   justify-content: flex-end;
-  margin-top: 24px;
+  margin-top: ${Variables.marginBase};
 
   button.ant-btn-text {
     color: ${Colors.primary};
@@ -93,7 +101,7 @@ StyledGlobal.CancelAndSaveBtn = styled.div`
   }
 
   button {
-    margin: 0 0 0 24px;
+    margin: 0 0 0 ${Variables.marginBase};
   }
 `;
 

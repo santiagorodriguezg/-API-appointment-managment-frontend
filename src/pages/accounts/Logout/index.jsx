@@ -29,10 +29,10 @@ const Logout = () => {
 
   return errorMsg ? (
     <StyledGlobal.Container>
-      <StyledGlobal.WrapperContent840>
+      <StyledGlobal.Wrapper800>
         <br />
         <ErrorMessage retryBtn />
-      </StyledGlobal.WrapperContent840>
+      </StyledGlobal.Wrapper800>
     </StyledGlobal.Container>
   ) : null;
 };
