@@ -12,7 +12,7 @@ const ErrorMessage = ({ retryBtn }) => {
         style={{ margin: '16px 0' }}
       />
       {retryBtn && (
-        <Button center type="primary" htmlType="button" onClick={() => window.location.reload(false)}>
+        <Button center $marginTop type="primary" htmlType="button" onClick={() => window.location.reload(false)}>
           Reintentar
         </Button>
       )}

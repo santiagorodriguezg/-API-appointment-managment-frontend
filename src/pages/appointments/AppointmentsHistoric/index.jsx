@@ -16,6 +16,7 @@ import {
   userRoles,
 } from '../../../config/utils/enums';
 import ModalContent from './ModalContent';
+import ErrorMessage from '../../../components/ErrorMessage';
 
 export default class AppointmentsHistoric extends Component {
   static contextType = AuthContext;
@@ -24,6 +25,7 @@ export default class AppointmentsHistoric extends Component {
     super(props);
     this.state = {
       loading: false,
+      errorMsg: false,
       data: [],
       pagination: {},
       isModalVisible: false,
@@ -42,7 +44,10 @@ export default class AppointmentsHistoric extends Component {
 
   getAppointmentsData = async (params = {}) => {
     try {
-      this.setState({ loading: true });
+      this.setState({
+        loading: true,
+        errorMsg: false,
+      });
       const { pagination } = this.state;
       const { username, role } = this.context;
 
@@ -57,7 +62,10 @@ export default class AppointmentsHistoric extends Component {
         },
       });
     } catch (e) {
-      console.log('ERROR', e);
+      this.setState({
+        loading: false,
+        errorMsg: true,
+      });
     }
   };
 
@@ -173,7 +181,7 @@ export default class AppointmentsHistoric extends Component {
 
   render() {
     const { role } = this.context;
-    const { isModalVisible, modalInfo, data, pagination, loading } = this.state;
+    const { loading, errorMsg, isModalVisible, modalInfo, data, pagination } = this.state;
     let { sortedInfo, filteredInfo } = this.state;
 
     sortedInfo = sortedInfo || {};
@@ -255,22 +263,31 @@ export default class AppointmentsHistoric extends Component {
           <ModalContent isModalVisible={isModalVisible} modalInfo={modalInfo} handleCancel={this.handleModalCancel} />
         )}
         <S.Title level={3}>Histórico de citas</S.Title>
-        <Space style={{ marginBottom: 16 }}>
-          <Button icon={<ClearOutlined />} onClick={this.clearAllFilters}>
-            Limpiar filtros
-          </Button>
-        </Space>
-        <Table
-          rowKey="id"
-          childrenColumnName="childrenTable"
-          loading={loading}
-          columns={columns}
-          dataSource={data}
-          pagination={pagination}
-          onChange={this.handleTableChange}
-          scroll={{ x: true }}
-          sticky
-        />
+        {errorMsg ? (
+          <ErrorMessage retryBtn />
+        ) : (
+          <>
+            <Button
+              icon={<ClearOutlined />}
+              onClick={this.clearAllFilters}
+              style={{ marginBottom: 16 }}
+              loading={loading}
+            >
+              Limpiar filtros
+            </Button>
+            <Table
+              rowKey="id"
+              childrenColumnName="childrenTable"
+              loading={loading}
+              columns={columns}
+              dataSource={data}
+              pagination={pagination}
+              onChange={this.handleTableChange}
+              scroll={{ x: true }}
+              sticky
+            />
+          </>
+        )}
       </Dashboard>
     );
   }
