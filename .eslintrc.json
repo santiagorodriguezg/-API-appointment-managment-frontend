@@ -9,6 +9,7 @@
     "plugin:prettier/recommended",
     "plugin:react/recommended"
   ],
+  "parser": "babel-eslint",
   "parserOptions": {
     "ecmaFeatures": {
       "jsx": true
@@ -33,6 +34,8 @@
       2
     ],
     "no-underscore-dangle": "off",
+    "react/static-property-placement": [1, "static public field"],
+    "react/no-array-index-key": "off",
     "no-param-reassign": [
       "error",
       {

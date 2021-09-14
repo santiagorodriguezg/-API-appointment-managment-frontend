@@ -1,4 +1,6 @@
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { ConfigProvider } from 'antd';
+import esES from 'antd/lib/locale/es_ES';
 
 import { AuthProvider } from '../context/Auth';
 import { PrivateRoute } from './PrivateRoute';
@@ -26,32 +28,34 @@ import Home from '../pages/Home';
 
 const AppRouter = () => {
   return (
-    <AuthProvider>
-      <Router>
-        <Switch>
-          <Route exact path="/accounts/login" component={Login} />
-          <Route exact path="/accounts/signup" component={Signup} />
-          <Route exact path="/accounts/password/reset" component={PasswordReset} />
-          <Route exact path="/accounts/password/reset/done" component={PasswordResetDone} />
-          <Route path="/accounts/password/reset/:uid/:token" component={PasswordResetConfirm} />
-          <Route exact path="/accounts/password/reset/complete" component={PasswordResetConfirmDone} />
+    <ConfigProvider locale={esES}>
+      <AuthProvider>
+        <Router>
+          <Switch>
+            <Route exact path="/accounts/login" component={Login} />
+            <Route exact path="/accounts/signup" component={Signup} />
+            <Route exact path="/accounts/password/reset" component={PasswordReset} />
+            <Route exact path="/accounts/password/reset/done" component={PasswordResetDone} />
+            <Route path="/accounts/password/reset/:uid/:token" component={PasswordResetConfirm} />
+            <Route exact path="/accounts/password/reset/complete" component={PasswordResetConfirmDone} />
 
-          <PrivateRoute exact path="/accounts/logout" component={Logout} />
-          <PrivateRoute exact path="/accounts/password/change" component={PasswordChange} />
-          <PrivateRoute exact path="/accounts/profile" component={Profile} />
-          <PrivateRoute exact path="/accounts/name" component={Name} />
-          <PrivateRoute exact path="/accounts/identification" component={Identification} />
-          <PrivateRoute exact path="/accounts/email" component={Email} />
-          <PrivateRoute exact path="/accounts/phone" component={Phone} />
-          <PrivateRoute exact path="/accounts/location" component={Location} />
+            <PrivateRoute exact path="/accounts/logout" component={Logout} />
+            <PrivateRoute exact path="/accounts/password/change" component={PasswordChange} />
+            <PrivateRoute exact path="/accounts/profile" component={Profile} />
+            <PrivateRoute exact path="/accounts/name" component={Name} />
+            <PrivateRoute exact path="/accounts/identification" component={Identification} />
+            <PrivateRoute exact path="/accounts/email" component={Email} />
+            <PrivateRoute exact path="/accounts/phone" component={Phone} />
+            <PrivateRoute exact path="/accounts/location" component={Location} />
 
-          <PrivateRoute exact path="/appointments/create" component={AppointmentsCreate} />
-          <PrivateRoute exact path="/appointments/historic" component={AppointmentsHistoric} />
+            <PrivateRoute exact path="/appointments/create" component={AppointmentsCreate} />
+            <PrivateRoute exact path="/appointments/historic" component={AppointmentsHistoric} />
 
-          <PrivateRoute exact path="/home" component={Home} />
-        </Switch>
-      </Router>
-    </AuthProvider>
+            <PrivateRoute exact path="/home" component={Home} />
+          </Switch>
+        </Router>
+      </AuthProvider>
+    </ConfigProvider>
   );
 };
 
