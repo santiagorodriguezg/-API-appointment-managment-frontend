@@ -58,6 +58,9 @@ const ModalContent = ({ isModalVisible, modalInfo, handleCancel }) => {
             <Descriptions column={1} style={{ paddingLeft: 24 }}>
               <Descriptions.Item label={<strong>Nombre</strong>}>{modalInfo.aggressor.name}</Descriptions.Item>
               <Descriptions.Item label={<strong>Edad</strong>}>{modalInfo.aggressor.age}</Descriptions.Item>
+              <Descriptions.Item label={<strong>Documento</strong>}>
+                {modalInfo.aggressor.identification_number}
+              </Descriptions.Item>
               <Descriptions.Item label={<strong>Teléfono</strong>}> {modalInfo.aggressor.phone}</Descriptions.Item>
               <Descriptions.Item label={<strong>Dirección</strong>} style={{ paddingBottom: 0 }}>
                 {modalInfo.aggressor.address}

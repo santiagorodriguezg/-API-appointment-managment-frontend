@@ -75,6 +75,7 @@ export default class AppointmentsHistoric extends Component {
       limit: pag.pageSize,
       offset: pag.current - 1,
       type: filters.type?.[0],
+      id: filters.id?.[0],
       user__identification_number: filters.identificationNumber?.[0],
       user__full_name: filters.fullName?.[0],
       ordering,
@@ -208,6 +209,16 @@ export default class AppointmentsHistoric extends Component {
 
     const columns = [
       {
+        title: 'Código',
+        dataIndex: 'id',
+        key: 'id',
+        sorter: true,
+        width: 150,
+        filteredValue: filteredInfo.fullName || null,
+        sortOrder: sortedInfo.columnKey === 'id' && sortedInfo.order,
+        ...this.getColumnSearchProps('código', 'id'),
+      },
+      {
         title: 'Tipo de cita',
         dataIndex: 'type',
         key: 'type',
@@ -254,7 +265,7 @@ export default class AppointmentsHistoric extends Component {
     ];
 
     if (role !== userRoles[2].value) {
-      columns.unshift(...columnsAdmin);
+      columns.splice(1, 0, ...columnsAdmin);
     }
 
     return (
