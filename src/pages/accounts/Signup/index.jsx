@@ -1,6 +1,6 @@
 import { useContext, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import { Col, Form, Input, Layout, Row } from 'antd';
+import { Col, Form, Input, Layout, Row, Select } from 'antd';
 
 import AuthContext from '../../../context/Auth';
 import { SignupService } from '../../../services/Auth';
@@ -9,6 +9,8 @@ import ErrorMessage from '../../../components/ErrorMessage';
 import Button from '../../../components/Button';
 import StyledGlobal from '../../../styles/Global';
 import { getFieldErrors } from '../../../config/utils';
+import { identificationTypes } from '../../../config/utils/enums';
+import InputNumber from '../../../components/Input/InputNumber';
 
 const Signup = () => {
   const history = useHistory();
@@ -53,7 +55,16 @@ const Signup = () => {
             <Logo />
             <StyledGlobal.TitleForm>Crear cuenta</StyledGlobal.TitleForm>
             {errorMsg && <ErrorMessage />}
-            <Form form={form} name="signup" layout="vertical" onFinish={onFinish}>
+            <Form
+              form={form}
+              name="signup"
+              layout="vertical"
+              requiredMark="optional"
+              initialValues={{
+                identification_type: identificationTypes[0].value,
+              }}
+              onFinish={onFinish}
+            >
               <Row gutter={16}>
                 <Col xs={24} md={12}>
                   <Form.Item
@@ -90,6 +101,44 @@ const Signup = () => {
                     ]}
                   >
                     <Input maxLength={50} />
+                  </Form.Item>
+                </Col>
+              </Row>
+
+              <Row gutter={16}>
+                <Col xs={24} md={12}>
+                  <Form.Item
+                    name="identification_type"
+                    label="Tipo de identificación"
+                    rules={[
+                      {
+                        required: true,
+                        message: 'Seleccione el tipo de identificación',
+                      },
+                    ]}
+                  >
+                    <Select placeholder="Seleccione un tipo de identificación">
+                      {identificationTypes.map(obj => (
+                        <Select.Option key={obj.value} value={obj.value}>
+                          {obj.text}
+                        </Select.Option>
+                      ))}
+                    </Select>
+                  </Form.Item>
+                </Col>
+
+                <Col xs={24} md={12}>
+                  <Form.Item
+                    name="identification_number"
+                    label="Número de identificación"
+                    rules={[
+                      {
+                        required: true,
+                        message: 'Ingrese su número de identificación',
+                      },
+                    ]}
+                  >
+                    <InputNumber min={1} />
                   </Form.Item>
                 </Col>
               </Row>

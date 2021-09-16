@@ -60,9 +60,16 @@ const Profile = ({ location }) => {
             </ProfileCard>
 
             <ProfileCard title="Datos de contacto">
-              <ProfileCardItem href="/accounts/email" title="Correo electrónico" content={user.email || ''} />
-              <ProfileCardItem href="/accounts/phone" title="Teléfono" content={user.phone || ''} />
-
+              <ProfileCardItem
+                href="/accounts/email"
+                title="Correo electrónico"
+                content={user.email || 'Ingresa tu correo electrónico para recuperar tu cuenta.'}
+              />
+              <ProfileCardItem
+                href="/accounts/phone"
+                title="Teléfono"
+                content={user.phone || 'Ingresa tu número de teléfono para que te podamos contactar más rápido.'}
+              />
               <ProfileCardItem
                 href="/accounts/location"
                 title="Dirección"

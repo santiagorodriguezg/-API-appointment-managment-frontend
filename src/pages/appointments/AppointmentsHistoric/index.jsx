@@ -193,7 +193,7 @@ export default class AppointmentsHistoric extends Component {
         title: 'Nombre',
         dataIndex: ['user', 'full_name'],
         key: 'fullName',
-        width: 300,
+        width: 250,
         filteredValue: filteredInfo.fullName || null,
         ...this.getColumnSearchProps('nombre', 'full_name'),
       },
@@ -201,7 +201,7 @@ export default class AppointmentsHistoric extends Component {
         title: 'Documento',
         dataIndex: ['user', 'identification_number'],
         key: 'identificationNumber',
-        width: 230,
+        width: 150,
         filteredValue: filteredInfo.identificationNumber || null,
         ...this.getColumnSearchProps('documento', 'identification_number'),
       },
@@ -213,8 +213,8 @@ export default class AppointmentsHistoric extends Component {
         dataIndex: 'id',
         key: 'id',
         sorter: true,
-        width: 150,
-        filteredValue: filteredInfo.fullName || null,
+        width: 110,
+        filteredValue: filteredInfo.id || null,
         sortOrder: sortedInfo.columnKey === 'id' && sortedInfo.order,
         ...this.getColumnSearchProps('código', 'id'),
       },
@@ -222,6 +222,7 @@ export default class AppointmentsHistoric extends Component {
         title: 'Tipo de cita',
         dataIndex: 'type',
         key: 'type',
+        width: 170,
         filterMultiple: false,
         filters: appointmentTypes,
         filteredValue: filteredInfo.type || null,
@@ -239,6 +240,7 @@ export default class AppointmentsHistoric extends Component {
         title: 'Fecha de solicitud',
         dataIndex: 'created_at',
         key: 'created_at',
+        width: 250,
         sorter: true,
         sortOrder: sortedInfo.columnKey === 'created_at' && sortedInfo.order,
         render: text => getFullDate(text),
@@ -247,6 +249,7 @@ export default class AppointmentsHistoric extends Component {
         title: 'Audio',
         dataIndex: 'audio',
         key: 'audio',
+        width: 150,
         render: text => (
           <Button type="link" shape="circle" icon={<PlayCircleOutlined />} href={text} target="_blank">
             Escuchar
@@ -256,6 +259,7 @@ export default class AppointmentsHistoric extends Component {
       {
         title: 'Acción',
         key: 'action',
+        width: 250,
         render: (text, record) => (
           <Space size="middle">
             <Button onClick={() => this.showModal(record)}>Ver detalles</Button>
@@ -294,7 +298,7 @@ export default class AppointmentsHistoric extends Component {
               dataSource={data}
               pagination={pagination}
               onChange={this.handleTableChange}
-              scroll={{ x: true }}
+              scroll={{ x: '100%' }}
               sticky
             />
           </>
