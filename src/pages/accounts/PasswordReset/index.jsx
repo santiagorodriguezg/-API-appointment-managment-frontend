@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { Link, Redirect } from 'react-router-dom';
-import { Col, Form, Input, Layout, Row } from 'antd';
-
+import { Col, Form, Layout, Row } from 'antd';
 import { PasswordResetService } from '../../../services/Auth';
 import Logo from '../../../components/Logo';
 import Alert from '../../../components/Alert';
 import Button from '../../../components/Button';
 import ErrorMessage from '../../../components/ErrorMessage';
+import InputUsername from '../../../components/Input/InputUsername';
 import StyledGlobal from '../../../styles/Global';
 
 const PasswordReset = () => {
@@ -57,18 +57,7 @@ const PasswordReset = () => {
               />
             )}
             <Form layout="vertical" name="password_reset" onFinish={onFinish} hideRequiredMark>
-              <Form.Item
-                name="username"
-                label="Usuario"
-                rules={[
-                  {
-                    required: true,
-                    message: 'Ingrese su nombre de usuario',
-                  },
-                ]}
-              >
-                <Input maxLength={40} />
-              </Form.Item>
+              <InputUsername />
 
               <Form.Item noStyle>
                 <Button block $marginTop type="primary" htmlType="submit" loading={loading}>

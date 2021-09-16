@@ -2,12 +2,12 @@ import { useEffect, useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import { Form, Skeleton } from 'antd';
 import useUserProfile from '../../../hooks/useUserProfile';
-import ErrorMessage from '../../../components/ErrorMessage';
-import InputNumber from '../../../components/Input/InputNumber';
-import { DashboardPageEdit } from '../../../components/Dashboard';
-import { ButtonCancelAndSave } from '../../../components/Button';
 import { UpdateMyProfileService } from '../../../services/Users';
 import { getFieldErrors } from '../../../config/utils';
+import { DashboardPageEdit } from '../../../components/Dashboard';
+import { ButtonCancelAndSave } from '../../../components/Button';
+import ErrorMessage from '../../../components/ErrorMessage';
+import InputPhone from '../../../components/Input/InputPhone';
 
 const Phone = () => {
   const [form] = Form.useForm();
@@ -65,18 +65,7 @@ const Phone = () => {
             onFinish={onFinish}
             hideRequiredMark
           >
-            <Form.Item
-              name="phone"
-              label="Teléfono"
-              rules={[
-                {
-                  required: true,
-                  message: 'Ingrese su número de teléfono',
-                },
-              ]}
-            >
-              <InputNumber min={3} />
-            </Form.Item>
+            <InputPhone />
 
             <Form.Item>
               <ButtonCancelAndSave loading={btnLoading} />

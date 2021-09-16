@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import { Redirect } from 'react-router-dom';
-import { Divider, Form, Input, Typography } from 'antd';
-import { DashboardPageEdit } from '../../../components/Dashboard';
-import { ButtonCancelAndSave } from '../../../components/Button';
+import { Divider, Form, Typography } from 'antd';
 import { PasswordChangeService } from '../../../services/Users';
 import { getFieldErrors } from '../../../config/utils';
+import { DashboardPageEdit } from '../../../components/Dashboard';
+import { ButtonCancelAndSave } from '../../../components/Button';
 import ErrorMessage from '../../../components/ErrorMessage';
+import InputPassword from '../../../components/Input/InputPassword';
 
 const { Title, Paragraph } = Typography;
 
@@ -58,65 +59,11 @@ const PasswordChange = () => {
           </Paragraph>
           <Divider />
           <Form form={form} layout="vertical" name="password_change" onFinish={onFinish} hideRequiredMark>
-            <Form.Item
-              name="password_old"
-              label="Contraseña actual"
-              rules={[
-                {
-                  required: true,
-                  message: 'Ingrese su contraseña actual',
-                },
-              ]}
-            >
-              <Input.Password maxLength={25} />
-            </Form.Item>
+            <InputPassword oldPassword />
 
-            <Form.Item
-              name="password"
-              label="Contraseña nueva"
-              rules={[
-                {
-                  required: true,
-                  message: 'Ingrese su contraseña nueva',
-                },
-                {
-                  min: 8,
-                  message: 'Asegúrese de que este campo tenga al menos 8 caracteres',
-                },
-                {
-                  pattern: /(?=.*\d)(?=.*[a-zA-Z]).*/,
-                  message: 'La contraseña debe contener letras y números',
-                },
-              ]}
-            >
-              <Input.Password maxLength={25} />
-            </Form.Item>
+            <InputPassword newPassword />
 
-            <Form.Item
-              name="password2"
-              label="Confirmar contraseña nueva"
-              dependencies={['password']}
-              rules={[
-                {
-                  required: true,
-                  message: 'Confirme su contraseña nueva',
-                },
-                {
-                  whitespace: true,
-                  message: 'Confirme su contraseña nueva',
-                },
-                ({ getFieldValue }) => ({
-                  validator(_, value) {
-                    if (!value || getFieldValue('password') === value) {
-                      return Promise.resolve();
-                    }
-                    return Promise.reject(new Error('Las dos contraseñas ingresadas no coinciden'));
-                  },
-                }),
-              ]}
-            >
-              <Input.Password />
-            </Form.Item>
+            <InputPassword confirmPassword={{ new: true }} />
 
             <Form.Item>
               <ButtonCancelAndSave loading={btnLoading} />

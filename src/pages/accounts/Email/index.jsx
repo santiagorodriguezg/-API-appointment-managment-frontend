@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
 import { Redirect } from 'react-router-dom';
-import { Form, Input, Skeleton } from 'antd';
-import { DashboardPageEdit } from '../../../components/Dashboard';
-import { ButtonCancelAndSave } from '../../../components/Button';
+import { Form, Skeleton } from 'antd';
 import useUserProfile from '../../../hooks/useUserProfile';
 import { UpdateMyProfileService } from '../../../services/Users';
 import { getFieldErrors } from '../../../config/utils';
+import { DashboardPageEdit } from '../../../components/Dashboard';
+import { ButtonCancelAndSave } from '../../../components/Button';
 import ErrorMessage from '../../../components/ErrorMessage';
+import InputEmail from '../../../components/Input/InputEmail';
 
 const Email = () => {
   const [form] = Form.useForm();
@@ -64,22 +65,7 @@ const Email = () => {
             onFinish={onFinish}
             hideRequiredMark
           >
-            <Form.Item
-              name="email"
-              label="Correo electrónico"
-              rules={[
-                {
-                  required: true,
-                  message: 'El correo electrónico es obligatorio',
-                },
-                {
-                  type: 'email',
-                  message: 'El correo electrónico ingresado no es válido',
-                },
-              ]}
-            >
-              <Input maxLength={60} />
-            </Form.Item>
+            <InputEmail required />
 
             <Form.Item>
               <ButtonCancelAndSave loading={btnLoading} />

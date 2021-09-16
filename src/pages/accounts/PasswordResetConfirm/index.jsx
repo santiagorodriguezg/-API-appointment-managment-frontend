@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { Link, useHistory, useParams } from 'react-router-dom';
-import { Col, Form, Input, Layout, Row } from 'antd';
-
+import { Col, Form, Layout, Row } from 'antd';
 import { PasswordResetCompleteService } from '../../../services/Auth';
 import Logo from '../../../components/Logo';
 import Button from '../../../components/Button';
 import Alert from '../../../components/Alert';
 import ErrorMessage from '../../../components/ErrorMessage';
+import InputPassword from '../../../components/Input/InputPassword';
 import StyledGlobal from '../../../styles/Global';
 
 const PasswordResetConfirm = () => {
@@ -47,52 +47,9 @@ const PasswordResetConfirm = () => {
             {errorText !== '' && <Alert message={errorText} type="error" showIcon />}
             {errorMsg && <ErrorMessage />}
             <Form layout="vertical" name="password_reset_confirm" onFinish={onFinish} hideRequiredMark>
-              <Form.Item
-                name="password"
-                label="Contraseña"
-                rules={[
-                  {
-                    required: true,
-                    message: 'Ingrese su contraseña',
-                  },
-                  {
-                    min: 8,
-                    message: 'Asegúrese de que este campo tenga al menos 8 caracteres',
-                  },
-                  {
-                    pattern: /(?=.*\d)(?=.*[a-zA-Z]).*/,
-                    message: 'La contraseña debe contener letras y números',
-                  },
-                ]}
-              >
-                <Input.Password maxLength={25} />
-              </Form.Item>
+              <InputPassword />
 
-              <Form.Item
-                name="password2"
-                label="Confirmar contraseña"
-                dependencies={['password']}
-                rules={[
-                  {
-                    required: true,
-                    message: 'Confirme su contraseña',
-                  },
-                  {
-                    whitespace: true,
-                    message: 'Confirme su contraseña',
-                  },
-                  ({ getFieldValue }) => ({
-                    validator(_, value) {
-                      if (!value || getFieldValue('password') === value) {
-                        return Promise.resolve();
-                      }
-                      return Promise.reject(new Error('Las dos contraseñas ingresadas no coinciden'));
-                    },
-                  }),
-                ]}
-              >
-                <Input.Password />
-              </Form.Item>
+              <InputPassword confirmPassword />
 
               <Form.Item>
                 <Button block $marginTop type="primary" htmlType="submit" loading={loading}>

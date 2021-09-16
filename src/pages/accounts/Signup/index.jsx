@@ -1,7 +1,6 @@
 import { useContext, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import { Col, Form, Input, Layout, Row, Select } from 'antd';
-
+import { Col, Form, Layout, Row } from 'antd';
 import AuthContext from '../../../context/Auth';
 import { SignupService } from '../../../services/Auth';
 import Logo from '../../../components/Logo';
@@ -10,7 +9,13 @@ import Button from '../../../components/Button';
 import StyledGlobal from '../../../styles/Global';
 import { getFieldErrors } from '../../../config/utils';
 import { identificationTypes } from '../../../config/utils/enums';
-import InputNumber from '../../../components/Input/InputNumber';
+import InputIdentificationNumber from '../../../components/Input/InputIdentificationNumber';
+import InputFirstName from '../../../components/Input/InputFirstName';
+import InputLastName from '../../../components/Input/InputLastName';
+import InputIdentificationType from '../../../components/Input/InputIdentificationType';
+import InputUsername from '../../../components/Input/InputUsername';
+import InputEmail from '../../../components/Input/InputEmail';
+import InputPassword from '../../../components/Input/InputPassword';
 
 const Signup = () => {
   const history = useHistory();
@@ -67,168 +72,41 @@ const Signup = () => {
             >
               <Row gutter={16}>
                 <Col xs={24} md={12}>
-                  <Form.Item
-                    name="first_name"
-                    label="Nombre"
-                    rules={[
-                      {
-                        required: true,
-                        message: 'Ingrese su nombre',
-                      },
-                      {
-                        whitespace: true,
-                        message: 'Ingrese su nombre',
-                      },
-                    ]}
-                  >
-                    <Input maxLength={50} />
-                  </Form.Item>
+                  <InputFirstName />
                 </Col>
 
                 <Col xs={24} md={12}>
-                  <Form.Item
-                    name="last_name"
-                    label="Apellidos"
-                    rules={[
-                      {
-                        required: true,
-                        message: 'Ingrese sus apellidos',
-                      },
-                      {
-                        whitespace: true,
-                        message: 'Ingrese sus apellidos',
-                      },
-                    ]}
-                  >
-                    <Input maxLength={50} />
-                  </Form.Item>
+                  <InputLastName />
                 </Col>
               </Row>
 
               <Row gutter={16}>
                 <Col xs={24} md={12}>
-                  <Form.Item
-                    name="identification_type"
-                    label="Tipo de identificación"
-                    rules={[
-                      {
-                        required: true,
-                        message: 'Seleccione el tipo de identificación',
-                      },
-                    ]}
-                  >
-                    <Select placeholder="Seleccione un tipo de identificación">
-                      {identificationTypes.map(obj => (
-                        <Select.Option key={obj.value} value={obj.value}>
-                          {obj.text}
-                        </Select.Option>
-                      ))}
-                    </Select>
-                  </Form.Item>
+                  <InputIdentificationType />
                 </Col>
 
                 <Col xs={24} md={12}>
-                  <Form.Item
-                    name="identification_number"
-                    label="Número de identificación"
-                    rules={[
-                      {
-                        required: true,
-                        message: 'Ingrese su número de identificación',
-                      },
-                    ]}
-                  >
-                    <InputNumber min={1} />
-                  </Form.Item>
+                  <InputIdentificationNumber />
                 </Col>
               </Row>
 
               <Row gutter={16}>
                 <Col xs={24} md={12}>
-                  <Form.Item
-                    name="username"
-                    label="Usuario"
-                    rules={[
-                      {
-                        required: true,
-                        message: 'Ingrese su usuario',
-                      },
-                      {
-                        whitespace: true,
-                        message: 'Ingrese su usuario',
-                      },
-                    ]}
-                  >
-                    <Input maxLength={40} />
-                  </Form.Item>
+                  <InputUsername />
                 </Col>
 
                 <Col xs={24} md={12}>
-                  <Form.Item
-                    name="email"
-                    label="Correo electrónico"
-                    rules={[
-                      {
-                        type: 'email',
-                        message: 'El correo electrónico ingresado no es válido',
-                      },
-                    ]}
-                  >
-                    <Input maxLength={60} />
-                  </Form.Item>
+                  <InputEmail />
                 </Col>
               </Row>
 
               <Row gutter={16}>
                 <Col xs={24} md={12}>
-                  <Form.Item
-                    name="password"
-                    label="Contraseña"
-                    rules={[
-                      {
-                        required: true,
-                        message: 'Ingrese su contraseña',
-                      },
-                      {
-                        min: 8,
-                        message: 'Asegúrese de que este campo tenga al menos 8 caracteres',
-                      },
-                      {
-                        pattern: /(?=.*\d)(?=.*[a-zA-Z]).*/,
-                        message: 'La contraseña debe contener letras y números',
-                      },
-                    ]}
-                  >
-                    <Input.Password maxLength={25} />
-                  </Form.Item>
+                  <InputPassword />
                 </Col>
 
                 <Col xs={24} md={12}>
-                  <Form.Item
-                    name="password2"
-                    label="Confirmar contraseña"
-                    dependencies={['password']}
-                    rules={[
-                      {
-                        required: true,
-                        message: 'Confirme su contraseña',
-                      },
-                      {
-                        whitespace: true,
-                        message: 'Confirme su contraseña',
-                      },
-                      ({ getFieldValue }) => ({
-                        validator(_, value) {
-                          if (!value || getFieldValue('password') === value) {
-                            return Promise.resolve();
-                          }
-                          return Promise.reject(new Error('Las dos contraseñas ingresadas no coinciden'));
-                        },
-                      }),
-                    ]}
-                  >
-                    <Input.Password />
-                  </Form.Item>
+                  <InputPassword confirmPassword />
                 </Col>
               </Row>
               <Row gutter={16}>

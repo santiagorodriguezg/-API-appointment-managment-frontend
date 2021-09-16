@@ -1,6 +1,6 @@
 import { useContext, useState } from 'react';
 import { Link, useHistory, useLocation } from 'react-router-dom';
-import { Col, Form, Input, Layout, Row } from 'antd';
+import { Col, Form, Layout, Row } from 'antd';
 
 import AuthContext from '../../../context/Auth';
 import { LoginService } from '../../../services/Auth';
@@ -8,6 +8,8 @@ import Logo from '../../../components/Logo';
 import Alert from '../../../components/Alert';
 import Button from '../../../components/Button';
 import ErrorMessage from '../../../components/ErrorMessage';
+import InputUsername from '../../../components/Input/InputUsername';
+import InputPassword from '../../../components/Input/InputPassword';
 import StyledGlobal from '../../../styles/Global';
 
 const Login = () => {
@@ -59,31 +61,9 @@ const Login = () => {
             {errorText !== '' && <Alert message={errorText} type="error" showIcon />}
             {errorMsg && <ErrorMessage />}
             <Form layout="vertical" name="login" className="form-box" onFinish={onFinish} hideRequiredMark>
-              <Form.Item
-                name="username"
-                label="Usuario"
-                rules={[
-                  {
-                    required: true,
-                    message: 'Ingrese su nombre de usuario',
-                  },
-                ]}
-              >
-                <Input maxLength={40} />
-              </Form.Item>
+              <InputUsername />
 
-              <Form.Item
-                name="password"
-                label="Contraseña"
-                rules={[
-                  {
-                    required: true,
-                    message: 'Ingrese su contraseña',
-                  },
-                ]}
-              >
-                <Input.Password maxLength={25} />
-              </Form.Item>
+              <InputPassword />
 
               <Form.Item noStyle>
                 <StyledGlobal.PForm>

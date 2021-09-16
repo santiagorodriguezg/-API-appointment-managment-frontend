@@ -1,16 +1,14 @@
 import { useEffect, useState } from 'react';
 import { Redirect } from 'react-router-dom';
-import { Form, Select, Skeleton } from 'antd';
+import { Form, Skeleton } from 'antd';
 import { UpdateMyProfileService } from '../../../services/Users';
 import useUserProfile from '../../../hooks/useUserProfile';
+import { getFieldErrors } from '../../../config/utils';
 import { DashboardPageEdit } from '../../../components/Dashboard';
 import { ButtonCancelAndSave } from '../../../components/Button';
-import { getFieldErrors } from '../../../config/utils';
 import ErrorMessage from '../../../components/ErrorMessage';
-import InputNumber from '../../../components/Input/InputNumber';
-import { identificationTypes } from '../../../config/utils/enums';
-
-const { Option } = Select;
+import InputIdentificationType from '../../../components/Input/InputIdentificationType';
+import InputIdentificationNumber from '../../../components/Input/InputIdentificationNumber';
 
 const Identification = () => {
   const [form] = Form.useForm();
@@ -69,28 +67,9 @@ const Identification = () => {
             onFinish={onFinish}
             hideRequiredMark
           >
-            <Form.Item name="identification_type" label="Tipo de identificación">
-              <Select placeholder="Seleccione un tipo de identificación">
-                {identificationTypes.map(obj => (
-                  <Option key={obj.value} value={obj.value}>
-                    {obj.text}
-                  </Option>
-                ))}
-              </Select>
-            </Form.Item>
+            <InputIdentificationType />
 
-            <Form.Item
-              name="identification_number"
-              label="Número de identificación"
-              rules={[
-                {
-                  required: true,
-                  message: 'Ingrese su número de identificación',
-                },
-              ]}
-            >
-              <InputNumber min={1} />
-            </Form.Item>
+            <InputIdentificationNumber />
 
             <Form.Item>
               <ButtonCancelAndSave loading={btnLoading} />

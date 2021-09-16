@@ -1,13 +1,15 @@
 import { useContext, useEffect, useState } from 'react';
 import { Redirect } from 'react-router-dom';
-import { Form, Input, Skeleton } from 'antd';
+import { Form, Skeleton } from 'antd';
 import AuthContext from '../../../context/Auth';
+import useUserProfile from '../../../hooks/useUserProfile';
 import { UpdateMyProfileService } from '../../../services/Users';
 import { DashboardPageEdit } from '../../../components/Dashboard';
 import { ButtonCancelAndSave } from '../../../components/Button';
 import ErrorMessage from '../../../components/ErrorMessage';
+import InputFirstName from '../../../components/Input/InputFirstName';
+import InputLastName from '../../../components/Input/InputLastName';
 import { getFieldErrors } from '../../../config/utils';
-import useUserProfile from '../../../hooks/useUserProfile';
 
 const Name = () => {
   const [form] = Form.useForm();
@@ -68,39 +70,9 @@ const Name = () => {
             onFinish={onFinish}
             hideRequiredMark
           >
-            <Form.Item
-              name="first_name"
-              label="Nombre"
-              rules={[
-                {
-                  required: true,
-                  message: 'Ingrese su nombre',
-                },
-                {
-                  whitespace: true,
-                  message: 'Ingrese su nombre',
-                },
-              ]}
-            >
-              <Input maxLength={50} />
-            </Form.Item>
+            <InputFirstName />
 
-            <Form.Item
-              name="last_name"
-              label="Apellidos"
-              rules={[
-                {
-                  required: true,
-                  message: 'Ingrese sus apellidos',
-                },
-                {
-                  whitespace: true,
-                  message: 'Ingrese sus apellidos',
-                },
-              ]}
-            >
-              <Input maxLength={50} />
-            </Form.Item>
+            <InputLastName />
 
             <Form.Item>
               <ButtonCancelAndSave loading={btnLoading} />

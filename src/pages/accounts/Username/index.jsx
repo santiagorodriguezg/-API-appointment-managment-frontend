@@ -1,13 +1,14 @@
 import { useContext, useEffect, useState } from 'react';
-import { Divider, Form, Input, Skeleton, Typography } from 'antd';
+import { Divider, Form, Skeleton, Typography } from 'antd';
 import { Redirect } from 'react-router-dom';
-import { DashboardPageEdit } from '../../../components/Dashboard';
+import AuthContext from '../../../context/Auth';
 import useUserProfile from '../../../hooks/useUserProfile';
 import { UpdateMyProfileService } from '../../../services/Users';
 import { getFieldErrors } from '../../../config/utils';
-import ErrorMessage from '../../../components/ErrorMessage';
+import { DashboardPageEdit } from '../../../components/Dashboard';
 import { ButtonCancelAndSave } from '../../../components/Button';
-import AuthContext from '../../../context/Auth';
+import ErrorMessage from '../../../components/ErrorMessage';
+import InputUsername from '../../../components/Input/InputUsername';
 
 const { Title, Paragraph } = Typography;
 
@@ -73,22 +74,7 @@ const Username = () => {
             onFinish={onFinish}
             hideRequiredMark
           >
-            <Form.Item
-              name="username"
-              label="Usuario"
-              rules={[
-                {
-                  required: true,
-                  message: 'Ingrese su usuario',
-                },
-                {
-                  whitespace: true,
-                  message: 'Ingrese su usuario',
-                },
-              ]}
-            >
-              <Input maxLength={40} />
-            </Form.Item>
+            <InputUsername />
 
             <Form.Item>
               <ButtonCancelAndSave loading={btnLoading} />

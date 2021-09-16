@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
 import { Redirect } from 'react-router-dom';
-import { Form, Input, Skeleton } from 'antd';
-import { DashboardPageEdit } from '../../../components/Dashboard';
-import { ButtonCancelAndSave } from '../../../components/Button';
+import { Form, Skeleton } from 'antd';
 import useUserProfile from '../../../hooks/useUserProfile';
 import { UpdateMyProfileService } from '../../../services/Users';
 import { getFieldErrors } from '../../../config/utils';
+import { DashboardPageEdit } from '../../../components/Dashboard';
+import { ButtonCancelAndSave } from '../../../components/Button';
 import ErrorMessage from '../../../components/ErrorMessage';
+import InputLocation from '../../../components/Input/InputLocation';
 
 const Location = () => {
   const [form] = Form.useForm();
@@ -66,26 +67,7 @@ const Location = () => {
             onFinish={onFinish}
             hideRequiredMark
           >
-            <Form.Item
-              name="city"
-              label="Cuidad"
-              rules={[
-                {
-                  required: true,
-                  message: 'Ingrese el nombre de la ciudad',
-                },
-              ]}
-            >
-              <Input maxLength={30} />
-            </Form.Item>
-
-            <Form.Item name="neighborhood" label="Barrio">
-              <Input maxLength={40} />
-            </Form.Item>
-
-            <Form.Item name="address" label="Dirección">
-              <Input maxLength={40} />
-            </Form.Item>
+            <InputLocation />
 
             <Form.Item>
               <ButtonCancelAndSave loading={btnLoading} />
