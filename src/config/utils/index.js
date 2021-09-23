@@ -20,3 +20,10 @@ export const getFullDate = date => {
     minute: 'numeric',
   });
 };
+
+export const getShortDate = date => {
+  return new Date(date).toLocaleDateString('es-co', {
+    hour: 'numeric',
+    minute: 'numeric',
+  });
+};

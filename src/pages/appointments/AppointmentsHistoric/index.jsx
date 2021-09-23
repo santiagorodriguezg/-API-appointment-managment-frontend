@@ -6,7 +6,7 @@ import AuthContext from '../../../context/Auth';
 import { AppointmentUserListService } from '../../../services/Appointments';
 import Button from '../../../components/Button';
 import Dashboard from '../../../components/Dashboard';
-import { getFullDate } from '../../../config/utils';
+import { getShortDate } from '../../../config/utils';
 import S from '../../../components/Dashboard/styles';
 import { Colors } from '../../../styles/Variables';
 import {
@@ -212,17 +212,15 @@ export default class AppointmentsHistoric extends Component {
         title: 'Código',
         dataIndex: 'id',
         key: 'id',
-        sorter: true,
-        width: 110,
+        width: 90,
         filteredValue: filteredInfo.id || null,
-        sortOrder: sortedInfo.columnKey === 'id' && sortedInfo.order,
         ...this.getColumnSearchProps('código', 'id'),
       },
       {
         title: 'Tipo de cita',
         dataIndex: 'type',
         key: 'type',
-        width: 170,
+        width: 150,
         filterMultiple: false,
         filters: appointmentTypes,
         filteredValue: filteredInfo.type || null,
@@ -240,16 +238,16 @@ export default class AppointmentsHistoric extends Component {
         title: 'Fecha de solicitud',
         dataIndex: 'created_at',
         key: 'created_at',
-        width: 250,
+        width: 150,
         sorter: true,
         sortOrder: sortedInfo.columnKey === 'created_at' && sortedInfo.order,
-        render: text => getFullDate(text),
+        render: text => getShortDate(text),
       },
       {
         title: 'Audio',
         dataIndex: 'audio',
         key: 'audio',
-        width: 150,
+        width: 120,
         render: text => (
           <Button type="link" shape="circle" icon={<PlayCircleOutlined />} href={text} target="_blank">
             Escuchar
@@ -259,7 +257,7 @@ export default class AppointmentsHistoric extends Component {
       {
         title: 'Acción',
         key: 'action',
-        width: 250,
+        width: 200,
         render: (text, record) => (
           <Space size="middle">
             <Button onClick={() => this.showModal(record)}>Ver detalles</Button>
