@@ -59,6 +59,28 @@ información.
 
 Soluciona problemas relacionados con `eslint`.
 
+## Actualizar dependencias
+
+Para actualizar las dependencias ver el
+artículo [Update all the Node.js dependencies to their latest version](https://nodejs.dev/learn/update-all-the-nodejs-dependencies-to-their-latest-version)
+. \
+Tener cuidado con los nuevos cambios de las dependencias ya que puede dejar de funcionar correctamente el proyecto.
+
+## Construir aplicación para producción y ejecutarla en local
+
+1. Crear archivo `.env.production`
+2. Ejecutar el comando `npm run build`
+3. Ejecutar servidor local (ver [Deployment](#deployment)):
+   ```bash
+   npm install -g serve
+   
+   # puerto 5000
+   serve -s build
+   
+   # puerto personalizado
+   serve -s build -l 3000
+   ```
+
 ## Más información
 
 ### Code Splitting
