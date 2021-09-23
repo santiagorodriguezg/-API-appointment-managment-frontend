@@ -25,6 +25,9 @@ import AppointmentsCreate from '../pages/appointments/AppointmentsCreate';
 import AppointmentsHistoric from '../pages/appointments/AppointmentsHistoric';
 
 import Home from '../pages/Home';
+import ChatList from '../pages/Chat/ChatList';
+
+import Error404 from '../pages/errors/404';
 
 const AppRouter = () => {
   return (
@@ -51,7 +54,11 @@ const AppRouter = () => {
             <PrivateRoute exact path="/appointments/create" component={AppointmentsCreate} />
             <PrivateRoute exact path="/appointments/historic" component={AppointmentsHistoric} />
 
+            <PrivateRoute exact path="/chat/listing" component={ChatList} />
+
             <PrivateRoute exact path="/home" component={Home} />
+
+            <Route path="*" component={Error404} />
           </Switch>
         </Router>
       </AuthProvider>
