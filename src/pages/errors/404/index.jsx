@@ -7,8 +7,8 @@ const Error404 = () => {
       title="404"
       subTitle="Lo sentimos, la página que has visitado no existe."
       extra={
-        <Button type="primary" href="/accounts/login">
-          Regresar al inicio de sesión
+        <Button type="primary" href="/accounts/profile">
+          Regresar a Mi cuenta
         </Button>
       }
     />

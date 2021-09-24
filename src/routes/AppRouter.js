@@ -3,7 +3,8 @@ import { ConfigProvider } from 'antd';
 import esES from 'antd/lib/locale/es_ES';
 
 import { AuthProvider } from '../context/Auth';
-import { PrivateRoute } from './PrivateRoute';
+import PublicRoute from './PublicRoute';
+import PrivateRoute from './PrivateRoute';
 
 import Login from '../pages/accounts/Login';
 import Signup from '../pages/accounts/Signup';
@@ -35,12 +36,12 @@ const AppRouter = () => {
       <AuthProvider>
         <Router>
           <Switch>
-            <Route exact path="/accounts/login" component={Login} />
-            <Route exact path="/accounts/signup" component={Signup} />
-            <Route exact path="/accounts/password/reset" component={PasswordReset} />
-            <Route exact path="/accounts/password/reset/done" component={PasswordResetDone} />
-            <Route path="/accounts/password/reset/:uid/:token" component={PasswordResetConfirm} />
-            <Route exact path="/accounts/password/reset/complete" component={PasswordResetConfirmDone} />
+            <PublicRoute exact path="/accounts/login" component={Login} />
+            <PublicRoute exact path="/accounts/signup" component={Signup} />
+            <PublicRoute exact path="/accounts/password/reset" component={PasswordReset} />
+            <PublicRoute exact path="/accounts/password/reset/done" component={PasswordResetDone} />
+            <PublicRoute path="/accounts/password/reset/:uid/:token" component={PasswordResetConfirm} />
+            <PublicRoute exact path="/accounts/password/reset/complete" component={PasswordResetConfirmDone} />
 
             <PrivateRoute exact path="/accounts/logout" component={Logout} />
             <PrivateRoute exact path="/accounts/password/change" component={PasswordChange} />
