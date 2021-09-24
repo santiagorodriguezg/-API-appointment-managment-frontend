@@ -26,6 +26,11 @@ const AppointmentsCreate = () => {
     return e && e.fileList;
   };
 
+  const onReset = () => {
+    form.resetFields();
+    setResult(false);
+  };
+
   const onFinish = async values => {
     try {
       setErrorMsg(false);
@@ -71,7 +76,9 @@ const AppointmentsCreate = () => {
                   <Button type="primary" key="historic" href="/appointments/historic">
                     Histórico de citas
                   </Button>,
-                  <Button key="create">Solicitar nueva cita</Button>,
+                  <Button key="create" onClick={onReset}>
+                    Solicitar nueva cita
+                  </Button>,
                 ]}
               />
             ) : (
