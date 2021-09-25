@@ -1,14 +1,16 @@
 import { Redirect, Route } from 'react-router-dom';
 import Error403 from '../pages/errors/403';
+import TokenStorage from '../config/utils/TokenStorage';
 
 const PrivateRoute = ({ component: Component, roles, ...rest }) => {
-  const token = JSON.parse(window.localStorage.getItem('token'));
+  const accessToken = TokenStorage.getAccessToken();
 
   return (
     <Route
       {...rest}
       component={props => {
-        if (!token) {
+        if (!accessToken) {
+          TokenStorage.clear();
           return (
             <Redirect
               to={{
@@ -20,7 +22,7 @@ const PrivateRoute = ({ component: Component, roles, ...rest }) => {
         }
 
         if (roles) {
-          const role = JSON.parse(window.localStorage.getItem('role'));
+          const role = TokenStorage.getRole();
           if (!roles.includes(role)) return <Error403 />;
         }
 

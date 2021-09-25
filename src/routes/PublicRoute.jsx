@@ -1,11 +1,21 @@
 import React from 'react';
 import { Redirect, Route } from 'react-router-dom';
+import TokenStorage from '../config/utils/TokenStorage';
 
 const PublicRoute = ({ component: Component, ...rest }) => {
-  const token = JSON.parse(window.localStorage.getItem('token'));
+  const accessToken = TokenStorage.getAccessToken();
 
   return (
-    <Route {...rest} component={props => (!token ? <Component {...props} /> : <Redirect to="/accounts/profile" />)} />
+    <Route
+      {...rest}
+      component={props => {
+        if (!accessToken) {
+          TokenStorage.clear();
+          return <Component {...props} />;
+        }
+        return <Redirect to="/accounts/profile" />;
+      }}
+    />
   );
 };
 

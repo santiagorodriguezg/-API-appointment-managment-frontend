@@ -4,12 +4,13 @@ import AuthContext from '../../../context/Auth';
 import { LogoutService } from '../../../services/Auth';
 import ErrorMessage from '../../../components/ErrorMessage';
 import StyledGlobal from '../../../styles/Global';
+import TokenStorage from '../../../config/utils/TokenStorage';
 
 const Logout = () => {
   const { logOut } = useContext(AuthContext);
   const history = useHistory();
   const [errorMsg, setErrorMsg] = useState(false);
-  const refreshToken = JSON.parse(localStorage.getItem('rf')) || '';
+  const refreshToken = TokenStorage.getRefreshToken();
 
   useEffect(() => {
     const load = async () => {

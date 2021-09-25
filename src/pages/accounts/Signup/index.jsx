@@ -33,7 +33,7 @@ const Signup = () => {
 
       setLoading(false);
       logIn({
-        token: res.data.access,
+        access: res.data.access,
         refresh: res.data.refresh,
         role: res.data.user.role,
         username: res.data.user.username,

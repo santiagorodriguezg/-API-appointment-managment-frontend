@@ -1,17 +1,18 @@
 import { createContext } from 'react';
 import useLocalStorage from '../../hooks/useLocalStorage';
+import TokenStorage from '../../config/utils/TokenStorage';
 
 const AuthContext = createContext({});
 
 export const AuthProvider = ({ children }) => {
-  const [token, setToken] = useLocalStorage('token', '');
-  const [refreshToken, setRefreshToken] = useLocalStorage('rf', '');
-  const [role, setRole] = useLocalStorage('role', '');
-  const [username, setUsername] = useLocalStorage('username', '');
-  const [name, setName] = useLocalStorage('name', '');
+  const [accessToken, setAccessToken] = useLocalStorage(TokenStorage.LOCAL_STORAGE_ACCESS_TOKEN, '');
+  const [refreshToken, setRefreshToken] = useLocalStorage(TokenStorage.LOCAL_STORAGE_REFRESH_TOKEN, '');
+  const [role, setRole] = useLocalStorage(TokenStorage.LOCAL_STORAGE_ROLE, '');
+  const [name, setName] = useLocalStorage(TokenStorage.LOCAL_STORAGE_NAME, '');
+  const [username, setUsername] = useLocalStorage(TokenStorage.LOCAL_STORAGE_USERNAME, '');
 
   const logIn = data => {
-    setToken(data.token);
+    setAccessToken(data.access);
     setRefreshToken(data.refresh);
     setRole(data.role);
     setUsername(data.username);
@@ -19,24 +20,20 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logOut = () => {
-    setToken(null);
+    setAccessToken(null);
     setRefreshToken(null);
     setRole(null);
     setUsername(null);
     setName(null);
 
-    localStorage.removeItem('token');
-    localStorage.removeItem('rf');
-    localStorage.removeItem('role');
-    localStorage.removeItem('username');
-    localStorage.removeItem('name');
+    TokenStorage.clear();
   };
 
   return (
     <AuthContext.Provider
       value={{
-        token,
-        setToken,
+        accessToken,
+        setAccessToken,
         refreshToken,
         setRefreshToken,
         role,

@@ -1,4 +1,5 @@
 import axios from 'axios';
+import TokenStorage from '../utils/TokenStorage';
 
 const baseURL = `${process.env.REACT_APP_API_URL}/`;
 
@@ -13,7 +14,7 @@ const axiosWithToken = axios.create(conf);
 
 axiosWithToken.interceptors.request.use(
   config => {
-    const token = JSON.parse(localStorage.getItem('token')) || '';
+    const token = TokenStorage.getAccessToken();
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -24,45 +25,44 @@ axiosWithToken.interceptors.request.use(
   },
 );
 
-axiosWithToken.interceptors.response.use(
-  response => {
-    return response;
-  },
-  async error => {
-    const originalConfig = error.config;
+const createAxiosResponseInterceptor = () => {
+  const interceptor = axiosWithToken.interceptors.response.use(
+    response => response,
+    error => {
+      const originalConfig = error.config;
 
-    if (error.response.status === 401 && originalConfig.url === 'token/refresh/') {
-      return Promise.reject(error);
-    }
-
-    if (error.response.status === 401 && !originalConfig._retry) {
-      const refreshToken = JSON.parse(localStorage.getItem('rf')) || '';
-      if (refreshToken) {
-        originalConfig._retry = true;
-
-        try {
-          const rs = await axiosWithToken.post('token/refresh/', {
-            refresh: refreshToken,
-          });
-
-          localStorage.setItem('token', JSON.stringify(rs.data.access));
-          localStorage.setItem('rf', JSON.stringify(rs.data.refresh));
-
-          return axiosWithToken(originalConfig);
-        } catch (e) {
-          localStorage.removeItem('token');
-          localStorage.removeItem('rf');
-          localStorage.removeItem('role');
-          localStorage.removeItem('username');
-          localStorage.removeItem('name');
-          window.location = '/accounts/login';
-          return Promise.reject(e);
-        }
+      // Reject promise if usual error
+      if (error.response.status !== 401) {
+        return Promise.reject(error);
       }
-    }
-    return Promise.reject(error);
-  },
-);
+
+      /*
+       * When response code is 401, try to refresh the token.
+       * Eject the interceptor so it doesn't loop in case token refresh causes the 401 response
+       */
+      axiosWithToken.interceptors.response.eject(interceptor);
+      const refreshToken = TokenStorage.getRefreshToken();
+
+      return axiosWithToken
+        .post('token/refresh/', {
+          refresh: refreshToken,
+        })
+        .then(response => {
+          TokenStorage.setAccessToken(response.data.access);
+          TokenStorage.setRefreshToken(response.data.refresh);
+          return axiosWithToken(originalConfig);
+        })
+        .catch(err => {
+          TokenStorage.clear();
+          window.location = '/accounts/login';
+          return Promise.reject(err);
+        })
+        .finally(createAxiosResponseInterceptor);
+    },
+  );
+};
+
+createAxiosResponseInterceptor();
 
 export { axiosWithoutToken };
 

@@ -31,7 +31,7 @@ const Login = () => {
       const res = await LoginService(values);
 
       logIn({
-        token: res.data.access,
+        access: res.data.access,
         refresh: res.data.refresh,
         role: res.data.user.role,
         username: res.data.user.username,
