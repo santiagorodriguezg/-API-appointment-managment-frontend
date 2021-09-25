@@ -22,6 +22,8 @@ import Phone from '../pages/accounts/Phone';
 import Location from '../pages/accounts/Location';
 import Identification from '../pages/accounts/Identification';
 
+import UsersList from '../pages/users/UsersList';
+
 import AppointmentsCreate from '../pages/appointments/AppointmentsCreate';
 import AppointmentsHistoric from '../pages/appointments/AppointmentsHistoric';
 
@@ -29,6 +31,7 @@ import Home from '../pages/Home';
 import ChatList from '../pages/Chat/ChatList';
 
 import Error404 from '../pages/errors/404';
+import { userRoles } from '../config/utils/enums';
 
 const AppRouter = () => {
   return (
@@ -51,6 +54,8 @@ const AppRouter = () => {
             <PrivateRoute exact path="/accounts/email" component={Email} />
             <PrivateRoute exact path="/accounts/phone" component={Phone} />
             <PrivateRoute exact path="/accounts/location" component={Location} />
+
+            <PrivateRoute exact path="/users" component={UsersList} roles={[userRoles[0].value, userRoles[1].value]} />
 
             <PrivateRoute exact path="/appointments/create" component={AppointmentsCreate} />
             <PrivateRoute exact path="/appointments/historic" component={AppointmentsHistoric} />

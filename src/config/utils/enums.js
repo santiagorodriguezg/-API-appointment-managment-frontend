@@ -13,8 +13,11 @@ export const userRoles = [
   },
 ];
 
+const roleColors = ['green', 'blue', 'purple'];
+
 export const getRoleName = value => userRoles.find(obj => obj.value === value)?.text;
 export const getRoleValue = text => userRoles.find(obj => obj.text === text)?.value;
+export const getRoleColor = value => roleColors[userRoles.indexOf(userRoles.find(obj => obj.value === value))];
 
 export const identificationTypes = [
   {
@@ -44,6 +47,7 @@ export const appointmentTypes = [
     value: 'LEG',
   },
 ];
+
 const appointmentTypesColors = ['green', 'geekblue'];
 
 export const getAppointmentTypeName = value => appointmentTypes.find(obj => obj.value === value)?.text;
