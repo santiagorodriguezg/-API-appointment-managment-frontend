@@ -1,31 +1,15 @@
-import { Component } from 'react';
-import { Input, Space, Table, Tag } from 'antd';
-import { ClearOutlined, SearchOutlined } from '@ant-design/icons';
-import Highlighter from 'react-highlight-words';
+import { Space, Table, Tag } from 'antd';
+import { ClearOutlined } from '@ant-design/icons';
 import { UsersListService } from '../../../services/Users';
 import Button from '../../../components/Button';
 import Dashboard from '../../../components/Dashboard';
 import ErrorMessage from '../../../components/ErrorMessage';
 import S from '../../../components/Dashboard/styles';
 import { getShortDate } from '../../../config/utils';
+import TableBase from '../../../config/utils/TableBase';
 import { getRoleColor, getRoleName, userRoles } from '../../../config/utils/enums';
-import { Colors } from '../../../styles/Variables';
 
-export default class UsersList extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      loading: false,
-      errorMsg: false,
-      data: [],
-      pagination: {},
-      searchText: '',
-      searchedColumn: '',
-      filteredInfo: null,
-      sortedInfo: null,
-    };
-  }
-
+export default class UsersList extends TableBase {
   componentDidMount() {
     const { pagination } = this.state;
     this.getUsersData({ pagination });
@@ -69,89 +53,12 @@ export default class UsersList extends Component {
       ordering,
     });
 
-    this.setState({
-      filteredInfo: filters,
-      sortedInfo: sorter,
-    });
-  };
-
-  getColumnSearchProps = (title, dataIndex) => ({
-    filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
-      <div style={{ padding: 8 }}>
-        <Input
-          ref={node => {
-            this.searchInput = node;
-          }}
-          placeholder={`Buscar ${title}`}
-          value={selectedKeys[0]}
-          onChange={e => setSelectedKeys(e.target.value ? [e.target.value] : [])}
-          onPressEnter={() => this.handleSearch(selectedKeys, confirm, dataIndex)}
-          style={{
-            marginBottom: 8,
-            display: 'block',
-          }}
-        />
-        <Space size={24}>
-          <Button onClick={() => this.handleReset(clearFilters)} size="small" style={{ width: 90 }}>
-            Limpiar
-          </Button>
-          <Button
-            type="primary"
-            onClick={() => this.handleSearch(selectedKeys, confirm, dataIndex)}
-            icon={<SearchOutlined />}
-            size="small"
-            style={{ width: 90 }}
-          >
-            Buscar
-          </Button>
-        </Space>
-      </div>
-    ),
-    filterIcon: filtered => <SearchOutlined style={{ color: filtered ? Colors.primary : undefined }} />,
-    onFilterDropdownVisibleChange: visible => {
-      if (visible) {
-        setTimeout(() => this.searchInput.select(), 100);
-      }
-    },
-    render: text => {
-      const { searchedColumn, searchText } = this.state;
-      return searchedColumn === dataIndex ? (
-        <Highlighter
-          highlightStyle={{
-            backgroundColor: '#ffc069',
-            padding: 0,
-          }}
-          searchWords={[searchText]}
-          autoEscape
-          textToHighlight={text ? text.toString() : ''}
-        />
-      ) : (
-        text
-      );
-    },
-  });
-
-  handleSearch = (selectedKeys, confirm, dataIndex) => {
-    confirm();
-    this.setState({
-      searchText: selectedKeys[0],
-      searchedColumn: dataIndex,
-    });
-  };
-
-  handleReset = clearFilters => {
-    clearFilters();
-    this.setState({ searchText: '' });
+    super.handleTableChange(pag, filters, sorter);
   };
 
   clearAllFilters = () => {
+    super.clearAllFilters();
     const { pagination } = this.state;
-    this.setState({
-      sortedInfo: null,
-      filteredInfo: null,
-      searchText: '',
-      searchedColumn: '',
-    });
     this.getUsersData({ pagination });
   };
 

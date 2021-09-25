@@ -1,14 +1,11 @@
-import { Component } from 'react';
-import { Input, Space, Table, Tag } from 'antd';
-import { ClearOutlined, PlayCircleOutlined, SearchOutlined } from '@ant-design/icons';
-import Highlighter from 'react-highlight-words';
+import { Space, Table, Tag } from 'antd';
+import { ClearOutlined, PlayCircleOutlined } from '@ant-design/icons';
 import AuthContext from '../../../context/Auth';
 import { AppointmentUserListService } from '../../../services/Appointments';
 import Button from '../../../components/Button';
 import Dashboard from '../../../components/Dashboard';
 import { getShortDate } from '../../../config/utils';
 import S from '../../../components/Dashboard/styles';
-import { Colors } from '../../../styles/Variables';
 import {
   appointmentTypes,
   getAppointmentTypeColor,
@@ -17,25 +14,10 @@ import {
 } from '../../../config/utils/enums';
 import ModalContent from './ModalContent';
 import ErrorMessage from '../../../components/ErrorMessage';
+import TableBase from '../../../config/utils/TableBase';
 
-export default class AppointmentsHistoric extends Component {
+export default class AppointmentsHistoric extends TableBase {
   static contextType = AuthContext;
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      loading: false,
-      errorMsg: false,
-      data: [],
-      pagination: {},
-      isModalVisible: false,
-      modalInfo: {},
-      searchText: '',
-      searchedColumn: '',
-      filteredInfo: null,
-      sortedInfo: null,
-    };
-  }
 
   componentDidMount() {
     const { pagination } = this.state;
@@ -81,103 +63,13 @@ export default class AppointmentsHistoric extends Component {
       ordering,
     });
 
-    this.setState({
-      filteredInfo: filters,
-      sortedInfo: sorter,
-    });
-  };
-
-  getColumnSearchProps = (title, dataIndex) => ({
-    filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
-      <div style={{ padding: 8 }}>
-        <Input
-          ref={node => {
-            this.searchInput = node;
-          }}
-          placeholder={`Buscar ${title}`}
-          value={selectedKeys[0]}
-          onChange={e => setSelectedKeys(e.target.value ? [e.target.value] : [])}
-          onPressEnter={() => this.handleSearch(selectedKeys, confirm, dataIndex)}
-          style={{
-            marginBottom: 8,
-            display: 'block',
-          }}
-        />
-        <Space size={24}>
-          <Button onClick={() => this.handleReset(clearFilters)} size="small" style={{ width: 90 }}>
-            Limpiar
-          </Button>
-          <Button
-            type="primary"
-            onClick={() => this.handleSearch(selectedKeys, confirm, dataIndex)}
-            icon={<SearchOutlined />}
-            size="small"
-            style={{ width: 90 }}
-          >
-            Buscar
-          </Button>
-        </Space>
-      </div>
-    ),
-    filterIcon: filtered => <SearchOutlined style={{ color: filtered ? Colors.primary : undefined }} />,
-    onFilterDropdownVisibleChange: visible => {
-      if (visible) {
-        setTimeout(() => this.searchInput.select(), 100);
-      }
-    },
-    render: text => {
-      const { searchedColumn, searchText } = this.state;
-      return searchedColumn === dataIndex ? (
-        <Highlighter
-          highlightStyle={{
-            backgroundColor: '#ffc069',
-            padding: 0,
-          }}
-          searchWords={[searchText]}
-          autoEscape
-          textToHighlight={text ? text.toString() : ''}
-        />
-      ) : (
-        text
-      );
-    },
-  });
-
-  handleSearch = (selectedKeys, confirm, dataIndex) => {
-    confirm();
-    this.setState({
-      searchText: selectedKeys[0],
-      searchedColumn: dataIndex,
-    });
-  };
-
-  handleReset = clearFilters => {
-    clearFilters();
-    this.setState({ searchText: '' });
+    super.handleTableChange(pag, filters, sorter);
   };
 
   clearAllFilters = () => {
+    super.clearAllFilters();
     const { pagination } = this.state;
-    this.setState({
-      sortedInfo: null,
-      filteredInfo: null,
-      searchText: '',
-      searchedColumn: '',
-    });
     this.getAppointmentsData({ pagination });
-  };
-
-  showModal = record => {
-    this.setState({
-      isModalVisible: true,
-      modalInfo: record,
-    });
-  };
-
-  handleModalCancel = () => {
-    this.setState({
-      isModalVisible: false,
-    });
   };
 
   render() {
@@ -273,7 +165,11 @@ export default class AppointmentsHistoric extends Component {
     return (
       <Dashboard>
         {isModalVisible && (
-          <ModalContent isModalVisible={isModalVisible} modalInfo={modalInfo} handleCancel={this.handleModalCancel} />
+          <ModalContent
+            isModalVisible={isModalVisible}
+            modalInfo={modalInfo}
+            handleCancel={() => this.handleModalCancel()}
+          />
         )}
         <S.Title level={3}>Histórico de citas</S.Title>
         {errorMsg ? (

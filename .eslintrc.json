@@ -33,6 +33,7 @@
       120,
       2
     ],
+    "react/no-unused-state": "off",
     "no-underscore-dangle": "off",
     "react/static-property-placement": [
       1,
