@@ -33,9 +33,11 @@ const Login = () => {
       logIn({
         access: res.data.access,
         refresh: res.data.refresh,
-        role: res.data.user.role,
-        username: res.data.user.username,
-        fullName: res.data.user.full_name,
+        user: {
+          role: res.data.user.role,
+          username: res.data.user.username,
+          fullName: res.data.user.full_name,
+        },
       });
       history.replace(from);
     } catch (e) {

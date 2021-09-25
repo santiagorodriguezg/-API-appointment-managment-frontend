@@ -18,11 +18,11 @@ export const MenuItems = props => {
 };
 
 export const UserMenu = () => {
-  const { name } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
 
   return (
     <S.DropdownUserMenu>
-      <Menu.Item key="name">{name}</Menu.Item>
+      <Menu.Item key="name">{user.fullName}</Menu.Item>
       <Menu.Divider />
       <Menu.Item key="/accounts/profile">
         <Link to="/accounts/profile">

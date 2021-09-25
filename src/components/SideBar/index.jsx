@@ -9,7 +9,7 @@ import { userRoles } from '../../config/utils/enums';
 
 const MenuItems = () => {
   const location = useLocation();
-  const { role } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
 
   return (
     <S.Menu theme="light" mode="inline" selectedKeys={[location.pathname]} defaultOpenKeys={['/appointments']}>
@@ -24,7 +24,7 @@ const MenuItems = () => {
       <Menu.Item key="/chat/listing" icon={<MessageOutlined />}>
         <Link to="/chat/listing">Chat</Link>
       </Menu.Item>
-      {role !== userRoles[2].value && (
+      {user.role !== userRoles[2].value && (
         <Menu.Item key="/users" icon={<UsergroupAddOutlined />}>
           <Link to="/users">Usuarios</Link>
         </Menu.Item>

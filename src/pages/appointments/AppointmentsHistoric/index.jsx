@@ -49,9 +49,9 @@ export default class AppointmentsHistoric extends Component {
         errorMsg: false,
       });
       const { pagination } = this.state;
-      const { username, role } = this.context;
+      const { user } = this.context;
 
-      const res = await AppointmentUserListService(username, role, params);
+      const res = await AppointmentUserListService(user.username, user.role, params);
 
       this.setState({
         loading: false,
@@ -181,7 +181,7 @@ export default class AppointmentsHistoric extends Component {
   };
 
   render() {
-    const { role } = this.context;
+    const { user } = this.context;
     const { loading, errorMsg, isModalVisible, modalInfo, data, pagination } = this.state;
     let { sortedInfo, filteredInfo } = this.state;
 
@@ -266,7 +266,7 @@ export default class AppointmentsHistoric extends Component {
       },
     ];
 
-    if (role !== userRoles[2].value) {
+    if (user.role !== userRoles[2].value) {
       columns.splice(1, 0, ...columnsAdmin);
     }
 

@@ -7,24 +7,18 @@ const AuthContext = createContext({});
 export const AuthProvider = ({ children }) => {
   const [accessToken, setAccessToken] = useLocalStorage(TokenStorage.LOCAL_STORAGE_ACCESS_TOKEN, '');
   const [refreshToken, setRefreshToken] = useLocalStorage(TokenStorage.LOCAL_STORAGE_REFRESH_TOKEN, '');
-  const [role, setRole] = useLocalStorage(TokenStorage.LOCAL_STORAGE_ROLE, '');
-  const [name, setName] = useLocalStorage(TokenStorage.LOCAL_STORAGE_NAME, '');
-  const [username, setUsername] = useLocalStorage(TokenStorage.LOCAL_STORAGE_USERNAME, '');
+  const [user, setUser] = useLocalStorage(TokenStorage.LOCAL_STORAGE_USER, {});
 
   const logIn = data => {
     setAccessToken(data.access);
     setRefreshToken(data.refresh);
-    setRole(data.role);
-    setUsername(data.username);
-    setName(data.fullName);
+    setUser(data.user);
   };
 
   const logOut = () => {
     setAccessToken(null);
     setRefreshToken(null);
-    setRole(null);
-    setUsername(null);
-    setName(null);
+    setUser(null);
 
     TokenStorage.clear();
   };
@@ -36,12 +30,8 @@ export const AuthProvider = ({ children }) => {
         setAccessToken,
         refreshToken,
         setRefreshToken,
-        role,
-        setRole,
-        username,
-        setUsername,
-        name,
-        setName,
+        user,
+        setUser,
         logIn,
         logOut,
       }}

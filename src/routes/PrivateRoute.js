@@ -22,7 +22,7 @@ const PrivateRoute = ({ component: Component, roles, ...rest }) => {
         }
 
         if (roles) {
-          const role = TokenStorage.getRole();
+          const { role } = TokenStorage.getUser();
           if (!roles.includes(role)) return <Error403 />;
         }
 
