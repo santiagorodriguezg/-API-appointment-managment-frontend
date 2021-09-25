@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Layout } from 'antd';
+import { Layout, Menu } from 'antd';
 
 const { Sider } = Layout;
 const S = {};
@@ -12,6 +12,10 @@ S.Sider = styled(Sider)`
   top: 64px;
   bottom: 0;
   left: 0;
+`;
+
+S.Menu = styled(Menu)`
+  border: none;
 `;
 
 export default S;

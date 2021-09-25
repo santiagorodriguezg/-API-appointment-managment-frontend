@@ -65,7 +65,8 @@ S.DropdownMenu = styled(Menu)`
   }
 
   @media (min-width: 992px) {
-    width: auto !important;
+    width: 100%;
+    justify-content: end;
   }
 `;
 

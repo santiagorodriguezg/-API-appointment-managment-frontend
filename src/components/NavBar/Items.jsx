@@ -22,7 +22,7 @@ export const UserMenu = () => {
 
   return (
     <S.DropdownUserMenu>
-      <Menu.Item key="3">{name}</Menu.Item>
+      <Menu.Item key="name">{name}</Menu.Item>
       <Menu.Divider />
       <Menu.Item key="/accounts/profile">
         <Link to="/accounts/profile">

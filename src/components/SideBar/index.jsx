@@ -1,38 +1,58 @@
+import { useContext } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Drawer, Menu } from 'antd';
-import { DiffOutlined, MessageOutlined, UploadOutlined, UserOutlined, VideoCameraOutlined } from '@ant-design/icons';
+import { DiffOutlined, MessageOutlined, UsergroupAddOutlined, UserOutlined } from '@ant-design/icons';
 import { MobileAndBelow, Tablet } from '../../styles/MediaQuery';
 import S from './styles';
+import AuthContext from '../../context/Auth';
+import { userRoles } from '../../config/utils/enums';
 
-const { SubMenu } = Menu;
-
-const SideBar = ({ collapsed, onClose, visible }) => {
+const MenuItems = () => {
   const location = useLocation();
+  const { role } = useContext(AuthContext);
 
+  return (
+    <S.Menu theme="light" mode="inline" selectedKeys={[location.pathname]} defaultOpenKeys={['/appointments']}>
+      <Menu.SubMenu key="/appointments" icon={<DiffOutlined />} title="Citas">
+        <Menu.Item key="/appointments/create">
+          <Link to="/appointments/create">Solicitar</Link>
+        </Menu.Item>
+        <Menu.Item key="/appointments/historic">
+          <Link to="/appointments/historic">Histórico</Link>
+        </Menu.Item>
+      </Menu.SubMenu>
+      <Menu.Item key="/chat/listing" icon={<MessageOutlined />}>
+        <Link to="/chat/listing">Chat</Link>
+      </Menu.Item>
+      {role !== userRoles[2].value && (
+        <Menu.Item key="/users" icon={<UsergroupAddOutlined />}>
+          <Link to="/users">Usuarios</Link>
+        </Menu.Item>
+      )}
+      <Menu.Item key="/accounts/profile" icon={<UserOutlined />}>
+        <Link to="/accounts/profile">Mi cuenta</Link>
+      </Menu.Item>
+      <Menu.Item key="4" icon={<MessageOutlined />}>
+        Contacto
+      </Menu.Item>
+    </S.Menu>
+  );
+};
+
+const SideBar = ({ collapsed, visible, onClose, onBreakpoint }) => {
   return (
     <>
       <Tablet>
-        <S.Sider trigger={null} collapsible collapsed={collapsed} theme="light" breakpoint="xl" width={250}>
-          <div className="logo" />
-          <Menu theme="light" mode="inline" selectedKeys={[location.pathname]} defaultOpenKeys={['/appointments']}>
-            <SubMenu key="/appointments" icon={<DiffOutlined />} title="Citas">
-              <Menu.Item key="/appointments/create">
-                <Link to="/appointments/create">Solicitar</Link>
-              </Menu.Item>
-              <Menu.Item key="/appointments/historic">
-                <Link to="/appointments/historic">Histórico</Link>
-              </Menu.Item>
-            </SubMenu>
-            <Menu.Item key="2" icon={<MessageOutlined />}>
-              Chat
-            </Menu.Item>
-            <Menu.Item key="/accounts/profile" icon={<UserOutlined />}>
-              <Link to="/accounts/profile">Mi cuenta</Link>
-            </Menu.Item>
-            <Menu.Item key="4" icon={<MessageOutlined />}>
-              Contacto
-            </Menu.Item>
-          </Menu>
+        <S.Sider
+          trigger={null}
+          collapsible
+          collapsed={collapsed}
+          theme="light"
+          breakpoint="xl"
+          width={250}
+          onBreakpoint={onBreakpoint}
+        >
+          <MenuItems />
         </S.Sider>
       </Tablet>
 
@@ -45,18 +65,7 @@ const SideBar = ({ collapsed, onClose, visible }) => {
           onClose={onClose}
           visible={visible}
         >
-          <div className="logo" />
-          <Menu theme="light" mode="inline" defaultSelectedKeys={['1']}>
-            <Menu.Item key="1" icon={<UserOutlined />}>
-              nav 1
-            </Menu.Item>
-            <Menu.Item key="2" icon={<VideoCameraOutlined />}>
-              nav 2
-            </Menu.Item>
-            <Menu.Item key="3" icon={<UploadOutlined />}>
-              nav 3
-            </Menu.Item>
-          </Menu>
+          <MenuItems />
         </Drawer>
       </MobileAndBelow>
     </>

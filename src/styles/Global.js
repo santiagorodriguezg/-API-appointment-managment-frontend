@@ -1,7 +1,32 @@
-import styled, { css } from 'styled-components';
+import styled, { createGlobalStyle, css } from 'styled-components';
 import Variables, { Colors } from './Variables';
 
 const StyledGlobal = {};
+
+// Global application styles
+export const GlobalStyle = createGlobalStyle`
+  body {
+    margin: 0;
+    font-family: 'Open Sans', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    color: #262626;
+  }
+
+  code {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+  }
+
+  #root {
+    height: 100%;
+  }
+
+  // Ant design tooltip
+  .ant-tooltip-inner > a {
+    color: white;
+  }
+`;
 
 StyledGlobal.Container = styled.div`
   padding: 0 15px;

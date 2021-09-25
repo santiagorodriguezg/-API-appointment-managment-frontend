@@ -18,12 +18,18 @@ const Dashboard = ({ children }) => {
     setCollapsed(!collapsed);
   };
 
+  const onBreakpoint = broken => {
+    if (broken) {
+      setCollapsed(true);
+    }
+  };
+
   return (
     <>
       <Affix>
         <NavBar toggle={toggle} />
       </Affix>
-      <SideBar collapsed={collapsed} onClose={onClose} visible={visible} />
+      <SideBar collapsed={collapsed} onClose={onClose} onBreakpoint={onBreakpoint} visible={visible} />
       <S.LeftContent $isCollapsed={collapsed}>
         <S.Content>{children}</S.Content>
         <Footer />
