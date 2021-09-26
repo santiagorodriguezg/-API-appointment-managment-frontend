@@ -76,15 +76,11 @@ S.UploadPhoto = styled.div`
   .ant-upload-list-item {
     margin: 8px 0;
     border: none;
-    padding: 8px 40px 8px 20px;
-  }
-
-  .ant-upload-list-item-progress {
-    padding-right: 40px;
+    padding: 8px 25px 0 0;
   }
 
   .ant-progress-inner {
-    margin-top: 8px;
+    margin-top: 16px;
   }
 `;
 

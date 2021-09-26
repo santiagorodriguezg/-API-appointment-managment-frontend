@@ -8,15 +8,15 @@ const InputUsername = () => {
       rules={[
         {
           required: true,
-          message: 'Ingrese su usuario',
+          message: 'Ingresa tu usuario',
         },
         {
           whitespace: true,
-          message: 'Ingrese su usuario',
+          message: 'Ingresa tu usuario',
         },
         {
           min: 3,
-          message: 'Asegúrese de que este campo tenga al menos 3 caracteres',
+          message: 'Ingresa al menos 3 caracteres',
         },
       ]}
     >

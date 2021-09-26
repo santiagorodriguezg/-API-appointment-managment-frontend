@@ -8,7 +8,7 @@ const OldPassword = () => {
       rules={[
         {
           required: true,
-          message: 'Ingrese su contraseña actual',
+          message: 'Ingresa tu contraseña actual',
         },
       ]}
     >
@@ -17,7 +17,7 @@ const OldPassword = () => {
   );
 };
 
-const NewPassword = ({ minRule, patternRule }) => {
+const NewPassword = ({ rules }) => {
   return (
     <Form.Item
       name="password"
@@ -25,10 +25,9 @@ const NewPassword = ({ minRule, patternRule }) => {
       rules={[
         {
           required: true,
-          message: 'Ingrese su contraseña nueva',
+          message: 'Ingresa tu contraseña nueva',
         },
-        minRule,
-        patternRule,
+        ...rules,
       ]}
     >
       <Input.Password maxLength={25} />
@@ -45,11 +44,11 @@ const ConfirmPassword = ({ newConfirm }) => {
       rules={[
         {
           required: true,
-          message: `Confirme su contraseña ${newConfirm ? 'nueva' : ''}`,
+          message: `Confirma tu contraseña ${newConfirm ? 'nueva' : ''}`,
         },
         {
           whitespace: true,
-          message: `Confirme su contraseña ${newConfirm ? 'nueva' : ''}`,
+          message: `Confirma tu contraseña ${newConfirm ? 'nueva' : ''}`,
         },
         ({ getFieldValue }) => ({
           validator(_, value) {
@@ -66,42 +65,35 @@ const ConfirmPassword = ({ newConfirm }) => {
   );
 };
 
-const InputPassword = ({ oldPassword, newPassword, confirmPassword }) => {
-  const passwordMinRule = {
-    min: 8,
-    message: 'Asegúrese de que este campo tenga al menos 8 caracteres',
-  };
+const InputPassword = ({ requiredOnly, oldPassword, newPassword, confirmPassword }) => {
+  const rules = [
+    {
+      required: true,
+      message: 'Ingresa tu contraseña',
+    },
+    {
+      min: 8,
+      message: 'Ingresa una combinación que tenga al menos 8 caracteres',
+    },
+    {
+      pattern: /(?=.*\d)(?=.*[a-zA-Z]).*/,
+      message: 'La contraseña debe contener letras y números',
+    },
+  ];
 
-  const passwordPatternRule = {
-    pattern: /(?=.*\d)(?=.*[a-zA-Z]).*/,
-    message: 'La contraseña debe contener letras y números',
-  };
+  if (requiredOnly) rules.splice(1, 2);
 
-  if (oldPassword) {
-    return <OldPassword />;
-  }
+  if (oldPassword) return <OldPassword />;
 
   if (newPassword) {
-    return <NewPassword minRule={passwordMinRule} patternRule={passwordPatternRule} />;
+    rules.shift();
+    return <NewPassword rules={rules} />;
   }
 
-  if (confirmPassword) {
-    return <ConfirmPassword newConfirm={confirmPassword?.new} />;
-  }
+  if (confirmPassword) return <ConfirmPassword newConfirm={confirmPassword?.new} />;
 
   return (
-    <Form.Item
-      name="password"
-      label="Contraseña"
-      rules={[
-        {
-          required: true,
-          message: 'Ingrese su contraseña',
-        },
-        passwordMinRule,
-        passwordPatternRule,
-      ]}
-    >
+    <Form.Item name="password" label="Contraseña" rules={rules}>
       <Input.Password maxLength={25} />
     </Form.Item>
   );

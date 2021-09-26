@@ -9,7 +9,7 @@ const InputIdentificationNumber = () => {
       rules={[
         {
           required: true,
-          message: 'Ingrese su número de identificación',
+          message: 'Ingresa tu número de identificación',
         },
       ]}
     >

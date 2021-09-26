@@ -9,7 +9,7 @@ const InputPhone = () => {
       rules={[
         {
           required: true,
-          message: 'Ingrese su número de teléfono',
+          message: 'Ingresa tu número de teléfono',
         },
       ]}
     >

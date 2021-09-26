@@ -9,7 +9,7 @@ const InputLocation = () => {
         rules={[
           {
             required: true,
-            message: 'Ingrese el nombre de la ciudad o municipio',
+            message: 'Ingresa el nombre de la ciudad o municipio',
           },
         ]}
       >

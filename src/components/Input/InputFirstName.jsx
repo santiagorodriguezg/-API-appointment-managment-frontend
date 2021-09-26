@@ -8,11 +8,11 @@ const InputFirstName = () => {
       rules={[
         {
           required: true,
-          message: 'Ingrese su nombre',
+          message: 'Ingresa tu nombre',
         },
         {
           whitespace: true,
-          message: 'Ingrese su nombre',
+          message: 'Ingresa tu nombre',
         },
       ]}
     >

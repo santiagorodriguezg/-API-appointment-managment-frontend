@@ -66,7 +66,7 @@ const Login = () => {
             <Form layout="vertical" name="login" className="form-box" onFinish={onFinish} hideRequiredMark>
               <InputUsername />
 
-              <InputPassword />
+              <InputPassword requiredOnly />
 
               <Form.Item noStyle>
                 <StyledGlobal.PForm>

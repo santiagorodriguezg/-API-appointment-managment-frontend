@@ -120,7 +120,7 @@ const AppointmentsCreate = () => {
                               rules={[
                                 {
                                   required: true,
-                                  message: 'Introduce el nombre completo de tu hijo/a',
+                                  message: 'Ingresa el nombre completo de tu hijo/a',
                                 },
                               ]}
                             >
@@ -137,7 +137,7 @@ const AppointmentsCreate = () => {
                               rules={[
                                 {
                                   required: true,
-                                  message: 'Introduce la edad de tu hijo/a',
+                                  message: 'Ingresa la edad de tu hijo/a',
                                 },
                               ]}
                             >
@@ -183,7 +183,7 @@ const AppointmentsCreate = () => {
                               rules={[
                                 {
                                   required: true,
-                                  message: 'Introduce el nombre completo del posible agresor',
+                                  message: 'Ingresa el nombre completo del posible agresor',
                                 },
                               ]}
                             >

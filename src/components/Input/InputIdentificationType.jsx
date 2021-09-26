@@ -9,11 +9,11 @@ const InputIdentificationType = () => {
       rules={[
         {
           required: true,
-          message: 'Seleccione el tipo de identificación',
+          message: 'Selecciona el tipo de identificación',
         },
       ]}
     >
-      <Select placeholder="Seleccione un tipo de identificación">
+      <Select placeholder="Selecciona un tipo de identificación">
         {identificationTypes.map(obj => (
           <Select.Option key={obj.value} value={obj.value}>
             {obj.text}

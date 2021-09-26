@@ -4,14 +4,14 @@ const InputEmail = ({ required }) => {
   const rules = [
     {
       type: 'email',
-      message: 'El correo electrónico ingresado no es válido',
+      message: 'Ingresa un correo electrónico válido',
     },
   ];
 
   if (required) {
     rules.push({
       required: true,
-      message: 'El correo electrónico es obligatorio',
+      message: 'Ingresa tu correo electrónico',
     });
   }
 
