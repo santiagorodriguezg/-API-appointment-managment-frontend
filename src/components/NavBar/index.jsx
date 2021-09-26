@@ -1,11 +1,14 @@
+import { useContext } from 'react';
 import { Avatar, Col, Dropdown, Row } from 'antd';
 import { CaretDownOutlined, MoreOutlined, UserOutlined } from '@ant-design/icons';
 
+import AuthContext from '../../context/Auth';
 import { MobileAndBelow, Tablet } from '../../styles/MediaQuery';
 import { MenuItems, UserMenu } from './Items';
 import S from './styles';
 
 const NavBar = ({ toggle }) => {
+  const { user } = useContext(AuthContext);
   return (
     <S.Header>
       <Row>
@@ -31,9 +34,14 @@ const NavBar = ({ toggle }) => {
               </Dropdown>
             </MobileAndBelow>
 
-            <Dropdown arrow overlay={<UserMenu />} trigger={['click']} placement="bottomRight">
+            <Dropdown arrow overlay={<UserMenu fullName={user.fullName} />} trigger={['click']} placement="bottomRight">
               <S.UserMenu type="text">
-                <Avatar icon={<UserOutlined />} /> <CaretDownOutlined />
+                {user?.picture ? (
+                  <S.Photo src={user.picture} alt={user.fullName} />
+                ) : (
+                  <Avatar icon={<UserOutlined />} />
+                )}
+                <CaretDownOutlined />
               </S.UserMenu>
             </Dropdown>
           </S.NavContainer>

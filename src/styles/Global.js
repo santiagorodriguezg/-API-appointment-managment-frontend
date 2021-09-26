@@ -26,6 +26,11 @@ export const GlobalStyle = createGlobalStyle`
   .ant-tooltip-inner > a {
     color: white;
   }
+  
+  // antd-img-crop
+  .reactEasyCrop_CropArea {
+    border-radius: 50%;
+  }
 `;
 
 StyledGlobal.Container = styled.div`

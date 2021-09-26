@@ -2,10 +2,11 @@ import { useEffect, useState } from 'react';
 import { message, Spin } from 'antd';
 import { GetMyProfileService } from '../../../services/Users';
 import Dashboard from '../../../components/Dashboard';
-import ProfileCard, { ProfileCardItem } from '../../../components/ProfileCard';
+import ProfileCard from '../../../components/ProfileCard';
 import ErrorMessage from '../../../components/ErrorMessage';
 import S from '../../../components/Dashboard/styles';
 import StyledGlobal from '../../../styles/Global';
+import ProfileCardItem, { ProfileCardItemPhoto } from '../../../components/ProfileCard/ProfileCardItem';
 
 const Profile = ({ location }) => {
   const { successMsg } = (location && location.state) || {};
@@ -47,6 +48,7 @@ const Profile = ({ location }) => {
         ) : (
           <Spin spinning={loading} size="large">
             <ProfileCard title="Datos básicos">
+              <ProfileCardItemPhoto />
               <ProfileCardItem
                 href="/accounts/name"
                 title="Nombre"

@@ -1,26 +1,12 @@
 import { Card } from 'antd';
-import styled from 'styled-components';
+import { CameraOutlined } from '@ant-design/icons';
+import styled, { css } from 'styled-components';
 import Variables from '../../styles/Variables';
 
 const S = {};
 
-S.Card = styled(Card)`
-  margin-bottom: ${Variables.marginBase};
-  border-radius: ${Variables.borderRadiusBase};
-  box-shadow: ${Variables.boxShadowBase};
-
-  .ant-card-body a:last-of-type {
-    border-bottom: none;
-  }
-`;
-
-S.ListItem = styled.a`
-  display: block;
+const sharedStylesListItem = css`
   border-bottom: 1px solid rgba(0, 0, 0, 0.125);
-  text-decoration: none;
-  padding: 20px;
-  cursor: ${props => (props.href ? 'pointer' : 'default')};
-  color: initial;
 
   &:hover {
     background-color: #f8f9fa;
@@ -29,6 +15,25 @@ S.ListItem = styled.a`
   &:active {
     background-color: #e9ecef;
   }
+`;
+
+S.Card = styled(Card)`
+  margin-bottom: ${Variables.marginBase};
+  border-radius: ${Variables.borderRadiusBase};
+  box-shadow: ${Variables.boxShadowBase};
+
+  .ant-card-body > a:last-of-type {
+    border-bottom: none;
+  }
+`;
+
+S.ListItem = styled.a`
+  display: block;
+  text-decoration: none;
+  padding: 20px;
+  cursor: ${props => (props.href ? 'pointer' : 'default')};
+  color: initial;
+  ${sharedStylesListItem}
 `;
 
 S.Title = styled.p`
@@ -45,6 +50,76 @@ S.Content = styled.p`
 S.Icon = styled.div`
   text-align: center;
   color: initial;
+`;
+
+S.UploadPhoto = styled.div`
+  position: relative;
+  padding: 20px 20px 14px 20px;
+  width: 100%;
+  cursor: pointer;
+
+  ${sharedStylesListItem}
+  & > p {
+    position: absolute;
+    top: 70px;
+    left: 180px;
+  }
+
+  .ant-upload {
+    width: 100%;
+
+    a {
+      cursor: pointer;
+    }
+  }
+
+  .ant-upload-list-item {
+    margin: 8px 0;
+    border: none;
+    padding: 8px 40px 8px 20px;
+  }
+
+  .ant-upload-list-item-progress {
+    padding-right: 40px;
+  }
+
+  .ant-progress-inner {
+    margin-top: 8px;
+  }
+`;
+
+S.Photo = styled.div`
+  position: relative;
+  width: 120px;
+  height: 120px;
+  overflow: hidden;
+  border-radius: 50%;
+
+  &:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.5);
+    width: 120px;
+    height: 30px;
+  }
+
+  .ant-badge {
+    height: 100%;
+  }
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+`;
+
+S.IconCamera = styled(CameraOutlined)`
+  color: rgba(255, 255, 255, 0.8);
+  z-index: 1;
+  font-size: 24px;
 `;
 
 export default S;

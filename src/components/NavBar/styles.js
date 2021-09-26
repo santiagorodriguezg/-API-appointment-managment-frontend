@@ -104,6 +104,13 @@ S.UserMenu = styled(Button)`
   }
 `;
 
+S.Photo = styled.img`
+  width: 32px;
+  height: 32px;
+  object-fit: cover;
+  border-radius: 50%;
+`;
+
 S.ButtonMoreOutlined = styled(S.UserMenu)`
   span {
     font-size: 28px;

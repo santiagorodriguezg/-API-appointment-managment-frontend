@@ -14,5 +14,4 @@ const ProfileCard = ({ title, children }) => {
   );
 };
 
-export { default as ProfileCardItem } from './ProfileCardItem';
 export default ProfileCard;

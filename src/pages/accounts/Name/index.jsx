@@ -13,7 +13,7 @@ import { getFieldErrors } from '../../../config/utils';
 
 const Name = () => {
   const [form] = Form.useForm();
-  const { setName } = useContext(AuthContext);
+  const { user: userContext, setUser } = useContext(AuthContext);
   const [btnLoading, setBtnLoading] = useState(false);
   const [initialValues, setInitialValues] = useState({});
   const [{ loading, user, errorMsg, redirect, setRedirect }, setErrorMsg] = useUserProfile();
@@ -30,7 +30,9 @@ const Name = () => {
       setBtnLoading(true);
 
       await UpdateMyProfileService(values);
-      setName(`${values.first_name} ${values.last_name}`);
+
+      userContext.fullName = `${values.first_name} ${values.last_name}`;
+      setUser(userContext);
 
       setRedirect(true);
     } catch (e) {

@@ -1,8 +1,6 @@
-import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { Menu } from 'antd';
 import { DiffOutlined, LogoutOutlined, UserOutlined } from '@ant-design/icons';
-import AuthContext from '../../context/Auth';
 import S from './styles';
 
 export const MenuItems = props => {
@@ -17,12 +15,10 @@ export const MenuItems = props => {
   );
 };
 
-export const UserMenu = () => {
-  const { user } = useContext(AuthContext);
-
+export const UserMenu = ({ fullName }) => {
   return (
     <S.DropdownUserMenu>
-      <Menu.Item key="name">{user.fullName}</Menu.Item>
+      <Menu.Item key="name">{fullName}</Menu.Item>
       <Menu.Divider />
       <Menu.Item key="/accounts/profile">
         <Link to="/accounts/profile">

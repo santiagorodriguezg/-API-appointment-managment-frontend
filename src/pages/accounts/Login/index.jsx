@@ -37,6 +37,7 @@ const Login = () => {
           role: res.data.user.role,
           username: res.data.user.username,
           fullName: res.data.user.full_name,
+          picture: res.data.user.picture,
         },
       });
       history.replace(from);
