@@ -1,5 +1,5 @@
-import { Space, Table, Tag } from 'antd';
-import { ClearOutlined } from '@ant-design/icons';
+import { Dropdown, Menu, Space, Table, Tag } from 'antd';
+import { ClearOutlined, DownOutlined, EditOutlined, LinkOutlined, SettingOutlined } from '@ant-design/icons';
 import { UsersListService } from '../../../services/Users';
 import Button from '../../../components/Button';
 import Dashboard from '../../../components/Dashboard';
@@ -8,6 +8,7 @@ import S from '../../../components/Dashboard/styles';
 import { getShortDate } from '../../../config/utils';
 import TableBase from '../../../config/utils/TableBase';
 import { getRoleColor, getRoleName, userRoles } from '../../../config/utils/enums';
+import ModalContent from './ModalContent';
 
 export default class UsersList extends TableBase {
   componentDidMount() {
@@ -63,7 +64,7 @@ export default class UsersList extends TableBase {
   };
 
   render() {
-    const { loading, errorMsg, data, pagination } = this.state;
+    const { loading, errorMsg, isModalVisible, modalInfo, data, pagination } = this.state;
     let { sortedInfo, filteredInfo } = this.state;
 
     sortedInfo = sortedInfo || {};
@@ -133,9 +134,28 @@ export default class UsersList extends TableBase {
         title: 'Acción',
         key: 'action',
         width: 200,
-        render: () => (
+        render: record => (
           <Space size="middle">
-            <Button>Ver detalles</Button>
+            <Button>Detalles</Button>
+            <Dropdown
+              overlay={
+                <Menu>
+                  <Menu.Item key="1" icon={<EditOutlined />}>
+                    Editar
+                  </Menu.Item>
+                  <Menu.Item key="2" icon={<LinkOutlined />} onClick={() => this.showModal(record)}>
+                    Restablecer contraseña
+                  </Menu.Item>
+                </Menu>
+              }
+              trigger={['click']}
+              placement="bottomRight"
+              arrow
+            >
+              <Button>
+                <SettingOutlined /> <DownOutlined />
+              </Button>
+            </Dropdown>
           </Space>
         ),
       },
@@ -144,6 +164,13 @@ export default class UsersList extends TableBase {
     return (
       <Dashboard>
         <S.Title level={3}>Usuarios</S.Title>
+        {isModalVisible && (
+          <ModalContent
+            isModalVisible={isModalVisible}
+            modalInfo={modalInfo}
+            handleCancel={() => this.handleModalCancel()}
+          />
+        )}
         {errorMsg ? (
           <ErrorMessage retryBtn />
         ) : (

@@ -6,6 +6,8 @@ export const UpdateMyProfileService = data => axiosWithToken.patch('users/me/', 
 
 export const PasswordChangeService = data => axiosWithToken.patch('users/password/change/', data);
 
+export const PasswordResetService = username => axiosWithToken.get(`users/${username}/password/reset/`);
+
 export const UsersListService = params => {
   return axiosWithToken.get('users/', {
     params,

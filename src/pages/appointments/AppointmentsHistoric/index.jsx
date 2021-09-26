@@ -164,6 +164,7 @@ export default class AppointmentsHistoric extends TableBase {
 
     return (
       <Dashboard>
+        <S.Title level={3}>Histórico de citas</S.Title>
         {isModalVisible && (
           <ModalContent
             isModalVisible={isModalVisible}
@@ -171,7 +172,6 @@ export default class AppointmentsHistoric extends TableBase {
             handleCancel={() => this.handleModalCancel()}
           />
         )}
-        <S.Title level={3}>Histórico de citas</S.Title>
         {errorMsg ? (
           <ErrorMessage retryBtn />
         ) : (

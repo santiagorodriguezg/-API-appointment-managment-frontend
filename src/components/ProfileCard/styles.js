@@ -57,12 +57,14 @@ S.UploadPhoto = styled.div`
   padding: 20px 20px 14px 20px;
   width: 100%;
   cursor: pointer;
+  z-index: 1;
 
   ${sharedStylesListItem}
   & > p {
     position: absolute;
     top: 70px;
     left: 180px;
+    z-index: -1;
   }
 
   .ant-upload {
