@@ -1,12 +1,14 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { Affix } from 'antd';
+import AuthContext from '../../context/Auth';
+import StyledGlobal from '../../styles/Global';
 import NavBar from '../NavBar';
 import SideBar from '../SideBar';
 import Footer from '../Footer';
 import S from './styles';
 
 const Dashboard = ({ children }) => {
-  const [collapsed, setCollapsed] = useState(false);
+  const { sideBarCollapsed, setSideBarCollapsed } = useContext(AuthContext);
   const [visible, setVisible] = useState(false);
 
   const onClose = () => {
@@ -15,12 +17,12 @@ const Dashboard = ({ children }) => {
 
   const toggle = () => {
     setVisible(true);
-    setCollapsed(!collapsed);
+    setSideBarCollapsed(!sideBarCollapsed);
   };
 
   const onBreakpoint = broken => {
     if (broken) {
-      setCollapsed(true);
+      setSideBarCollapsed(true);
     }
   };
 
@@ -29,14 +31,13 @@ const Dashboard = ({ children }) => {
       <Affix>
         <NavBar toggle={toggle} />
       </Affix>
-      <SideBar collapsed={collapsed} onClose={onClose} onBreakpoint={onBreakpoint} visible={visible} />
-      <S.LeftContent $isCollapsed={collapsed}>
-        <S.Content>{children}</S.Content>
+      <SideBar collapsed={sideBarCollapsed} onClose={onClose} onBreakpoint={onBreakpoint} visible={visible} />
+      <S.LeftContent $isCollapsed={sideBarCollapsed}>
+        <StyledGlobal.WrapperContent>{children}</StyledGlobal.WrapperContent>
         <Footer />
       </S.LeftContent>
     </>
   );
 };
 
-export { default as DashboardPageEdit } from './DashboardPageEdit';
 export default Dashboard;

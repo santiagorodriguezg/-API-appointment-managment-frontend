@@ -45,6 +45,19 @@ StyledGlobal.Wrapper = styled.div`
   flex-direction: column;
 `;
 
+StyledGlobal.WrapperContent = styled.div`
+  flex-grow: 1;
+  background: ${Colors.bgBody};
+  padding: 0 12px;
+
+  @media (min-width: 768px) {
+    padding: 0 24px;
+  }
+  @media (min-width: 992px) {
+    padding: 0 48px;
+  }
+`;
+
 StyledGlobal.Wrapper800 = styled.div`
   max-width: 800px;
   margin: auto;

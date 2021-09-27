@@ -1,7 +1,13 @@
 import { useContext } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Drawer, Menu } from 'antd';
-import { DiffOutlined, MessageOutlined, UsergroupAddOutlined, UserOutlined } from '@ant-design/icons';
+import {
+  DiffOutlined,
+  InfoCircleOutlined,
+  MessageOutlined,
+  UsergroupAddOutlined,
+  UserOutlined,
+} from '@ant-design/icons';
 import { MobileAndBelow, Tablet } from '../../styles/MediaQuery';
 import S from './styles';
 import AuthContext from '../../context/Auth';
@@ -12,7 +18,7 @@ const MenuItems = () => {
   const { user } = useContext(AuthContext);
 
   return (
-    <S.Menu theme="light" mode="inline" selectedKeys={[location.pathname]} defaultOpenKeys={['/appointments']}>
+    <S.Menu theme="light" mode="inline" selectedKeys={[location.pathname]}>
       <Menu.SubMenu key="/appointments" icon={<DiffOutlined />} title="Citas">
         <Menu.Item key="/appointments/create">
           <Link to="/appointments/create">Solicitar</Link>
@@ -32,7 +38,7 @@ const MenuItems = () => {
       <Menu.Item key="/accounts/profile" icon={<UserOutlined />}>
         <Link to="/accounts/profile">Mi cuenta</Link>
       </Menu.Item>
-      <Menu.Item key="4" icon={<MessageOutlined />}>
+      <Menu.Item key="4" icon={<InfoCircleOutlined />}>
         Contacto
       </Menu.Item>
     </S.Menu>
