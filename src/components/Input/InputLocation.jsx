@@ -5,7 +5,7 @@ const InputLocation = () => {
     <>
       <Form.Item
         name="city"
-        label="Cuidad"
+        label="Cuidad / Municipio"
         rules={[
           {
             required: true,

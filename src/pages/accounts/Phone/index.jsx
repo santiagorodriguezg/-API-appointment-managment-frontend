@@ -65,7 +65,7 @@ const Phone = () => {
             onFinish={onFinish}
             hideRequiredMark
           >
-            <InputPhone />
+            <InputPhone required />
 
             <Form.Item>
               <ButtonCancelAndSave loading={btnLoading} />

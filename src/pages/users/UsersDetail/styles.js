@@ -1,4 +1,4 @@
-import { Button, Col, Row, Typography } from 'antd';
+import { Col, Row, Typography } from 'antd';
 import styled from 'styled-components';
 import Variables, { Colors } from '../../../styles/Variables';
 
@@ -73,27 +73,6 @@ S.Title = styled(Title)`
   @media (min-width: 576px) {
     text-align: left;
     padding-left: 160px;
-  }
-`;
-
-S.EditBtn = styled(Button)`
-  color: white;
-  float: right;
-  right: 16px;
-  top: 16px;
-  width: 48px;
-  height: 48px;
-  background: rgba(255, 255, 255, 0.2);
-
-  &:hover {
-    color: ${Colors.primary};
-    background: rgba(255, 255, 255, 0.8);
-  }
-
-  .anticon {
-    line-height: 48px;
-    display: block;
-    font-size: 24px;
   }
 `;
 

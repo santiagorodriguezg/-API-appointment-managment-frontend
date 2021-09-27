@@ -1,7 +1,8 @@
 import { useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import { Avatar, Col, Result, Spin, Tag, Tooltip } from 'antd';
+import { useContext, useEffect, useState } from 'react';
+import { Avatar, Col, Result, Spin, Tag } from 'antd';
 import { EditOutlined, UserOutlined } from '@ant-design/icons';
+import AuthContext from '../../../context/Auth';
 import { UsersDetailService } from '../../../services/Users';
 import NavBar from '../../../components/NavBar';
 import PageHeader from '../../../components/PageHeader';
@@ -10,15 +11,16 @@ import Button from '../../../components/Button';
 import StyledGlobal from '../../../styles/Global';
 import ErrorMessage from '../../../components/ErrorMessage';
 import { getFullDate } from '../../../config/utils';
-import { getIdentificationTypeName, getRoleColor, getRoleName } from '../../../config/utils/enums';
+import { getIdentificationTypeName, getRoleColor, getRoleName, userRoles } from '../../../config/utils/enums';
 import S from './styles';
 
 const UsersDetail = () => {
   const { username } = useParams();
+  const { user } = useContext(AuthContext);
   const [errorMsg, setErrorMsg] = useState(false);
   const [error404, setError404] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [user, setUser] = useState({});
+  const [userInfo, setUserInfo] = useState({});
 
   useEffect(() => {
     const getUserInfo = async () => {
@@ -27,7 +29,7 @@ const UsersDetail = () => {
         setErrorMsg(false);
 
         const res = await UsersDetailService(username);
-        setUser(res.data);
+        setUserInfo(res.data);
         setLoading(false);
       } catch (e) {
         if (e.response) {
@@ -66,24 +68,21 @@ const UsersDetail = () => {
                 <S.Card>
                   <S.UpperContainer>
                     <S.ImageContaier>
-                      {user?.picture ? (
-                        <img src={user.picture} alt={user.fullName} />
+                      {userInfo?.picture ? (
+                        <img src={userInfo.picture} alt={userInfo.fullName} />
                       ) : (
                         <Avatar size={130} icon={<UserOutlined />} />
                       )}
                     </S.ImageContaier>
-                    <Tooltip title="Editar" placement="bottomRight">
-                      <S.EditBtn type="link" href="#" shape="circle" icon={<EditOutlined />} />
-                    </Tooltip>
                   </S.UpperContainer>
                   <S.LowerContainer>
-                    <S.Title level={5}>{user.full_name}</S.Title>
+                    <S.Title level={5}>{userInfo.full_name}</S.Title>
                     <S.Row>
                       <S.Col xs={24} sm={8} md={10}>
                         Rol:
                       </S.Col>
                       <Col xs={24} sm={16} md={14}>
-                        <Tag color={getRoleColor(user.role)}>{getRoleName(user.role)}</Tag>
+                        <Tag color={getRoleColor(userInfo.role)}>{getRoleName(userInfo.role)}</Tag>
                       </Col>
                     </S.Row>
                     <S.Row>
@@ -91,7 +90,7 @@ const UsersDetail = () => {
                         Usuario:
                       </S.Col>
                       <Col xs={24} sm={16} md={14}>
-                        {user.username}
+                        {userInfo.username}
                       </Col>
                     </S.Row>
                     <S.Row>
@@ -99,7 +98,7 @@ const UsersDetail = () => {
                         Tipo de identificación:
                       </S.Col>
                       <Col xs={24} sm={16} md={14}>
-                        {getIdentificationTypeName(user.identification_type)}
+                        {getIdentificationTypeName(userInfo.identification_type)}
                       </Col>
                     </S.Row>
                     <S.Row>
@@ -107,7 +106,7 @@ const UsersDetail = () => {
                         Número de identificación:
                       </S.Col>
                       <Col xs={24} sm={16} md={14}>
-                        {user.identification_number}
+                        {userInfo.identification_number}
                       </Col>
                     </S.Row>
                     <S.Row>
@@ -115,7 +114,7 @@ const UsersDetail = () => {
                         Correo electrónico:
                       </S.Col>
                       <Col xs={24} sm={16} md={14}>
-                        {user.email}
+                        {userInfo.email}
                       </Col>
                     </S.Row>
                     <S.Row>
@@ -123,7 +122,7 @@ const UsersDetail = () => {
                         Teléfono:
                       </S.Col>
                       <Col xs={24} sm={16} md={14}>
-                        {user.phone}
+                        {userInfo.phone}
                       </Col>
                     </S.Row>
                     <S.Row>
@@ -131,7 +130,7 @@ const UsersDetail = () => {
                         Cuidad:
                       </S.Col>
                       <Col xs={24} sm={16} md={14}>
-                        {user.city}
+                        {userInfo.city}
                       </Col>
                     </S.Row>
                     <S.Row>
@@ -139,7 +138,7 @@ const UsersDetail = () => {
                         Barrio:
                       </S.Col>
                       <Col xs={24} sm={16} md={14}>
-                        {user.neighborhood}
+                        {userInfo.neighborhood}
                       </Col>
                     </S.Row>
                     <S.Row>
@@ -147,7 +146,7 @@ const UsersDetail = () => {
                         Dirección:
                       </S.Col>
                       <Col xs={24} sm={16} md={14}>
-                        {user.direction}
+                        {userInfo.direction}
                       </Col>
                     </S.Row>
                     <S.Row>
@@ -155,7 +154,7 @@ const UsersDetail = () => {
                         Fecha de registro:
                       </S.Col>
                       <Col xs={24} sm={16} md={14}>
-                        {getFullDate(user.created_at)}
+                        {getFullDate(userInfo.created_at)}
                       </Col>
                     </S.Row>
                     <S.Row>
@@ -163,12 +162,14 @@ const UsersDetail = () => {
                         Fecha de actualización:
                       </S.Col>
                       <Col xs={24} sm={16} md={14}>
-                        {getFullDate(user.updated_at)}
+                        {getFullDate(userInfo.updated_at)}
                       </Col>
                     </S.Row>
-                    <Button type="primary" href="#" icon={<EditOutlined />} ghost $marginTop>
-                      Editar
-                    </Button>
+                    {user.role === userRoles[0].value && (
+                      <Button type="primary" href="#" icon={<EditOutlined />} ghost $marginTop>
+                        Editar
+                      </Button>
+                    )}
                   </S.LowerContainer>
                 </S.Card>
               )}
