@@ -88,7 +88,7 @@ const Signup = () => {
                 </Col>
 
                 <Col xs={24} md={12}>
-                  <InputIdentificationNumber />
+                  <InputIdentificationNumber required />
                 </Col>
               </Row>
 

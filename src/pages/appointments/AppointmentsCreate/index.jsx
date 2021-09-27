@@ -197,8 +197,14 @@ const AppointmentsCreate = () => {
                               name={[name, 'identification_number']}
                               label="Documento de identidad"
                               fieldKey={[fieldKey, 'identification_number']}
+                              rules={[
+                                {
+                                  pattern: /^([0-9])*$/,
+                                  message: 'Ingresa un número de identificación valido',
+                                },
+                              ]}
                             >
-                              <InputNumber min={1} />
+                              <Input minLength={6} maxLength={10} />
                             </Form.Item>
                           </Col>
 
@@ -208,8 +214,14 @@ const AppointmentsCreate = () => {
                               name={[name, 'phone']}
                               label="Teléfono"
                               fieldKey={[fieldKey, 'phone']}
+                              rules={[
+                                {
+                                  pattern: /^3[0-9]{2} ?[0-9]{3} ?[0-9]{4}$/,
+                                  message: 'Ingresa un número de teléfono valido',
+                                },
+                              ]}
                             >
-                              <InputNumber min={3} />
+                              <Input maxLength={12} />
                             </Form.Item>
                           </Col>
 

@@ -69,7 +69,7 @@ const Identification = () => {
           >
             <InputIdentificationType />
 
-            <InputIdentificationNumber />
+            <InputIdentificationNumber required />
 
             <Form.Item>
               <ButtonCancelAndSave loading={btnLoading} />
