@@ -26,14 +26,13 @@ const PasswordResetConfirm = () => {
       history.push('/accounts/password/reset/complete');
     } catch (e) {
       if (e.response) {
-        setLoading(false);
         setErrorMsg(false);
         setErrorText(e.response.data.detail);
       } else {
-        setLoading(false);
         setErrorMsg(true);
         setErrorText('');
       }
+      setLoading(false);
     }
   };
 

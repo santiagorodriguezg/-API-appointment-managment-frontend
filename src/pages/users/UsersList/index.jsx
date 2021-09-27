@@ -1,16 +1,26 @@
 import { Dropdown, Menu, Space, Table, Tag } from 'antd';
-import { ClearOutlined, DownOutlined, EditOutlined, LinkOutlined, SettingOutlined } from '@ant-design/icons';
+import {
+  ClearOutlined,
+  DownOutlined,
+  EditOutlined,
+  LinkOutlined,
+  MessageOutlined,
+  SettingOutlined,
+} from '@ant-design/icons';
+import AuthContext from '../../../context/Auth';
 import { UsersListService } from '../../../services/Users';
+import { getShortDate } from '../../../config/utils';
+import TableBase from '../../../config/utils/TableBase';
+import { getRoleColor, getRoleName, userRoles } from '../../../config/utils/enums';
 import Button from '../../../components/Button';
 import Dashboard from '../../../components/Dashboard';
 import ErrorMessage from '../../../components/ErrorMessage';
 import S from '../../../components/Dashboard/styles';
-import { getShortDate } from '../../../config/utils';
-import TableBase from '../../../config/utils/TableBase';
-import { getRoleColor, getRoleName, userRoles } from '../../../config/utils/enums';
 import ModalContent from './ModalContent';
 
 export default class UsersList extends TableBase {
+  static contextType = AuthContext;
+
   componentDidMount() {
     const { pagination } = this.state;
     this.getUsersData({ pagination });
@@ -66,6 +76,7 @@ export default class UsersList extends TableBase {
   render() {
     const { loading, errorMsg, isModalVisible, modalInfo, data, pagination } = this.state;
     let { sortedInfo, filteredInfo } = this.state;
+    const { user } = this.context;
 
     sortedInfo = sortedInfo || {};
     filteredInfo = filteredInfo || {};
@@ -115,11 +126,7 @@ export default class UsersList extends TableBase {
         filterMultiple: false,
         filters: userRoles,
         filteredValue: filteredInfo.role || null,
-        render: role => (
-          <Tag color={getRoleColor(role)} key={role}>
-            {getRoleName(role)}
-          </Tag>
-        ),
+        render: role => <Tag color={getRoleColor(role)}>{getRoleName(role)}</Tag>,
       },
       {
         title: 'Fecha de registro',
@@ -136,26 +143,31 @@ export default class UsersList extends TableBase {
         width: 200,
         render: record => (
           <Space size="middle">
-            <Button>Detalles</Button>
-            <Dropdown
-              overlay={
-                <Menu>
-                  <Menu.Item key="1" icon={<EditOutlined />}>
-                    Editar
-                  </Menu.Item>
-                  <Menu.Item key="2" icon={<LinkOutlined />} onClick={() => this.showModal(record)}>
-                    Restablecer contraseña
-                  </Menu.Item>
-                </Menu>
-              }
-              trigger={['click']}
-              placement="bottomRight"
-              arrow
-            >
-              <Button>
-                <SettingOutlined /> <DownOutlined />
-              </Button>
-            </Dropdown>
+            <Button href={`/users/${record.username}`}>Detalles</Button>
+            {user.role === userRoles[0].value && (
+              <Dropdown
+                overlay={
+                  <Menu>
+                    <Menu.Item key="1" icon={<EditOutlined />}>
+                      Editar
+                    </Menu.Item>
+                    <Menu.Item key="2" icon={<MessageOutlined />}>
+                      Chat
+                    </Menu.Item>
+                    <Menu.Item key="3" icon={<LinkOutlined />} onClick={() => this.showModal(record)}>
+                      Restablecer contraseña
+                    </Menu.Item>
+                  </Menu>
+                }
+                trigger={['click']}
+                placement="bottomRight"
+                arrow
+              >
+                <Button>
+                  <SettingOutlined /> <DownOutlined />
+                </Button>
+              </Dropdown>
+            )}
           </Space>
         ),
       },

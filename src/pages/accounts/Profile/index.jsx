@@ -74,7 +74,7 @@ const Profile = ({ location }) => {
               />
               <ProfileCardItem
                 href="/accounts/location"
-                title="Dirección"
+                title="Ubicación"
                 content={`${user.address || ''} ${user.neighborhood || ''} ${user.city || ''}`}
               />
             </ProfileCard>

@@ -1,20 +1,9 @@
-import { Descriptions, Typography } from 'antd';
+import { Typography } from 'antd';
 import styled from 'styled-components';
 
 const { Paragraph } = Typography;
 
 const S = {};
-
-S.Descriptions = styled(Descriptions)`
-  .ant-descriptions-title {
-    font-size: initial;
-    font-weight: 600;
-  }
-
-  .ant-descriptions-item-label {
-    font-weight: 600;
-  }
-`;
 
 S.Paragraph = styled(Paragraph)`
   display: flex;

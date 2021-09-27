@@ -13,3 +13,7 @@ export const UsersListService = params => {
     params,
   });
 };
+
+export const UsersDetailService = username => {
+  return axiosWithToken.get(`users/${username}/`);
+};

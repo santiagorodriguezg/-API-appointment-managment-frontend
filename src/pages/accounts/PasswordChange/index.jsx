@@ -3,8 +3,8 @@ import { Redirect } from 'react-router-dom';
 import { Divider, Form, Typography } from 'antd';
 import { PasswordChangeService } from '../../../services/Users';
 import { getFieldErrors } from '../../../config/utils';
-import { DashboardPageEdit } from '../../../components/Dashboard';
 import { ButtonCancelAndSave } from '../../../components/Button';
+import DashboardPageEdit from '../../../components/Dashboard/DashboardPageEdit';
 import ErrorMessage from '../../../components/ErrorMessage';
 import InputPassword from '../../../components/Input/InputPassword';
 

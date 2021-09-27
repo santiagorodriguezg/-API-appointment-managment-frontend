@@ -23,6 +23,7 @@ import Location from '../pages/accounts/Location';
 import Identification from '../pages/accounts/Identification';
 
 import UsersList from '../pages/users/UsersList';
+import UsersDetail from '../pages/users/UsersDetail';
 
 import AppointmentsCreate from '../pages/appointments/AppointmentsCreate';
 import AppointmentsHistoric from '../pages/appointments/AppointmentsHistoric';
@@ -34,6 +35,7 @@ import Error404 from '../pages/errors/404';
 import { userRoles } from '../config/utils/enums';
 
 const AppRouter = () => {
+  const ROLES_ADMIN_DOCTOR = [userRoles[0].value, userRoles[1].value];
   return (
     <ConfigProvider locale={esES}>
       <AuthProvider>
@@ -55,7 +57,8 @@ const AppRouter = () => {
             <PrivateRoute exact path="/accounts/phone" component={Phone} />
             <PrivateRoute exact path="/accounts/location" component={Location} />
 
-            <PrivateRoute exact path="/users" component={UsersList} roles={[userRoles[0].value, userRoles[1].value]} />
+            <PrivateRoute exact path="/users" component={UsersList} roles={ROLES_ADMIN_DOCTOR} />
+            <PrivateRoute path="/users/:username" component={UsersDetail} roles={ROLES_ADMIN_DOCTOR} />
 
             <PrivateRoute exact path="/appointments/create" component={AppointmentsCreate} />
             <PrivateRoute exact path="/appointments/historic" component={AppointmentsHistoric} />

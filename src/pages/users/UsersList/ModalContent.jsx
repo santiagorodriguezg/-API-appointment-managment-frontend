@@ -3,6 +3,7 @@ import { Descriptions, Modal, Spin } from 'antd';
 import { CheckOutlined, CopyOutlined } from '@ant-design/icons';
 import { PasswordResetService } from '../../../services/Users';
 import Button from '../../../components/Button';
+import Description from '../../../components/Description';
 import ErrorMessage from '../../../components/ErrorMessage';
 import S from './styles';
 
@@ -42,11 +43,11 @@ const ModalContent = ({ isModalVisible, modalInfo, handleCancel }) => {
       onCancel={handleCancel}
     >
       <Spin size="large" spinning={loading}>
-        <S.Descriptions title="Información del usuario" column={1}>
+        <Description title="Información del usuario" column={1}>
           <Descriptions.Item label="Nombre">{modalInfo.full_name}</Descriptions.Item>
           <Descriptions.Item label="Usuario">{modalInfo.username}</Descriptions.Item>
           <Descriptions.Item label="Teléfono">{modalInfo.phone}</Descriptions.Item>
-        </S.Descriptions>
+        </Description>
         <p>El siguiente enlace permite restablecer la contraseña del usuario:</p>
         <S.Paragraph
           copyable={{

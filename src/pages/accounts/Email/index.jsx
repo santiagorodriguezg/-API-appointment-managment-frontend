@@ -4,8 +4,8 @@ import { Form, Skeleton } from 'antd';
 import useUserProfile from '../../../hooks/useUserProfile';
 import { UpdateMyProfileService } from '../../../services/Users';
 import { getFieldErrors } from '../../../config/utils';
-import { DashboardPageEdit } from '../../../components/Dashboard';
 import { ButtonCancelAndSave } from '../../../components/Button';
+import DashboardPageEdit from '../../../components/Dashboard/DashboardPageEdit';
 import ErrorMessage from '../../../components/ErrorMessage';
 import InputEmail from '../../../components/Input/InputEmail';
 

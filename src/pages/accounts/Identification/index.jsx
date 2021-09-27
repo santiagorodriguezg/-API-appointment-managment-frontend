@@ -4,9 +4,9 @@ import { Form, Skeleton } from 'antd';
 import { UpdateMyProfileService } from '../../../services/Users';
 import useUserProfile from '../../../hooks/useUserProfile';
 import { getFieldErrors } from '../../../config/utils';
-import { DashboardPageEdit } from '../../../components/Dashboard';
 import { ButtonCancelAndSave } from '../../../components/Button';
 import ErrorMessage from '../../../components/ErrorMessage';
+import DashboardPageEdit from '../../../components/Dashboard/DashboardPageEdit';
 import InputIdentificationType from '../../../components/Input/InputIdentificationType';
 import InputIdentificationNumber from '../../../components/Input/InputIdentificationNumber';
 
