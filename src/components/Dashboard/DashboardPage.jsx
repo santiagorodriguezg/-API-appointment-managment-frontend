@@ -3,17 +3,15 @@ import PageHeader from '../PageHeader';
 import NavBar from '../NavBar';
 import Footer from '../Footer';
 
-const DashboardPageEdit = ({ title, children }) => {
+const DashboardPage = ({ title, path, children }) => {
   return (
     <>
       <NavBar />
       <StyledGlobal.Wrapper>
         <StyledGlobal.WrapperContent>
           <StyledGlobal.Wrapper800>
-            <PageHeader onBack={() => window.history.back()} title={title} />
-            <StyledGlobal.ContainerForm shadow marginTop={16}>
-              {children}
-            </StyledGlobal.ContainerForm>
+            <PageHeader title={title} path={path} />
+            {children}
           </StyledGlobal.Wrapper800>
         </StyledGlobal.WrapperContent>
         <Footer />
@@ -21,4 +19,4 @@ const DashboardPageEdit = ({ title, children }) => {
     </>
   );
 };
-export default DashboardPageEdit;
+export default DashboardPage;

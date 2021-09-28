@@ -4,10 +4,12 @@ import { Form, Skeleton } from 'antd';
 import useUserProfile from '../../../hooks/useUserProfile';
 import { UpdateMyProfileService } from '../../../services/Users';
 import { getFieldErrors } from '../../../config/utils';
-import { ButtonCancelAndSave } from '../../../components/Button';
+import { ButtonCancelAndSaveAccount } from '../../../components/Button';
 import ErrorMessage from '../../../components/ErrorMessage';
-import DashboardPageEdit from '../../../components/Dashboard/DashboardPageEdit';
-import InputLocation from '../../../components/Input/InputLocation';
+import DashboardPageAccount from '../../../components/Dashboard/DashboardPageAccount';
+import InputCity from '../../../components/Input/InputCity';
+import InputNeighborhood from '../../../components/Input/InputNeighborhood';
+import InputAddress from '../../../components/Input/InputAddress';
 
 const Location = () => {
   const [form] = Form.useForm();
@@ -26,35 +28,30 @@ const Location = () => {
   const onFinish = async values => {
     try {
       setBtnLoading(true);
-
       await UpdateMyProfileService(values);
-
       setRedirect(true);
     } catch (e) {
+      setBtnLoading(false);
       if (e.response) {
-        setBtnLoading(false);
         setErrorMsg(false);
         form.setFields(getFieldErrors(e.response.data.errors));
       } else {
-        setBtnLoading(false);
         setErrorMsg(true);
       }
     }
   };
 
-  return (
-    <DashboardPageEdit title="Ubicación">
-      {redirect && (
-        <Redirect
-          to={{
-            pathname: '/accounts/profile',
-            state: {
-              successMsg: 'Su ubicación se actualizo correctamente',
-            },
-          }}
-        />
-      )}
-
+  return redirect ? (
+    <Redirect
+      to={{
+        pathname: '/accounts/profile',
+        state: {
+          successMsg: 'Su ubicación se actualizo correctamente',
+        },
+      }}
+    />
+  ) : (
+    <DashboardPageAccount title="Ubicación">
       {errorMsg ? (
         <ErrorMessage retryBtn />
       ) : (
@@ -67,15 +64,17 @@ const Location = () => {
             onFinish={onFinish}
             hideRequiredMark
           >
-            <InputLocation />
+            <InputCity />
+            <InputNeighborhood />
+            <InputAddress />
 
             <Form.Item>
-              <ButtonCancelAndSave loading={btnLoading} />
+              <ButtonCancelAndSaveAccount loading={btnLoading} />
             </Form.Item>
           </Form>
         </Skeleton>
       )}
-    </DashboardPageEdit>
+    </DashboardPageAccount>
   );
 };
 export default Location;

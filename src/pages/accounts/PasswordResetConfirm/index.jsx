@@ -25,6 +25,7 @@ const PasswordResetConfirm = () => {
       await PasswordResetCompleteService({ ...values, ...params });
       history.push('/accounts/password/reset/complete');
     } catch (e) {
+      setLoading(false);
       if (e.response) {
         setErrorMsg(false);
         setErrorText(e.response.data.detail);
@@ -32,7 +33,6 @@ const PasswordResetConfirm = () => {
         setErrorMsg(true);
         setErrorText('');
       }
-      setLoading(false);
     }
   };
 

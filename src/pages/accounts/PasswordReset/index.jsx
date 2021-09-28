@@ -39,7 +39,14 @@ const PasswordReset = () => {
     }
   };
 
-  return (
+  return redirect ? (
+    <Redirect
+      to={{
+        pathname: '/accounts/password/reset/done',
+        state: { email },
+      }}
+    />
+  ) : (
     <Layout.Content>
       <Row>
         <Col span={24}>
@@ -48,14 +55,6 @@ const PasswordReset = () => {
             <StyledGlobal.TitleForm>Recuperación de cuenta</StyledGlobal.TitleForm>
             {errorMsg && <ErrorMessage />}
             {userNotFound !== '' && <Alert message={userNotFound} type="error" showIcon />}
-            {redirect && (
-              <Redirect
-                to={{
-                  pathname: '/accounts/password/reset/done',
-                  state: { email },
-                }}
-              />
-            )}
             <Form layout="vertical" name="password_reset" onFinish={onFinish} hideRequiredMark>
               <InputUsername />
 

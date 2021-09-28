@@ -54,7 +54,7 @@ const createAxiosResponseInterceptor = () => {
         })
         .catch(err => {
           TokenStorage.clear();
-          window.location = '/accounts/login';
+          window.location.replace('/accounts/login');
           return Promise.reject(err);
         })
         .finally(createAxiosResponseInterceptor);

@@ -4,12 +4,12 @@ import { Form, Skeleton } from 'antd';
 import AuthContext from '../../../context/Auth';
 import useUserProfile from '../../../hooks/useUserProfile';
 import { UpdateMyProfileService } from '../../../services/Users';
-import { ButtonCancelAndSave } from '../../../components/Button';
+import { ButtonCancelAndSaveAccount } from '../../../components/Button';
 import ErrorMessage from '../../../components/ErrorMessage';
-import DashboardPageEdit from '../../../components/Dashboard/DashboardPageEdit';
 import InputFirstName from '../../../components/Input/InputFirstName';
 import InputLastName from '../../../components/Input/InputLastName';
 import { getFieldErrors } from '../../../config/utils';
+import DashboardPageAccount from '../../../components/Dashboard/DashboardPageAccount';
 
 const Name = () => {
   const [form] = Form.useForm();
@@ -28,7 +28,6 @@ const Name = () => {
   const onFinish = async values => {
     try {
       setBtnLoading(true);
-
       await UpdateMyProfileService(values);
 
       userContext.fullName = `${values.first_name} ${values.last_name}`;
@@ -36,30 +35,27 @@ const Name = () => {
 
       setRedirect(true);
     } catch (e) {
+      setBtnLoading(false);
       if (e.response) {
-        setBtnLoading(false);
         setErrorMsg(false);
         form.setFields(getFieldErrors(e.response.data.errors));
       } else {
-        setBtnLoading(false);
         setErrorMsg(true);
       }
     }
   };
 
-  return (
-    <DashboardPageEdit title="Nombre">
-      {redirect && (
-        <Redirect
-          to={{
-            pathname: '/accounts/profile',
-            state: {
-              successMsg: 'Su nombre se actualizo correctamente',
-            },
-          }}
-        />
-      )}
-
+  return redirect ? (
+    <Redirect
+      to={{
+        pathname: '/accounts/profile',
+        state: {
+          successMsg: 'Su nombre se actualizo correctamente',
+        },
+      }}
+    />
+  ) : (
+    <DashboardPageAccount title="Nombre">
       {errorMsg ? (
         <ErrorMessage retryBtn />
       ) : (
@@ -77,12 +73,13 @@ const Name = () => {
             <InputLastName />
 
             <Form.Item>
-              <ButtonCancelAndSave loading={btnLoading} />
+              <ButtonCancelAndSaveAccount loading={btnLoading} />
             </Form.Item>
           </Form>
         </Skeleton>
       )}
-    </DashboardPageEdit>
+    </DashboardPageAccount>
   );
 };
+
 export default Name;

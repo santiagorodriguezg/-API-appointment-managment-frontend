@@ -12,10 +12,10 @@ const Button = ({ children, center, ...props }) => {
   return <StyledButton {...props}>{children}</StyledButton>;
 };
 
-export const ButtonCancelAndSave = ({ loading }) => {
+export const ButtonCancelAndSave = ({ loading, path }) => {
   return (
     <StyledGlobal.CancelAndSaveBtn>
-      <StyledButton onClick={() => window.history.back()} size="large" type="text">
+      <StyledButton href={path} size="large" type="text">
         Cancelar
       </StyledButton>
       <StyledButton type="primary" size="large" htmlType="submit" loading={loading}>
@@ -23,6 +23,10 @@ export const ButtonCancelAndSave = ({ loading }) => {
       </StyledButton>
     </StyledGlobal.CancelAndSaveBtn>
   );
+};
+
+export const ButtonCancelAndSaveAccount = ({ loading }) => {
+  return <ButtonCancelAndSave loading={loading} path="/accounts/profile" />;
 };
 
 export default Button;

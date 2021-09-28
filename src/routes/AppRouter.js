@@ -23,6 +23,7 @@ import Location from '../pages/accounts/Location';
 import Identification from '../pages/accounts/Identification';
 
 import UsersList from '../pages/users/UsersList';
+import UsersEdit from '../pages/users/UsersEdit';
 import UsersDetail from '../pages/users/UsersDetail';
 
 import AppointmentsCreate from '../pages/appointments/AppointmentsCreate';
@@ -45,7 +46,7 @@ const AppRouter = () => {
             <PublicRoute exact path="/accounts/signup" component={Signup} />
             <PublicRoute exact path="/accounts/password/reset" component={PasswordReset} />
             <PublicRoute exact path="/accounts/password/reset/done" component={PasswordResetDone} />
-            <PublicRoute path="/accounts/password/reset/:uid/:token" component={PasswordResetConfirm} />
+            <PublicRoute exact path="/accounts/password/reset/:uid/:token" component={PasswordResetConfirm} />
             <PublicRoute exact path="/accounts/password/reset/complete" component={PasswordResetConfirmDone} />
 
             <PrivateRoute exact path="/accounts/logout" component={Logout} />
@@ -58,7 +59,8 @@ const AppRouter = () => {
             <PrivateRoute exact path="/accounts/location" component={Location} />
 
             <PrivateRoute exact path="/users" component={UsersList} roles={ROLES_ADMIN_DOCTOR} />
-            <PrivateRoute path="/users/:username" component={UsersDetail} roles={ROLES_ADMIN_DOCTOR} />
+            <PrivateRoute exact path="/users/:username" component={UsersDetail} roles={ROLES_ADMIN_DOCTOR} />
+            <PrivateRoute exact path="/users/:username/edit" component={UsersEdit} roles={ROLES_ADMIN_DOCTOR[0]} />
 
             <PrivateRoute exact path="/appointments/create" component={AppointmentsCreate} />
             <PrivateRoute exact path="/appointments/historic" component={AppointmentsHistoric} />

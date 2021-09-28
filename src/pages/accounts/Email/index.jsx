@@ -4,10 +4,10 @@ import { Form, Skeleton } from 'antd';
 import useUserProfile from '../../../hooks/useUserProfile';
 import { UpdateMyProfileService } from '../../../services/Users';
 import { getFieldErrors } from '../../../config/utils';
-import { ButtonCancelAndSave } from '../../../components/Button';
-import DashboardPageEdit from '../../../components/Dashboard/DashboardPageEdit';
+import { ButtonCancelAndSaveAccount } from '../../../components/Button';
 import ErrorMessage from '../../../components/ErrorMessage';
 import InputEmail from '../../../components/Input/InputEmail';
+import DashboardPageAccount from '../../../components/Dashboard/DashboardPageAccount';
 
 const Email = () => {
   const [form] = Form.useForm();
@@ -24,35 +24,30 @@ const Email = () => {
   const onFinish = async values => {
     try {
       setBtnLoading(true);
-
       await UpdateMyProfileService(values);
-
       setRedirect(true);
     } catch (e) {
+      setBtnLoading(false);
       if (e.response) {
-        setBtnLoading(false);
         setErrorMsg(false);
         form.setFields(getFieldErrors(e.response.data.errors));
       } else {
-        setBtnLoading(false);
         setErrorMsg(true);
       }
     }
   };
 
-  return (
-    <DashboardPageEdit title="Correo electrónico">
-      {redirect && (
-        <Redirect
-          to={{
-            pathname: '/accounts/profile',
-            state: {
-              successMsg: 'Su correo electrónico se actualizo correctamente',
-            },
-          }}
-        />
-      )}
-
+  return redirect ? (
+    <Redirect
+      to={{
+        pathname: '/accounts/profile',
+        state: {
+          successMsg: 'Su correo electrónico se actualizo correctamente',
+        },
+      }}
+    />
+  ) : (
+    <DashboardPageAccount title="Correo electrónico">
       {errorMsg ? (
         <ErrorMessage retryBtn />
       ) : (
@@ -68,12 +63,12 @@ const Email = () => {
             <InputEmail required />
 
             <Form.Item>
-              <ButtonCancelAndSave loading={btnLoading} />
+              <ButtonCancelAndSaveAccount loading={btnLoading} />
             </Form.Item>
           </Form>
         </Skeleton>
       )}
-    </DashboardPageEdit>
+    </DashboardPageAccount>
   );
 };
 export default Email;

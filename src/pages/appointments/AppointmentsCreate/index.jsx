@@ -65,7 +65,7 @@ const AppointmentsCreate = () => {
     <Dashboard>
       <StyledGlobal.Wrapper800>
         <S.Title level={3}>Solicitar cita</S.Title>
-        <StyledGlobal.WrapperInner840>
+        <StyledGlobal.WrapperInner>
           <StyledGlobal.ContainerForm center width={600} marginTop={16}>
             {result ? (
               <Result
@@ -333,7 +333,7 @@ const AppointmentsCreate = () => {
               </Form>
             )}
           </StyledGlobal.ContainerForm>
-        </StyledGlobal.WrapperInner840>
+        </StyledGlobal.WrapperInner>
       </StyledGlobal.Wrapper800>
     </Dashboard>
   );

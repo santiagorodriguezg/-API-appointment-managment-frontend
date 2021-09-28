@@ -43,12 +43,11 @@ const Signup = () => {
       });
       history.push('/accounts/profile');
     } catch (e) {
+      setLoading(false);
       if (e.response) {
-        setLoading(false);
         setErrorMsg(false);
         form.setFields(getFieldErrors(e.response.data.errors));
       } else {
-        setLoading(false);
         setErrorMsg(true);
       }
     }

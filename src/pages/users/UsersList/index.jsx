@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { Dropdown, Menu, Space, Table, Tag } from 'antd';
 import {
   ClearOutlined,
@@ -149,7 +150,7 @@ export default class UsersList extends TableBase {
                 overlay={
                   <Menu>
                     <Menu.Item key="1" icon={<EditOutlined />}>
-                      Editar
+                      <Link to={`/users/${record.username}/edit`}>Editar</Link>
                     </Menu.Item>
                     <Menu.Item key="2" icon={<MessageOutlined />}>
                       Chat

@@ -1,6 +1,6 @@
 import { Form, Input } from 'antd';
 
-const InputLocation = () => {
+const InputCity = () => {
   return (
     <>
       <Form.Item
@@ -13,18 +13,10 @@ const InputLocation = () => {
           },
         ]}
       >
-        <Input maxLength={30} />
-      </Form.Item>
-
-      <Form.Item name="neighborhood" label="Barrio">
-        <Input maxLength={40} />
-      </Form.Item>
-
-      <Form.Item name="address" label="Dirección">
-        <Input maxLength={40} />
+        <Input maxLength={50} />
       </Form.Item>
     </>
   );
 };
 
-export default InputLocation;
+export default InputCity;

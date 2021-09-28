@@ -3,10 +3,10 @@ import { Redirect } from 'react-router-dom';
 import { Divider, Form, Typography } from 'antd';
 import { PasswordChangeService } from '../../../services/Users';
 import { getFieldErrors } from '../../../config/utils';
-import { ButtonCancelAndSave } from '../../../components/Button';
-import DashboardPageEdit from '../../../components/Dashboard/DashboardPageEdit';
+import { ButtonCancelAndSaveAccount } from '../../../components/Button';
 import ErrorMessage from '../../../components/ErrorMessage';
 import InputPassword from '../../../components/Input/InputPassword';
+import DashboardPageAccount from '../../../components/Dashboard/DashboardPageAccount';
 
 const { Title, Paragraph } = Typography;
 
@@ -19,34 +19,30 @@ const PasswordChange = () => {
   const onFinish = async values => {
     try {
       setBtnLoading(true);
-
       await PasswordChangeService(values);
-
       setRedirect(true);
     } catch (e) {
+      setBtnLoading(false);
       if (e.response) {
-        setBtnLoading(false);
         setErrorMsg(false);
         form.setFields(getFieldErrors(e.response.data.errors));
       } else {
-        setBtnLoading(false);
         setErrorMsg(true);
       }
     }
   };
 
-  return (
-    <DashboardPageEdit title="Contraseña">
-      {redirect && (
-        <Redirect
-          to={{
-            pathname: '/accounts/profile',
-            state: {
-              successMsg: 'Su contraseña se actualizo correctamente',
-            },
-          }}
-        />
-      )}
+  return redirect ? (
+    <Redirect
+      to={{
+        pathname: '/accounts/profile',
+        state: {
+          successMsg: 'Su contraseña se actualizo correctamente',
+        },
+      }}
+    />
+  ) : (
+    <DashboardPageAccount title="Contraseña">
       {errorMsg ? (
         <ErrorMessage retryBtn />
       ) : (
@@ -66,12 +62,12 @@ const PasswordChange = () => {
             <InputPassword confirmPassword={{ new: true }} />
 
             <Form.Item>
-              <ButtonCancelAndSave loading={btnLoading} />
+              <ButtonCancelAndSaveAccount loading={btnLoading} />
             </Form.Item>
           </Form>
         </>
       )}
-    </DashboardPageEdit>
+    </DashboardPageAccount>
   );
 };
 export default PasswordChange;

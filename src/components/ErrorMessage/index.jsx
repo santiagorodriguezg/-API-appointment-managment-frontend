@@ -1,4 +1,4 @@
-import { Alert } from 'antd';
+import { Alert, Result } from 'antd';
 import Button from '../Button';
 
 const ErrorMessage = ({ retryBtn }) => {
@@ -12,11 +12,26 @@ const ErrorMessage = ({ retryBtn }) => {
         style={{ margin: '16px 0' }}
       />
       {retryBtn && (
-        <Button center $marginTop type="primary" htmlType="button" onClick={() => window.location.reload(false)}>
+        <Button center $marginTop type="primary" htmlType="button" onClick={() => window.location.reload()}>
           Reintentar
         </Button>
       )}
     </>
   );
 };
+
+export const UserNotFound = () => {
+  return (
+    <Result
+      status="404"
+      title="Usuario no encontrado"
+      extra={
+        <Button type="primary" href="/users">
+          Regresar a Usuarios
+        </Button>
+      }
+    />
+  );
+};
+
 export default ErrorMessage;

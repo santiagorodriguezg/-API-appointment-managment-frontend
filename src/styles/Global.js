@@ -26,7 +26,7 @@ export const GlobalStyle = createGlobalStyle`
   .ant-tooltip-inner > a {
     color: white;
   }
-  
+
   // antd-img-crop
   .reactEasyCrop_CropArea {
     border-radius: 50%;
@@ -63,7 +63,7 @@ StyledGlobal.Wrapper800 = styled.div`
   margin: auto;
 `;
 
-StyledGlobal.WrapperInner840 = styled.div`
+StyledGlobal.WrapperInner = styled.div`
   background: #fff;
   border-radius: ${Variables.borderRadiusBase};
   padding-top: ${Variables.paddingBase};
@@ -134,7 +134,7 @@ StyledGlobal.CancelAndSaveBtn = styled.div`
   justify-content: flex-end;
   margin-top: ${Variables.marginBase};
 
-  button.ant-btn-text {
+  .ant-btn-text {
     color: ${Colors.primary};
 
     &:hover {
@@ -144,7 +144,7 @@ StyledGlobal.CancelAndSaveBtn = styled.div`
   }
 
   button {
-    margin: 0 0 0 ${Variables.marginBase};
+    margin-left: ${Variables.marginBase};
   }
 `;
 

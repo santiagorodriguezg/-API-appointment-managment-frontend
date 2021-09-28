@@ -5,8 +5,8 @@ import Dashboard from '../../../components/Dashboard';
 import ProfileCard from '../../../components/ProfileCard';
 import ErrorMessage from '../../../components/ErrorMessage';
 import S from '../../../components/Dashboard/styles';
-import StyledGlobal from '../../../styles/Global';
 import ProfileCardItem, { ProfileCardItemPhoto } from '../../../components/ProfileCard/ProfileCardItem';
+import StyledGlobal from '../../../styles/Global';
 
 const Profile = ({ location }) => {
   const { successMsg } = (location && location.state) || {};
@@ -22,18 +22,16 @@ const Profile = ({ location }) => {
 
         setUser(res.data);
         setLoading(false);
+
         window.history.replaceState({}, document.title);
-        if (successMsg) {
-          message.success(successMsg);
-        }
+        if (successMsg) message.success(successMsg);
       } catch (err) {
         if (err.response) {
-          setLoading(false);
           setErrorMsg(false);
         } else {
-          setLoading(false);
           setErrorMsg(true);
         }
+        setLoading(false);
       }
     };
     load();

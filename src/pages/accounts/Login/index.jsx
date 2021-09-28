@@ -42,12 +42,11 @@ const Login = () => {
       });
       history.replace(from);
     } catch (e) {
+      setLoading(false);
       if (e.response) {
-        setLoading(false);
         setErrorText(e.response.data.detail);
         setErrorMsg(false);
       } else {
-        setLoading(false);
         setErrorText('');
         setErrorMsg(true);
       }

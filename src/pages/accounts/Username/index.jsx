@@ -5,10 +5,10 @@ import AuthContext from '../../../context/Auth';
 import useUserProfile from '../../../hooks/useUserProfile';
 import { UpdateMyProfileService } from '../../../services/Users';
 import { getFieldErrors } from '../../../config/utils';
-import { ButtonCancelAndSave } from '../../../components/Button';
+import { ButtonCancelAndSaveAccount } from '../../../components/Button';
 import ErrorMessage from '../../../components/ErrorMessage';
-import DashboardPageEdit from '../../../components/Dashboard/DashboardPageEdit';
 import InputUsername from '../../../components/Input/InputUsername';
+import DashboardPageAccount from '../../../components/Dashboard/DashboardPageAccount';
 
 const { Title, Paragraph } = Typography;
 
@@ -28,35 +28,31 @@ const Username = () => {
   const onFinish = async values => {
     try {
       setBtnLoading(true);
-
       await UpdateMyProfileService(values);
       setUsername(values.username);
       setRedirect(true);
     } catch (e) {
+      setBtnLoading(false);
       if (e.response) {
-        setBtnLoading(false);
         setErrorMsg(false);
         form.setFields(getFieldErrors(e.response.data.errors));
       } else {
-        setBtnLoading(false);
         setErrorMsg(true);
       }
     }
   };
 
-  return (
-    <DashboardPageEdit title="Usuario">
-      {redirect && (
-        <Redirect
-          to={{
-            pathname: '/accounts/profile',
-            state: {
-              successMsg: 'Su usuario se actualizo correctamente',
-            },
-          }}
-        />
-      )}
-
+  return redirect ? (
+    <Redirect
+      to={{
+        pathname: '/accounts/profile',
+        state: {
+          successMsg: 'Su usuario se actualizo correctamente',
+        },
+      }}
+    />
+  ) : (
+    <DashboardPageAccount title="Usuario">
       {errorMsg ? (
         <ErrorMessage retryBtn />
       ) : (
@@ -77,12 +73,12 @@ const Username = () => {
             <InputUsername />
 
             <Form.Item>
-              <ButtonCancelAndSave loading={btnLoading} />
+              <ButtonCancelAndSaveAccount loading={btnLoading} />
             </Form.Item>
           </Form>
         </Skeleton>
       )}
-    </DashboardPageEdit>
+    </DashboardPageAccount>
   );
 };
 export default Username;
