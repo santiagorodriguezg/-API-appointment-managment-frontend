@@ -10,6 +10,8 @@ export const Colors = {
   primaryRGB: '157, 66, 159',
   primaryHover: '#863688',
   bgBody: '#f0f2f5',
+  listItemColor: '#f8f9fa',
+  listItemColorHover: '#e9ecef',
 };
 
 export default Variables;

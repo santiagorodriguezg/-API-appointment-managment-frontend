@@ -1,7 +1,7 @@
 import { Card } from 'antd';
 import { CameraOutlined } from '@ant-design/icons';
 import styled, { css } from 'styled-components';
-import Variables from '../../styles/Variables';
+import Variables, { Colors } from '../../styles/Variables';
 
 const S = {};
 
@@ -9,11 +9,11 @@ const sharedStylesListItem = css`
   border-bottom: 1px solid rgba(0, 0, 0, 0.125);
 
   &:hover {
-    background-color: #f8f9fa;
+    background-color: ${Colors.listItemColor};
   }
 
   &:active {
-    background-color: #e9ecef;
+    background-color: ${Colors.listItemColorHover};
   }
 `;
 
