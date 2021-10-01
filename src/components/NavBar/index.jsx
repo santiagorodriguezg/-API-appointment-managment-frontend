@@ -36,11 +36,7 @@ const NavBar = ({ toggle }) => {
 
             <Dropdown arrow overlay={<UserMenu fullName={user.fullName} />} trigger={['click']} placement="bottomRight">
               <S.UserMenu type="text">
-                {user?.picture ? (
-                  <S.Photo src={user.picture} alt={user.fullName} />
-                ) : (
-                  <Avatar icon={<UserOutlined />} />
-                )}
+                <Avatar icon={<UserOutlined />} src={user.picture} />
                 <CaretDownOutlined />
               </S.UserMenu>
             </Dropdown>

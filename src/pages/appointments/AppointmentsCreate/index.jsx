@@ -2,18 +2,19 @@ import { useContext, useState } from 'react';
 import { Checkbox, Col, Divider, Form, Input, Result, Row, Upload } from 'antd';
 import { MinusCircleOutlined, PlusOutlined, UploadOutlined } from '@ant-design/icons';
 import AuthContext from '../../../context/Auth';
+import { getFieldErrors, IMAGE_EXTENSIONS, validateFileBeforeUpload } from '../../../config/utils';
+import { appointmentMultimedia } from '../../../config/utils/enums';
+import { AppointmentUserCreateService } from '../../../services/Appointments';
 import Dashboard from '../../../components/Dashboard';
 import InputNumber from '../../../components/Input/InputNumber';
 import ErrorMessage from '../../../components/ErrorMessage';
 import Button from '../../../components/Button';
 import S from '../../../components/Dashboard/styles';
-import { AppointmentUserCreateService } from '../../../services/Appointments';
-import { getFieldErrors } from '../../../config/utils';
 import StyledGlobal from '../../../styles/Global';
 
 const AppointmentsCreate = () => {
   const [form] = Form.useForm();
-  const { username } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const [errorMsg, setErrorMsg] = useState(false);
   const [loading, setLoading] = useState(false);
   const [aggressorInfo, setAggressorInfo] = useState(true);
@@ -45,7 +46,19 @@ const AppointmentsCreate = () => {
       formData.append('aggressor', values.aggressor ? JSON.stringify(values.aggressor[0]) : null);
       formData.append('audio', values.audio ? values.audio[0].originFileObj : '');
 
-      await AppointmentUserCreateService(username, formData);
+      if (values.multimedia.length) {
+        values.multimedia.map((file, i) => {
+          const fileExtension = IMAGE_EXTENSIONS.includes(file.originFileObj.type)
+            ? appointmentMultimedia[0].value
+            : appointmentMultimedia[1].value;
+
+          formData.append(`multimedia[${i}]file`, file.originFileObj);
+          formData.append(`multimedia[${i}]file_type`, fileExtension);
+          return formData;
+        });
+      }
+
+      await AppointmentUserCreateService(user.username, formData);
 
       setLoading(false);
       setResult(true);
@@ -297,7 +310,11 @@ const AppointmentsCreate = () => {
                   valuePropName="fileList"
                   getValueFromEvent={normFile}
                   label="Audio donde nos cuentes tu caso"
-                  extra="Los formatos permitidos son: .mp3, .mp4, .ogg, .m4a."
+                  extra={
+                    <>
+                      Los formatos permitidos son: <strong>.mp3, .mp4, .ogg, .m4a</strong>.
+                    </>
+                  }
                   rules={[
                     {
                       required: true,
@@ -305,8 +322,47 @@ const AppointmentsCreate = () => {
                     },
                   ]}
                 >
-                  <Upload accept=".mp3,.mp4,.ogg,.m4a" listType="picture" maxCount={1} beforeUpload={() => false}>
+                  <Upload
+                    accept=".mp3,.mp4,.ogg,.m4a"
+                    listType="picture"
+                    maxCount={1}
+                    beforeUpload={file => {
+                      const fileTypes = ['audio/mpeg', 'audio/mpeg-4', 'audio/ogg', 'audio/x-m4a'];
+                      return validateFileBeforeUpload(fileTypes, file);
+                    }}
+                  >
                     <Button icon={<UploadOutlined />}>Seleccionar archivo</Button>
+                  </Upload>
+                </Form.Item>
+
+                <Form.Item
+                  name="multimedia"
+                  valuePropName="fileList"
+                  getValueFromEvent={normFile}
+                  label="Selecciona fotos y documentos en PDF como evidencia (opcional)"
+                  extra={
+                    <>
+                      Los formatos permitidos son: <strong>.jpg, .jpeg, .png, .webp, .pdf</strong>.
+                      <br />
+                      Se permiten <strong>máximo 6</strong> archivos.
+                    </>
+                  }
+                >
+                  <Upload
+                    multiple
+                    accept=".jpg,.jpeg,.png,.webp,.pdf"
+                    listType="picture-card"
+                    maxCount={6}
+                    showUploadList={{ showPreviewIcon: false }}
+                    beforeUpload={file => {
+                      const fileTypes = [...IMAGE_EXTENSIONS, 'application/pdf'];
+                      return validateFileBeforeUpload(fileTypes, file);
+                    }}
+                  >
+                    <div>
+                      <PlusOutlined />
+                      <div style={{ marginTop: 8 }}>Seleccionar</div>
+                    </div>
                   </Upload>
                 </Form.Item>
 

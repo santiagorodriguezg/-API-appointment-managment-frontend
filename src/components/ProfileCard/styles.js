@@ -102,16 +102,6 @@ S.Photo = styled.div`
     width: 120px;
     height: 30px;
   }
-
-  .ant-badge {
-    height: 100%;
-  }
-
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
 `;
 
 S.IconCamera = styled(CameraOutlined)`

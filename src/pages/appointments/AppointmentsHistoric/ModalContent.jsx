@@ -1,12 +1,15 @@
 import { Fragment } from 'react';
-import { Descriptions, Modal, Tag } from 'antd';
-import { PlayCircleOutlined } from '@ant-design/icons';
+import { Col, Descriptions, Image, Modal, Row, Tag } from 'antd';
+import { FilePdfOutlined, PlayCircleOutlined } from '@ant-design/icons';
 import Button from '../../../components/Button';
 import Description from '../../../components/Description';
 import { getFullDate } from '../../../config/utils';
-import { getAppointmentTypeColor, getAppointmentTypeName } from '../../../config/utils/enums';
+import { appointmentMultimedia, getAppointmentTypeColor, getAppointmentTypeName } from '../../../config/utils/enums';
 
 const ModalContent = ({ isModalVisible, modalInfo, handleCancel }) => {
+  const images = modalInfo?.multimedia.filter(f => f.file_type === appointmentMultimedia[0].value);
+  const files = modalInfo?.multimedia.filter(f => f.file_type === appointmentMultimedia[1].value);
+
   return (
     <Modal
       footer={[
@@ -74,6 +77,34 @@ const ModalContent = ({ isModalVisible, modalInfo, handleCancel }) => {
 
         <Descriptions.Item label="Datos adicionales">
           {modalInfo.description ? modalInfo.description : <>No hay información.</>}
+        </Descriptions.Item>
+
+        <Descriptions.Item label="Fotos">
+          <Image.PreviewGroup>
+            <Row gutter={8}>
+              {images.map(f => {
+                return (
+                  <Col key={f.id} span={12}>
+                    <Image src={f.file} />
+                  </Col>
+                );
+              })}
+            </Row>
+          </Image.PreviewGroup>
+        </Descriptions.Item>
+
+        <Descriptions.Item label="Archivos">
+          <Row gutter={8}>
+            {files.map(f => {
+              return (
+                <Col key={f.id} span={12}>
+                  <Button type="link" shape="circle" icon={<FilePdfOutlined />} href={f.file} target="_blank">
+                    {f.file_name}
+                  </Button>
+                </Col>
+              );
+            })}
+          </Row>
         </Descriptions.Item>
 
         <Descriptions.Item label="Audio" style={{ paddingBottom: 0 }}>

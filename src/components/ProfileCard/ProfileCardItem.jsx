@@ -4,6 +4,7 @@ import { RightOutlined, UserOutlined } from '@ant-design/icons';
 import ImgCrop from 'antd-img-crop';
 import AuthContext from '../../context/Auth';
 import { UpdateMyProfileService } from '../../services/Users';
+import { IMAGE_EXTENSIONS, validateFileBeforeUpload } from '../../config/utils';
 import S from './styles';
 
 const ProfileCardItem = ({ title, content, showIcon = true, ...props }) => {
@@ -60,7 +61,18 @@ const ProfileCardItemPhoto = () => {
 
   return (
     <S.UploadPhoto title="Clic para cambiar la foto de perfil">
-      <ImgCrop rotate modalTitle="Seleccionar foto de perfil" modalOk="Guardar">
+      <ImgCrop
+        rotate
+        modalTitle="Seleccionar foto de perfil"
+        modalOk="Guardar"
+        beforeCrop={file => {
+          if (validateFileBeforeUpload(IMAGE_EXTENSIONS, file)) {
+            setShowUploadList(false);
+            return false;
+          }
+          return true;
+        }}
+      >
         <Upload
           accept=".jpg,.jpeg,.png,.webp"
           listType="picture"
@@ -72,11 +84,7 @@ const ProfileCardItemPhoto = () => {
         >
           <S.Photo>
             <Badge count={<S.IconCamera />} offset={[-60, 105]}>
-              {user?.picture ? (
-                <img src={user.picture} alt={user.fullName} />
-              ) : (
-                <Avatar size={120} icon={<UserOutlined />} />
-              )}
+              <Avatar size={120} icon={<UserOutlined />} src={user.picture} />
             </Badge>
           </S.Photo>
         </Upload>

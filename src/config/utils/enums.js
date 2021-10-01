@@ -55,3 +55,21 @@ export const getAppointmentTypeValue = text => appointmentTypes.find(obj => obj.
 export const getAppointmentTypeColor = value => {
   return appointmentTypesColors[appointmentTypes.indexOf(appointmentTypes.find(obj => obj.value === value))];
 };
+
+export const appointmentMultimedia = [
+  {
+    text: 'Imagen',
+    value: 'IMG',
+  },
+  {
+    text: 'Archivo PDF',
+    value: 'PDF',
+  },
+  {
+    text: 'Video',
+    value: 'VIDEO',
+  },
+];
+
+export const getAppointmentMultimediaName = value => appointmentMultimedia.find(obj => obj.value === value)?.text;
+export const getAppointmentMultimediaValue = text => appointmentMultimedia.find(obj => obj.text === text)?.value;

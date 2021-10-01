@@ -54,11 +54,7 @@ const UsersDetail = ({ location }) => {
           <S.Card>
             <S.UpperContainer>
               <S.ImageContaier>
-                {userInfo?.picture ? (
-                  <img src={userInfo.picture} alt={userInfo.fullName} />
-                ) : (
-                  <Avatar size={130} icon={<UserOutlined />} />
-                )}
+                <Avatar size={130} icon={<UserOutlined />} src={userInfo.picture} />
               </S.ImageContaier>
             </S.UpperContainer>
             <S.LowerContainer>

@@ -1,8 +1,8 @@
 import axiosWithToken from '../../config/client/Axios';
 
-export const GetMyProfileService = () => axiosWithToken.get('users/me/');
+export const GetMyProfileService = () => axiosWithToken.get('users/profile/');
 
-export const UpdateMyProfileService = data => axiosWithToken.patch('users/me/', data);
+export const UpdateMyProfileService = data => axiosWithToken.patch('users/profile/', data);
 
 export const PasswordChangeService = data => axiosWithToken.patch('users/password/change/', data);
 
