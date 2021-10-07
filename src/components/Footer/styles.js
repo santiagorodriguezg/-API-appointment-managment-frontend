@@ -9,4 +9,8 @@ S.Footer = styled(Footer)`
   padding: 30px 0 0 0;
 `;
 
+S.Content = styled.div`
+  color: #00000073;
+`;
+
 export default S;

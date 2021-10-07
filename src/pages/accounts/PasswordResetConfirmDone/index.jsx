@@ -1,27 +1,11 @@
-import { Card, Layout } from 'antd';
-
-import Logo from '../../../components/Logo';
-import Button from '../../../components/Button';
-import StyledCard from '../../../styles/Card';
+import Card from '../../../components/Card';
+import S from '../../../components/Card/styles';
 
 const PasswordResetConfirmDone = () => {
   return (
-    <Layout.Content>
-      <StyledCard.Container>
-        <Card>
-          <Logo />
-          <StyledCard.Title>Restablecimiento de contraseña completado</StyledCard.Title>
-          <StyledCard.Text>
-            Tu contraseña ha sido cambiada. Ahora puedes seguir adelante e iniciar sesión.
-          </StyledCard.Text>
-          <StyledCard.Button>
-            <Button type="primary" href="/accounts/login">
-              Iniciar sesión
-            </Button>
-          </StyledCard.Button>
-        </Card>
-      </StyledCard.Container>
-    </Layout.Content>
+    <Card title="Restablecimiento de contraseña completado">
+      <S.Text>Tu contraseña ha sido cambiada. Ahora puedes seguir adelante e iniciar sesión.</S.Text>
+    </Card>
   );
 };
 

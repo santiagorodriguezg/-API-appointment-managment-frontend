@@ -4,10 +4,14 @@ import S from './styles';
 const Footer = () => {
   return (
     <S.Footer>
-      <Divider />
-      <div>
-        <p>Casa de la Mujer ©2021 Created by Ant UED</p>
-      </div>
+      <S.Content>
+        <Divider />
+        <p>
+          Proyecto social con perspectiva de género. Espacio universitario de investigación y extensión, basado en la
+          defensa de los Derechos Humanos.
+        </p>
+        <p>Casa de la Mujer UPTC ©2021. Todos los derechos reservados</p>
+      </S.Content>
     </S.Footer>
   );
 };

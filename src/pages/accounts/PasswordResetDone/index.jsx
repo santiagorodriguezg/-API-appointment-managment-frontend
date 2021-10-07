@@ -1,32 +1,19 @@
-import { Card, Layout } from 'antd';
-import Logo from '../../../components/Logo';
-import Button from '../../../components/Button';
-import StyledCard from '../../../styles/Card';
+import Card from '../../../components/Card';
+import S from '../../../components/Card/styles';
 
 const PasswordResetDone = ({ location }) => {
   const { email } = (location && location.state) || {};
   return (
-    <Layout.Content>
-      <StyledCard.Container>
-        <Card>
-          <Logo />
-          <StyledCard.Title>Restablecimiento de contraseña enviado</StyledCard.Title>
-          <StyledCard.Text>
-            Le hemos enviado un correo electrónico a <strong>{email}</strong> con las instrucciones para restablecer la
-            contraseña.
-          </StyledCard.Text>
-          <StyledCard.Text>
-            Si el correo electrónico no aparece en la bandeja de entrada, revisa las secciones de spam, importantes,
-            entre otras.
-          </StyledCard.Text>
-          <StyledCard.Button>
-            <Button type="primary" href="/accounts/login">
-              Inicio de sesión
-            </Button>
-          </StyledCard.Button>
-        </Card>
-      </StyledCard.Container>
-    </Layout.Content>
+    <Card title="Restablecimiento de contraseña enviado">
+      <S.Text>
+        Le hemos enviado un correo electrónico a <strong>{email}</strong> con las instrucciones para restablecer la
+        contraseña.
+      </S.Text>
+      <S.Text>
+        Si el correo electrónico no aparece en la bandeja de entrada, revisa las secciones de spam, importantes, entre
+        otras.
+      </S.Text>
+    </Card>
   );
 };
 

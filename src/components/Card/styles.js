@@ -1,25 +1,25 @@
 import styled from 'styled-components';
 
-const StyledCard = {};
+const S = {};
 
-StyledCard.Container = styled.div`
+S.Container = styled.div`
   width: 500px;
   padding-top: 5em;
   margin: 0 auto;
 `;
 
-StyledCard.Title = styled.h2`
+S.Title = styled.h2`
   text-align: center;
   margin: 1em 0;
 `;
 
-StyledCard.Text = styled.p`
+S.Text = styled.p`
   font-size: 1.2em;
 `;
 
-StyledCard.Button = styled.div`
+S.Button = styled.div`
   text-align: center;
   margin-top: 48px;
 `;
 
-export default StyledCard;
+export default S;

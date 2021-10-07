@@ -1,3 +1,6 @@
+const getName = (array, value) => array.find(obj => obj.value === value)?.text;
+const getValue = (array, text) => array.find(obj => obj.text === text)?.value;
+
 export const userRoles = [
   {
     text: 'Administrador',
@@ -15,8 +18,8 @@ export const userRoles = [
 
 const roleColors = ['green', 'blue', 'purple'];
 
-export const getRoleName = value => userRoles.find(obj => obj.value === value)?.text;
-export const getRoleValue = text => userRoles.find(obj => obj.text === text)?.value;
+export const getRoleName = value => getName(userRoles, value);
+export const getRoleValue = text => getValue(userRoles, text);
 export const getRoleColor = value => roleColors[userRoles.indexOf(userRoles.find(obj => obj.value === value))];
 
 export const identificationTypes = [
@@ -34,8 +37,8 @@ export const identificationTypes = [
   },
 ];
 
-export const getIdentificationTypeName = value => identificationTypes.find(obj => obj.value === value)?.text;
-export const getIdentificationTypeValue = text => identificationTypes.find(obj => obj.text === text)?.value;
+export const getIdentificationTypeName = value => getName(identificationTypes, value);
+export const getIdentificationTypeValue = text => getValue(identificationTypes, text);
 
 export const appointmentTypes = [
   {
@@ -50,8 +53,8 @@ export const appointmentTypes = [
 
 const appointmentTypesColors = ['green', 'geekblue'];
 
-export const getAppointmentTypeName = value => appointmentTypes.find(obj => obj.value === value)?.text;
-export const getAppointmentTypeValue = text => appointmentTypes.find(obj => obj.text === text)?.value;
+export const getAppointmentTypeName = value => getName(appointmentTypes, value);
+export const getAppointmentTypeValue = text => getValue(appointmentTypes, text);
 export const getAppointmentTypeColor = value => {
   return appointmentTypesColors[appointmentTypes.indexOf(appointmentTypes.find(obj => obj.value === value))];
 };
@@ -71,5 +74,5 @@ export const appointmentMultimedia = [
   },
 ];
 
-export const getAppointmentMultimediaName = value => appointmentMultimedia.find(obj => obj.value === value)?.text;
-export const getAppointmentMultimediaValue = text => appointmentMultimedia.find(obj => obj.text === text)?.value;
+export const getAppointmentMultimediaName = value => getName(appointmentMultimedia, value);
+export const getAppointmentMultimediaValue = text => getValue(appointmentMultimedia, text);
