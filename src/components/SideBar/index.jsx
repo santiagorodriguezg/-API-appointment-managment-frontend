@@ -63,7 +63,7 @@ const SideBar = ({ collapsed, visible, onClose, onBreakpoint }) => {
         placement="left"
         closable={false}
         bodyStyle={{ padding: 0 }}
-        title="Casa de la Mujer"
+        title="Casa de la Mujer UPTC"
         onClose={onClose}
         visible={visible}
       >

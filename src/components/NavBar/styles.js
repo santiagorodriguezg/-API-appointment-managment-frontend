@@ -34,8 +34,14 @@ S.NavContainer = styled.div`
   height: 100%;
 `;
 
-S.Logo = styled.img`
-  height: 60px;
+S.Logo = styled.a`
+  height: 100%;
+  display: flex;
+  align-items: center;
+
+  img {
+    height: 60px;
+  }
 `;
 
 S.IconMenu = styled(MenuOutlined)`
