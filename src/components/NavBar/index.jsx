@@ -1,9 +1,8 @@
 import { useContext } from 'react';
 import { Avatar, Col, Dropdown, Row } from 'antd';
 import { CaretDownOutlined, MoreOutlined, UserOutlined } from '@ant-design/icons';
-
 import AuthContext from '../../context/Auth';
-import { MobileAndBelow, Tablet } from '../../styles/MediaQuery';
+import logo from '../../assets/logo.jpg';
 import { MenuItems, UserMenu } from './Items';
 import S from './styles';
 
@@ -12,28 +11,16 @@ const NavBar = ({ toggle }) => {
   return (
     <S.Header>
       <Row>
-        <Col xs={14} sm={10} lg={8}>
+        <Col xs={14} sm={4}>
           <S.LogoContainer>
             {toggle && <S.IconMenu onClick={toggle} />}
-            <S.Logo>
-              <span>Casa de la Mujer</span>
-            </S.Logo>
+            <S.Logo src={logo} alt="Casa de la Mujer UPTC" />
           </S.LogoContainer>
         </Col>
 
-        <Col xs={10} sm={14} lg={16}>
+        <Col xs={10} sm={20}>
           <S.NavContainer>
-            <Tablet>
-              <MenuItems mode="horizontal" />
-            </Tablet>
-            <MobileAndBelow>
-              <Dropdown arrow overlay={<MenuItems />} trigger={['click']} placement="bottomRight">
-                <S.ButtonMoreOutlined type="text">
-                  <MoreOutlined />
-                </S.ButtonMoreOutlined>
-              </Dropdown>
-            </MobileAndBelow>
-
+            <MenuItems mode="horizontal" expandIcon={<MoreOutlined />} />
             <Dropdown arrow overlay={<UserMenu fullName={user.fullName} />} trigger={['click']} placement="bottomRight">
               <S.UserMenu type="text">
                 <Avatar icon={<UserOutlined />} src={user.picture} />

@@ -10,7 +10,7 @@ const Footer = () => {
           Proyecto social con perspectiva de género. Espacio universitario de investigación y extensión, basado en la
           defensa de los Derechos Humanos.
         </p>
-        <p>Casa de la Mujer UPTC ©2021. Todos los derechos reservados</p>
+        <p>Casa de la Mujer UPTC ©{new Date().getFullYear()}. Todos los derechos reservados</p>
       </S.Content>
     </S.Footer>
   );

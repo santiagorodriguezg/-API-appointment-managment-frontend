@@ -1,11 +1,13 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Menu } from 'antd';
 import { DiffOutlined, LogoutOutlined, UserOutlined } from '@ant-design/icons';
 import S from './styles';
 
 export const MenuItems = props => {
+  const location = useLocation();
+
   return (
-    <S.DropdownMenu {...props}>
+    <S.DropdownMenu selectedKeys={[location.pathname]} {...props}>
       <Menu.Item key="/appointments/create">
         <Link to="/appointments/create">
           <DiffOutlined /> Solicitar cita

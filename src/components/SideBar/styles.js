@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Layout, Menu } from 'antd';
+import { Drawer, Layout, Menu } from 'antd';
 
 const { Sider } = Layout;
 const S = {};
@@ -12,6 +12,17 @@ S.Sider = styled(Sider)`
   top: 64px;
   bottom: 0;
   left: 0;
+  display: none;
+
+  @media (min-width: 992px) {
+    display: block;
+  }
+`;
+
+S.Drawer = styled(Drawer)`
+  @media (min-width: 992px) {
+    display: none;
+  }
 `;
 
 S.Menu = styled(Menu)`

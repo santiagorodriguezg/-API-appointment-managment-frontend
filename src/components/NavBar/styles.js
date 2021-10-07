@@ -34,14 +34,8 @@ S.NavContainer = styled.div`
   height: 100%;
 `;
 
-S.Logo = styled.h1`
-  margin: 0;
-  color: ${Colors.primary};
-  display: none;
-
-  @media (min-width: 440px) {
-    display: block;
-  }
+S.Logo = styled.img`
+  height: 60px;
 `;
 
 S.IconMenu = styled(MenuOutlined)`
@@ -55,8 +49,8 @@ S.Menu = styled(Menu)`
 `;
 
 S.DropdownMenu = styled(Menu)`
-  width: 300px;
   border: none !important;
+  justify-content: end;
 
   .ant-menu-horizontal,
   .ant-menu-item::after,
@@ -64,9 +58,14 @@ S.DropdownMenu = styled(Menu)`
     border: none !important;
   }
 
+  .anticon.anticon-ellipsis {
+    font-size: 32px;
+    line-height: 62px;
+    transform: rotate(90deg);
+  }
+
   @media (min-width: 992px) {
     width: 100%;
-    justify-content: end;
   }
 `;
 
@@ -101,12 +100,6 @@ S.UserMenu = styled(Button)`
   .anticon-caret-down {
     font-size: 13px;
     vertical-align: sub;
-  }
-`;
-
-S.ButtonMoreOutlined = styled(S.UserMenu)`
-  span {
-    font-size: 28px;
   }
 `;
 

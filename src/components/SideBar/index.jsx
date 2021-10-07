@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Drawer, Menu } from 'antd';
+import { Menu } from 'antd';
 import {
   DiffOutlined,
   InfoCircleOutlined,
@@ -8,10 +8,9 @@ import {
   UsergroupAddOutlined,
   UserOutlined,
 } from '@ant-design/icons';
-import { MobileAndBelow, Tablet } from '../../styles/MediaQuery';
-import S from './styles';
 import AuthContext from '../../context/Auth';
 import { userRoles } from '../../config/utils/enums';
+import S from './styles';
 
 const MenuItems = () => {
   const location = useLocation();
@@ -48,32 +47,28 @@ const MenuItems = () => {
 const SideBar = ({ collapsed, visible, onClose, onBreakpoint }) => {
   return (
     <>
-      <Tablet>
-        <S.Sider
-          trigger={null}
-          collapsible
-          collapsed={collapsed}
-          theme="light"
-          breakpoint="xl"
-          width={250}
-          onBreakpoint={onBreakpoint}
-        >
-          <MenuItems />
-        </S.Sider>
-      </Tablet>
+      <S.Sider
+        trigger={null}
+        collapsible
+        collapsed={collapsed}
+        theme="light"
+        breakpoint="xl"
+        width={250}
+        onBreakpoint={onBreakpoint}
+      >
+        <MenuItems />
+      </S.Sider>
 
-      <MobileAndBelow>
-        <Drawer
-          placement="left"
-          closable={false}
-          bodyStyle={{ padding: 0 }}
-          title="Casa de la Mujer"
-          onClose={onClose}
-          visible={visible}
-        >
-          <MenuItems />
-        </Drawer>
-      </MobileAndBelow>
+      <S.Drawer
+        placement="left"
+        closable={false}
+        bodyStyle={{ padding: 0 }}
+        title="Casa de la Mujer"
+        onClose={onClose}
+        visible={visible}
+      >
+        <MenuItems />
+      </S.Drawer>
     </>
   );
 };
