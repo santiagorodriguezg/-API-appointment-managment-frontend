@@ -79,6 +79,12 @@ const ModalContent = ({ isModalVisible, modalInfo, handleCancel }) => {
           {modalInfo.description ? modalInfo.description : <>No hay información.</>}
         </Descriptions.Item>
 
+        <Descriptions.Item label="Audio">
+          <Button type="link" shape="circle" icon={<PlayCircleOutlined />} href={modalInfo.audio} target="_blank">
+            Escuchar
+          </Button>
+        </Descriptions.Item>
+
         <Descriptions.Item label="Fotos">
           <Image.PreviewGroup>
             <Row gutter={8}>
@@ -93,7 +99,7 @@ const ModalContent = ({ isModalVisible, modalInfo, handleCancel }) => {
           </Image.PreviewGroup>
         </Descriptions.Item>
 
-        <Descriptions.Item label="Archivos">
+        <Descriptions.Item label="Archivos" style={{ paddingBottom: 0 }}>
           <Row gutter={8}>
             {files.map(f => {
               return (
@@ -105,12 +111,6 @@ const ModalContent = ({ isModalVisible, modalInfo, handleCancel }) => {
               );
             })}
           </Row>
-        </Descriptions.Item>
-
-        <Descriptions.Item label="Audio" style={{ paddingBottom: 0 }}>
-          <Button type="link" shape="circle" icon={<PlayCircleOutlined />} href={modalInfo.audio} target="_blank">
-            Escuchar
-          </Button>
         </Descriptions.Item>
       </Description>
     </Modal>

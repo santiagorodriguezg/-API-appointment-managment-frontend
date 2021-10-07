@@ -1,6 +1,6 @@
 import { Link, useLocation } from 'react-router-dom';
 import { Menu } from 'antd';
-import { DiffOutlined, LogoutOutlined, UserOutlined } from '@ant-design/icons';
+import { DiffOutlined, HistoryOutlined, LogoutOutlined, UserOutlined } from '@ant-design/icons';
 import S from './styles';
 
 export const MenuItems = props => {
@@ -11,6 +11,11 @@ export const MenuItems = props => {
       <Menu.Item key="/appointments/create">
         <Link to="/appointments/create">
           <DiffOutlined /> Solicitar cita
+        </Link>
+      </Menu.Item>
+      <Menu.Item key="/appointments/historic">
+        <Link to="/appointments/historic">
+          <HistoryOutlined /> Histórico de citas
         </Link>
       </Menu.Item>
     </S.DropdownMenu>
