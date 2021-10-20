@@ -7,23 +7,7 @@ import AuthContext from '../../context/Auth';
 import { GetMyChatMessagesService } from '../../services/Chat';
 import S from './styles';
 
-// eslint-disable-next-line no-unused-vars
 const ListUserConversation = ({ data, loading, chatUser, setChatUser }) => {
-  // const data = [
-  //   {
-  //     title: 'Luis Guillermo Gómez',
-  //   },
-  //   {
-  //     title: 'Sofia Garcia',
-  //   },
-  //   {
-  //     title: 'Juan Carlos Perez',
-  //   },
-  //   {
-  //     title: 'Ana María Hernández',
-  //   },
-  // ];
-
   const { user } = useContext(AuthContext);
   const history = useHistory();
 
@@ -53,44 +37,24 @@ const ListUserConversation = ({ data, loading, chatUser, setChatUser }) => {
   };
 
   return (
-    <>
-      <List
-        loading={loading}
-        itemLayout="horizontal"
-        dataSource={data}
-        renderItem={item => (
-          // eslint-disable-next-line no-constant-condition
-          <S.ListItem $active={item.id === chatUser.id} onClick={() => onClick(item)}>
-            <S.ListItemMeta
-              avatar={<Avatar size={64} icon={<UserOutlined />} src={item.avatar} />}
-              title={item.title}
-              description={
-                <S.Paragraph ellipsis={{ rows: 2 }}>
-                  Lorem Ipsum is simply dummy text of the printing and typesetting industry. It is a long established
-                </S.Paragraph>
-              }
-            />
-          </S.ListItem>
-        )}
-      />
-
-      <S.ChatItem onClick={onClick}>
-        <S.ChatItemAvatar>
-          <Avatar
-            size={64}
-            icon={<UserOutlined />}
-            src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+    <List
+      loading={loading}
+      itemLayout="horizontal"
+      dataSource={data}
+      renderItem={item => (
+        <S.ListItem $active={item.id === chatUser.id} onClick={() => onClick(item)}>
+          <S.ListItemMeta
+            avatar={<Avatar size={64} icon={<UserOutlined />} src={item.avatar} />}
+            title={item.title}
+            description={
+              <S.Paragraph ellipsis={{ rows: 2 }}>
+                Lorem Ipsum is simply dummy text of the printing and typesetting industry. It is a long established
+              </S.Paragraph>
+            }
           />
-        </S.ChatItemAvatar>
-        <S.ChatItemContent>
-          <S.ChatItemTitle>Usuario 1 Lorem ipsum dolor sit amet, consectetur adipisicing elit</S.ChatItemTitle>
-          <S.Paragraph ellipsis={{ rows: 2 }}>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda, debitis earum incidunt ipsa iste, iusto
-            maxime modi nemo possimus quae qui sapiente sed similique sint tempora tenetur totam ullam, vero.
-          </S.Paragraph>
-        </S.ChatItemContent>
-      </S.ChatItem>
-    </>
+        </S.ListItem>
+      )}
+    />
   );
 };
 

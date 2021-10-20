@@ -84,4 +84,9 @@ S.ChatMessageReply = styled.div`
   }
 `;
 
+S.MessagesEnd = styled.div`
+  float: left;
+  clear: both;
+`;
+
 export default S;

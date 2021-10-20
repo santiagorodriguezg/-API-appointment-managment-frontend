@@ -21,6 +21,7 @@ const Chat = () => {
   const accessToken = TokenStorage.getAccessToken();
 
   const clientRef = useRef(null);
+  const messagesEndRef = useRef(null);
   const [waitingToReconnect, setWaitingToReconnect] = useState(null);
   const [messages, setMessages] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
@@ -35,6 +36,10 @@ const Chat = () => {
 
   const onChange = e => {
     if (e.target.value !== ' ') setMessage(e.target.value);
+  };
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
   const getChats = async () => {
@@ -137,6 +142,10 @@ const Chat = () => {
     }
   }, [waitingToReconnect]);
 
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+
   const sendMessage = () => {
     if (clientRef.current) {
       if (message.trim()) {
@@ -182,12 +191,15 @@ const Chat = () => {
 
             <Styled.ChatMessageList>
               <Spin spinning={loadingMessages}>
-                {messages.map(msg => {
-                  if (msg.user === user.username) {
-                    return <Message key={msg.id} sender text={msg.content} time={msg.created_at} />;
-                  }
-                  return <Message key={msg.id} receiver text={msg.content} time={msg.created_at} />;
-                })}
+                {messages.map(msg => (
+                  <Message
+                    key={msg.id}
+                    receiver={msg.user !== user.username}
+                    text={msg.content}
+                    time={msg.created_at}
+                  />
+                ))}
+                <Styled.MessagesEnd ref={messagesEndRef} />
               </Spin>
             </Styled.ChatMessageList>
 
