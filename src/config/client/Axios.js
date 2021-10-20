@@ -1,5 +1,5 @@
 import axios from 'axios';
-import TokenStorage from '../utils/TokenStorage';
+import TokenStorage from '../TokenStorage';
 
 const baseURL = process.env.REACT_APP_API_URL;
 

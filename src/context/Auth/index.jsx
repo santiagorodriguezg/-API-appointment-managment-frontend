@@ -1,6 +1,6 @@
 import { createContext } from 'react';
 import useLocalStorage from '../../hooks/useLocalStorage';
-import TokenStorage from '../../config/utils/TokenStorage';
+import TokenStorage from '../../config/TokenStorage';
 
 const AuthContext = createContext({});
 

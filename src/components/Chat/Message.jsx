@@ -1,10 +1,10 @@
 import S from './styles';
 
-const Message = ({ sender, receiver }) => {
+const Message = ({ sender, receiver, text, time }) => {
   return (
     <S.Message sender={sender} receiver={receiver}>
-      <S.MessageText>Hola</S.MessageText>
-      <S.MessageTime>28/09/21 a.m</S.MessageTime>
+      <S.MessageText>{text}</S.MessageText>
+      <S.MessageTime>{time}</S.MessageTime>
     </S.Message>
   );
 };

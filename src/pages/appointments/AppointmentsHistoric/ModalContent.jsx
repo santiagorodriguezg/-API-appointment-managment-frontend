@@ -57,7 +57,6 @@ const ModalContent = ({ isModalVisible, modalInfo, handleCancel }) => {
           {modalInfo.aggressor ? (
             <Descriptions column={1} style={{ paddingLeft: 24 }}>
               <Descriptions.Item label="Nombre">{modalInfo.aggressor.name}</Descriptions.Item>
-              <Descriptions.Item label="Edad">{modalInfo.aggressor.age}</Descriptions.Item>
               <Descriptions.Item label="Documento">{modalInfo.aggressor.identification_number}</Descriptions.Item>
               <Descriptions.Item label="Teléfono"> {modalInfo.aggressor.phone}</Descriptions.Item>
               <Descriptions.Item label="Dirección" style={{ paddingBottom: 0 }}>

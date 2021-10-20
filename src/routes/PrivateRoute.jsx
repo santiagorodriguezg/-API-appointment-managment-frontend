@@ -1,6 +1,6 @@
 import { Redirect, Route } from 'react-router-dom';
 import Error403 from '../pages/errors/403';
-import TokenStorage from '../config/utils/TokenStorage';
+import TokenStorage from '../config/TokenStorage';
 
 const PrivateRoute = ({ component: Component, roles, ...rest }) => {
   const accessToken = TokenStorage.getAccessToken();

@@ -30,7 +30,7 @@ import AppointmentsCreate from '../pages/appointments/AppointmentsCreate';
 import AppointmentsHistoric from '../pages/appointments/AppointmentsHistoric';
 
 import Home from '../pages/Home';
-import ChatList from '../pages/Chat/ChatList';
+import Chat from '../pages/Chat';
 
 import Error404 from '../pages/errors/404';
 import { userRoles } from '../config/utils/enums';
@@ -65,7 +65,7 @@ const AppRouter = () => {
             <PrivateRoute exact path="/appointments/create" component={AppointmentsCreate} />
             <PrivateRoute exact path="/appointments/historic" component={AppointmentsHistoric} />
 
-            <PrivateRoute exact path="/chat/listing" component={ChatList} />
+            <PrivateRoute exact path="/chat/:roomName" component={Chat} />
 
             <PrivateRoute exact path="/home" component={Home} />
 

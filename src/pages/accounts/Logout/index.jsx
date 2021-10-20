@@ -4,7 +4,7 @@ import AuthContext from '../../../context/Auth';
 import { LogoutService } from '../../../services/Auth';
 import ErrorMessage from '../../../components/ErrorMessage';
 import StyledGlobal from '../../../styles/Global';
-import TokenStorage from '../../../config/utils/TokenStorage';
+import TokenStorage from '../../../config/TokenStorage';
 
 const Logout = () => {
   const { logOut } = useContext(AuthContext);
