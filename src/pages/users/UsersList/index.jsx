@@ -1,3 +1,4 @@
+import crypto from 'crypto';
 import { Link } from 'react-router-dom';
 import { Dropdown, Menu, Space, Table, Tag } from 'antd';
 import {
@@ -78,10 +79,10 @@ export default class UsersList extends TableBase {
     const { loading, errorMsg, isModalVisible, modalInfo, data, pagination } = this.state;
     let { sortedInfo, filteredInfo } = this.state;
     const { user } = this.context;
+    const roomName = crypto.randomBytes(16).toString('hex');
 
     sortedInfo = sortedInfo || {};
     filteredInfo = filteredInfo || {};
-
     const columns = [
       {
         title: 'Nombre',
@@ -153,7 +154,21 @@ export default class UsersList extends TableBase {
                       <Link to={`/users/${record.username}/edit`}>Editar</Link>
                     </Menu.Item>
                     <Menu.Item key="2" icon={<MessageOutlined />}>
-                      Chat
+                      <Link
+                        to={{
+                          pathname: `/chat/${roomName}`,
+                          state: {
+                            chatRoom: {
+                              roomName,
+                              username: record.username,
+                              title: record.full_name,
+                              avatar: record.picture,
+                            },
+                          },
+                        }}
+                      >
+                        Chat
+                      </Link>
                     </Menu.Item>
                     <Menu.Item key="3" icon={<LinkOutlined />} onClick={() => this.showModal(record)}>
                       Restablecer contraseña

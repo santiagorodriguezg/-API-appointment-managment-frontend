@@ -42,7 +42,7 @@ const ListUserConversation = ({ data, loading, chatUser, setChatUser }) => {
       itemLayout="horizontal"
       dataSource={data}
       renderItem={item => (
-        <S.ListItem $active={item.id === chatUser.id} onClick={() => onClick(item)}>
+        <S.ListItem $active={item.roomName === chatUser.roomName} onClick={() => onClick(item)}>
           <S.ListItemMeta
             avatar={<Avatar size={64} icon={<UserOutlined />} src={item.avatar} />}
             title={item.title}

@@ -12,27 +12,26 @@ import S from '../../components/Dashboard/styles';
 import StyledGlobal from '../../styles/Global';
 import Styled from './styles';
 
-const Chat = () => {
+const Chat = ({ location }) => {
+  const { chatRoom } = (location && location.state) || {};
+  const accessToken = TokenStorage.getAccessToken();
   const { user, chatUser, setChatUser } = useContext(AuthContext);
   const [loadingChats, setLoadingChats] = useState(false);
   const [loadingMessages, setLoadingMessages] = useState(false);
   const [chats, setChats] = useState([]);
+  const [waitingToReconnect, setWaitingToReconnect] = useState(null);
   const [message, setMessage] = useState('');
-  const accessToken = TokenStorage.getAccessToken();
-
+  const [messages, setMessages] = useState([]);
   const clientRef = useRef(null);
   const messagesEndRef = useRef(null);
-  const [waitingToReconnect, setWaitingToReconnect] = useState(null);
-  const [messages, setMessages] = useState([]);
-  const [isOpen, setIsOpen] = useState(false);
 
-  function addMessage(msg) {
+  const addMessage = msg => {
     if (msg instanceof Array) {
       setMessages(prev => [...prev, ...msg]);
     } else {
       setMessages(prev => [...prev, msg]);
     }
-  }
+  };
 
   const onChange = e => {
     if (e.target.value !== ' ') setMessage(e.target.value);
@@ -52,13 +51,17 @@ const Chat = () => {
 
       res.data.results.rooms.forEach(chat => {
         chatList.push({
-          id: chat.id,
           roomName: chat.name,
           username: chat?.user_owner?.username || chat?.user_receiver?.username,
           title: chat?.user_owner?.full_name || chat?.user_receiver?.full_name,
           avatar: chat?.user_owner?.picture || chat?.user_receiver?.picture,
         });
       });
+
+      if (chatRoom) {
+        chatList.push(chatRoom);
+        setChatUser(chatRoom);
+      }
 
       setChats(chatList);
       setLoadingChats(false);
@@ -77,17 +80,14 @@ const Chat = () => {
 
     // Only set up the websocket once
     if (!clientRef.current) {
-      const roomName = window.location.pathname.substring('/chat/'.length);
+      const roomName = location.pathname.substring('/chat/'.length);
       const client = new WebSocket(`ws://localhost:8000/ws/v1/chat/${roomName}/?token=${accessToken}`);
       clientRef.current = client;
-
-      // window.client = client;
 
       client.onerror = e => console.error(e);
 
       client.onopen = () => {
         setLoadingMessages(true);
-        setIsOpen(true);
         console.log('ws opened');
         client.send(JSON.stringify({ command: 'fetch_messages' }));
       };
@@ -106,7 +106,6 @@ const Chat = () => {
           return;
         }
         // Parse event code and log
-        setIsOpen(false);
         console.log('ws closed');
 
         // Setting this will trigger a re-run of the effect,

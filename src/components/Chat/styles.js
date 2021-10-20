@@ -31,6 +31,8 @@ S.ListItem = styled(List.Item)`
   ${props =>
     props.$active &&
     css`
+      background-color: ${Colors.listItemColorHover};
+
       &:before {
         content: '';
         position: absolute;
