@@ -8,7 +8,7 @@ import { GetMyChatMessagesService } from '../../services/Chat';
 import S from './styles';
 
 // eslint-disable-next-line no-unused-vars
-const ListUserConversation = ({ data, loading, setUserChat }) => {
+const ListUserConversation = ({ data, loading, chatUser, setChatUser }) => {
   // const data = [
   //   {
   //     title: 'Luis Guillermo Gómez',
@@ -41,30 +41,16 @@ const ListUserConversation = ({ data, loading, setUserChat }) => {
 
   const onClick = async item => {
     console.log('EVE', item);
-    setUserChat(item);
+    setChatUser(item);
     // eslint-disable-next-line no-unused-vars
     const y = crypto.randomBytes(16).toString('hex');
-    let roomName = window.location.pathname.substring('/chat/'.length);
-    roomName = roomName === 'roomtest1' ? 'roomtest2' : 'roomtest1';
-    history.push(`/chat/${roomName}`);
+    // const roomName = window.location.pathname.substring('/chat/'.length);
+    // roomName = roomName === 'roomtest1' ? 'roomtest2' : 'roomtest1';
+    // const roomName =
+    history.push(`/chat/${item.roomName}`);
     setRoom('Hola');
-    getMessages(roomName);
+    getMessages(item.roomName);
   };
-
-  // const onClick = useCallback(
-  //   item => {
-  //     console.log('EVE', item);
-  //     setUserChat(item);
-  //     // eslint-disable-next-line no-unused-vars
-  //     const y = crypto.randomBytes(16).toString('hex');
-  //     let roomName = window.location.pathname.substring('/chat/'.length);
-  //     roomName = roomName === 'roomtest1' ? 'roomtest2' : 'roomtest1';
-  //     history.push(`/chat/${roomName}`);
-  //     setRoom('Hola');
-  //     getMessages(roomName);
-  //   },
-  //   [setUserChat],
-  // );
 
   return (
     <>
@@ -73,7 +59,8 @@ const ListUserConversation = ({ data, loading, setUserChat }) => {
         itemLayout="horizontal"
         dataSource={data}
         renderItem={item => (
-          <S.ListItem onClick={() => onClick(item)}>
+          // eslint-disable-next-line no-constant-condition
+          <S.ListItem $active={item.id === chatUser.id} onClick={() => onClick(item)}>
             <S.ListItemMeta
               avatar={<Avatar size={64} icon={<UserOutlined />} src={item.avatar} />}
               title={item.title}

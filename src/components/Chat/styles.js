@@ -55,6 +55,7 @@ S.ListItem = styled(List.Item)`
   padding: 0;
   cursor: pointer;
   border: none !important;
+  position: relative;
 
   &:hover {
     background-color: ${Colors.listItemColor};
@@ -63,6 +64,20 @@ S.ListItem = styled(List.Item)`
   &:active {
     background-color: ${Colors.listItemColorHover};
   }
+
+  ${props =>
+    props.$active &&
+    css`
+      &:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 4px;
+        background: ${Colors.primary};
+      }
+    `};
 `;
 
 S.ListItemMeta = styled(List.Item.Meta)`

@@ -13,13 +13,12 @@ import StyledGlobal from '../../styles/Global';
 import Styled from './styles';
 
 const Chat = () => {
-  const { user } = useContext(AuthContext);
+  const { user, chatUser, setChatUser } = useContext(AuthContext);
   const [loadingChats, setLoadingChats] = useState(false);
   const [loadingMessages, setLoadingMessages] = useState(false);
   const [chats, setChats] = useState([]);
   const [message, setMessage] = useState('');
   const accessToken = TokenStorage.getAccessToken();
-  const [userChat, setUserChat] = useState({});
 
   const clientRef = useRef(null);
   const [waitingToReconnect, setWaitingToReconnect] = useState(null);
@@ -34,13 +33,8 @@ const Chat = () => {
     }
   }
 
-  const addUserChat = item => {
-    setUserChat(item);
-  };
-
   const onChange = e => {
-    console.log('MSG', e.target.value);
-    setMessage(e.target.value);
+    if (e.target.value !== ' ') setMessage(e.target.value);
   };
 
   const getChats = async () => {
@@ -53,6 +47,9 @@ const Chat = () => {
 
       res.data.results.rooms.forEach(chat => {
         chatList.push({
+          id: chat.id,
+          roomName: chat.name,
+          username: chat?.user_owner?.username || chat?.user_receiver?.username,
           title: chat?.user_owner?.full_name || chat?.user_receiver?.full_name,
           avatar: chat?.user_owner?.picture || chat?.user_receiver?.picture,
         });
@@ -142,16 +139,19 @@ const Chat = () => {
 
   const sendMessage = () => {
     if (clientRef.current) {
-      clientRef.current.send(
-        JSON.stringify({
-          command: 'create_message',
-          data: {
-            room_name: window.location.pathname.substring('/chat/'.length),
-            user_receiver: 'luis',
-            content: message,
-          },
-        }),
-      );
+      if (message.trim()) {
+        clientRef.current.send(
+          JSON.stringify({
+            command: 'create_message',
+            data: {
+              room_name: window.location.pathname.substring('/chat/'.length),
+              user_receiver: chatUser.username,
+              content: message.trim(),
+            },
+          }),
+        );
+      }
+      setMessage('');
     }
   };
 
@@ -167,14 +167,14 @@ const Chat = () => {
               </div>
             </Styled.ChatMessageTitleBar>
 
-            <ListUserConversation data={chats} loading={loadingChats} setUserChat={addUserChat} />
+            <ListUserConversation data={chats} loading={loadingChats} chatUser={chatUser} setChatUser={setChatUser} />
           </Styled.ChatUserList>
 
           <Styled.ChatMessageContainer>
             <Styled.ChatMessageTitleBar>
               <div className="user-profile">
                 <Styled.Paragraph ellipsis strong>
-                  {userChat.title}
+                  {chatUser.title}
                 </Styled.Paragraph>
               </div>
               <EllipsisOutlined />
@@ -201,10 +201,11 @@ const Chat = () => {
                 }}
                 size="large"
                 placeholder="Escribe un mensaje..."
+                value={message}
                 onChange={onChange}
               />
               <Tooltip title="Enviar">
-                <Button size="large" icon={<SendOutlined />} onClick={sendMessage} />
+                <Button size="large" icon={<SendOutlined />} onClick={sendMessage} disabled={message === ''} />
               </Tooltip>
             </Styled.ChatMessageReply>
           </Styled.ChatMessageContainer>

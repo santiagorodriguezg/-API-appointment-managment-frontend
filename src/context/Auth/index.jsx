@@ -9,6 +9,7 @@ export const AuthProvider = ({ children }) => {
   const [refreshToken, setRefreshToken] = useLocalStorage(TokenStorage.LOCAL_STORAGE_REFRESH_TOKEN, '');
   const [user, setUser] = useLocalStorage(TokenStorage.LOCAL_STORAGE_USER, {});
   const [sideBarCollapsed, setSideBarCollapsed] = useLocalStorage(TokenStorage.LOCAL_STORAGE_SB_COLLAPSED, false);
+  const [chatUser, setChatUser] = useLocalStorage(TokenStorage.LOCAL_STORAGE_CHAT_USER, {});
 
   const logIn = data => {
     setAccessToken(data.access);
@@ -35,6 +36,8 @@ export const AuthProvider = ({ children }) => {
         setRefreshToken,
         user,
         setUser,
+        chatUser,
+        setChatUser,
         sideBarCollapsed,
         setSideBarCollapsed,
         logIn,
