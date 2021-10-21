@@ -13,8 +13,7 @@ import StyledGlobal from '../../styles/Global';
 import Styled from './styles';
 
 const Chat = ({ location }) => {
-  const { chatRoom } = (location && location.state) || {};
-  const accessToken = TokenStorage.getAccessToken();
+  const { isNewChat, chatRoom } = (location && location.state) || {};
   const { user, chatUser, setChatUser } = useContext(AuthContext);
   const [loadingChats, setLoadingChats] = useState(false);
   const [loadingMessages, setLoadingMessages] = useState(false);
@@ -44,10 +43,8 @@ const Chat = ({ location }) => {
   const getChats = async () => {
     try {
       setLoadingChats(true);
-      const res = await GetMyChatsService(user.username);
-      console.log('RES', res.data.results);
-
       const chatList = [];
+      const res = await GetMyChatsService(user.username);
 
       res.data.results.rooms.forEach(chat => {
         chatList.push({
@@ -55,11 +52,15 @@ const Chat = ({ location }) => {
           username: chat?.user_owner?.username || chat?.user_receiver?.username,
           title: chat?.user_owner?.full_name || chat?.user_receiver?.full_name,
           avatar: chat?.user_owner?.picture || chat?.user_receiver?.picture,
+          description: chat.last_message.content,
+          messageTime: chat.last_message.created_at,
         });
       });
 
       if (chatRoom) {
-        chatList.push(chatRoom);
+        if (isNewChat) {
+          chatList.unshift(chatRoom);
+        }
         setChatUser(chatRoom);
       }
 
@@ -80,6 +81,7 @@ const Chat = ({ location }) => {
 
     // Only set up the websocket once
     if (!clientRef.current) {
+      const accessToken = TokenStorage.getAccessToken();
       const roomName = location.pathname.substring('/chat/'.length);
       const client = new WebSocket(`ws://localhost:8000/ws/v1/chat/${roomName}/?token=${accessToken}`);
       clientRef.current = client;
@@ -141,12 +143,24 @@ const Chat = ({ location }) => {
     }
   }, [waitingToReconnect]);
 
+  const renderChatList = () => {
+    const lastMsg = messages[messages.length - 1];
+    chats.map(chat => {
+      if (chat.roomName === chatUser.roomName) {
+        chat.description = lastMsg?.content;
+        chat.messageTime = lastMsg?.created_at;
+      }
+      return chat;
+    });
+    return <ListUserConversation data={chats} loading={loadingChats} chatUser={chatUser} setChatUser={setChatUser} />;
+  };
+
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
 
   const sendMessage = () => {
-    if (clientRef.current) {
+    if (clientRef.current?.readyState === 1) {
       if (message.trim()) {
         clientRef.current.send(
           JSON.stringify({
@@ -174,8 +188,7 @@ const Chat = ({ location }) => {
                 <Input.Search placeholder="Buscar un chat" />
               </div>
             </Styled.ChatMessageTitleBar>
-
-            <ListUserConversation data={chats} loading={loadingChats} chatUser={chatUser} setChatUser={setChatUser} />
+            {renderChatList()}
           </Styled.ChatUserList>
 
           <Styled.ChatMessageContainer>

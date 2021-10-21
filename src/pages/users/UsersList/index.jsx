@@ -19,6 +19,7 @@ import Dashboard from '../../../components/Dashboard';
 import ErrorMessage from '../../../components/ErrorMessage';
 import S from '../../../components/Dashboard/styles';
 import ModalContent from './ModalContent';
+import { GetMyChatsService } from '../../../services/Chat';
 
 export default class UsersList extends TableBase {
   static contextType = AuthContext;
@@ -35,12 +36,15 @@ export default class UsersList extends TableBase {
         errorMsg: false,
       });
       const { pagination } = this.state;
+      const { user } = this.context;
 
       const res = await UsersListService(params);
+      const resChat = await GetMyChatsService(user.username);
 
       this.setState({
         loading: false,
         data: res.data.results,
+        rooms: resChat.data.results.rooms,
         pagination: {
           ...pagination,
           total: res.data.count,
@@ -75,11 +79,47 @@ export default class UsersList extends TableBase {
     this.getUsersData({ pagination });
   };
 
+  getChatLink = record => {
+    const { rooms } = this.state;
+    const { user } = this.context;
+    let isNewChat = false;
+    let roomName = null;
+
+    rooms.forEach(room => {
+      if (room?.user_owner?.username === record.username || room?.user_receiver?.username === record.username) {
+        roomName = room.name;
+      }
+    });
+
+    if (!roomName) {
+      roomName = crypto.randomBytes(16).toString('hex');
+      isNewChat = true;
+    }
+
+    const linkProps = {
+      pathname: `/chat/${roomName}`,
+      state: {
+        isNewChat,
+        chatRoom: {
+          roomName,
+          username: record.username,
+          title: record.full_name,
+          avatar: record.picture,
+        },
+      },
+    };
+
+    return (
+      <Menu.Item key="2" icon={<MessageOutlined />} disabled={record.username === user.username}>
+        <Link to={linkProps}>Chat</Link>
+      </Menu.Item>
+    );
+  };
+
   render() {
     const { loading, errorMsg, isModalVisible, modalInfo, data, pagination } = this.state;
     let { sortedInfo, filteredInfo } = this.state;
     const { user } = this.context;
-    const roomName = crypto.randomBytes(16).toString('hex');
 
     sortedInfo = sortedInfo || {};
     filteredInfo = filteredInfo || {};
@@ -153,23 +193,7 @@ export default class UsersList extends TableBase {
                     <Menu.Item key="1" icon={<EditOutlined />}>
                       <Link to={`/users/${record.username}/edit`}>Editar</Link>
                     </Menu.Item>
-                    <Menu.Item key="2" icon={<MessageOutlined />}>
-                      <Link
-                        to={{
-                          pathname: `/chat/${roomName}`,
-                          state: {
-                            chatRoom: {
-                              roomName,
-                              username: record.username,
-                              title: record.full_name,
-                              avatar: record.picture,
-                            },
-                          },
-                        }}
-                      >
-                        Chat
-                      </Link>
-                    </Menu.Item>
+                    {this.getChatLink(record)}
                     <Menu.Item key="3" icon={<LinkOutlined />} onClick={() => this.showModal(record)}>
                       Restablecer contraseña
                     </Menu.Item>

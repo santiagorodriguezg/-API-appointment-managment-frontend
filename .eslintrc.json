@@ -41,6 +41,13 @@
       1,
       "static public field"
     ],
+    "prefer-destructuring": [
+      "error",
+      {
+        "object": true,
+        "array": false
+      }
+    ],
     "react/no-array-index-key": "off",
     "no-param-reassign": [
       "error",

@@ -52,16 +52,30 @@ S.ListItemMeta = styled(List.Item.Meta)`
   }
 
   .ant-list-item-meta-title {
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
     font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    & > div {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
   }
 
   .ant-list-item-meta-content {
     padding: 12px 8px 12px 0;
     border-bottom: 1px solid #f0f0f0 !important;
   }
+`;
+
+S.ListItemMetaTitle = styled.div`
+  max-width: 70%;
+`;
+
+S.ListItemMetaTime = styled.div`
+  font-size: 70%;
 `;
 
 // Message
