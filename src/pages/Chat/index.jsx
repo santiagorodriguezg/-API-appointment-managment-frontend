@@ -172,18 +172,24 @@ const Chat = ({ location }) => {
           </Styled.ChatUserList>
 
           <Styled.ChatMessageContainer>
-            <Styled.ChatMessageTitleBar>
-              <TitleBar chatUser={chatUser} />
-            </Styled.ChatMessageTitleBar>
-
-            <MessageList
-              messages={messages}
-              loadingMessages={loadingMessages}
-              messagesEndRef={messagesEndRef}
-              user={user}
-            />
-
-            <Form message={message} setMessage={setMessage} clientRef={clientRef} chatUser={chatUser} />
+            {roomName === 'listing' ? (
+              <Styled.SelectChatMessage>
+                <div>Selecciona un chat para comenzar</div>
+              </Styled.SelectChatMessage>
+            ) : (
+              <>
+                <Styled.ChatMessageTitleBar>
+                  <TitleBar chatUser={chatUser} />
+                </Styled.ChatMessageTitleBar>
+                <MessageList
+                  messages={messages}
+                  loadingMessages={loadingMessages}
+                  messagesEndRef={messagesEndRef}
+                  user={user}
+                />
+                <Form message={message} setMessage={setMessage} clientRef={clientRef} chatUser={chatUser} />
+              </>
+            )}
           </Styled.ChatMessageContainer>
         </Styled.ChatContainer>
       </StyledGlobal.Wrapper800>

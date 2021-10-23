@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import Variables from '../../styles/Variables';
+import Variables, { Colors } from '../../styles/Variables';
 
 const S = {};
 
@@ -42,6 +42,22 @@ S.ChatMessageTitleBar = styled.div`
     display: flex;
     flex-direction: column;
     overflow: hidden;
+  }
+`;
+
+S.SelectChatMessage = styled.div`
+  display: flex;
+  height: 100%;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+
+  > div {
+    padding: 5px 10px;
+    background: ${Colors.primary};
+    border-radius: 20px;
+    color: #fff;
+    font-weight: 600;
   }
 `;
 
