@@ -1,4 +1,4 @@
-import { getShortDate } from '../../config/utils';
+import { getShortDate } from '../../../config/utils';
 import S from './styles';
 
 const Message = ({ receiver, text, time }) => {

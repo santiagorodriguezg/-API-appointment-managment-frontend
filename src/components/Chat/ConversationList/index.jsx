@@ -3,7 +3,7 @@ import { Avatar, List } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import S from './styles';
 
-const ListUserConversation = ({ data, loading, chatUser, setChatUser }) => {
+const ConversationList = ({ data, loading, chatUser, setChatUser }) => {
   const history = useHistory();
 
   const renderTimestamp = timestamp => {
@@ -54,4 +54,4 @@ const ListUserConversation = ({ data, loading, chatUser, setChatUser }) => {
   );
 };
 
-export default ListUserConversation;
+export default ConversationList;

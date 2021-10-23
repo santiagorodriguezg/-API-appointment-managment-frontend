@@ -1,7 +1,6 @@
 import { useContext, useState } from 'react';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import { Col, Form, Layout, Row } from 'antd';
-
 import AuthContext from '../../../context/Auth';
 import { LoginService } from '../../../services/Auth';
 import Logo from '../../../components/Logo';
@@ -16,11 +15,10 @@ const Login = () => {
   const history = useHistory();
   const location = useLocation();
   const { logIn } = useContext(AuthContext);
+  const { from } = location.state || { from: { pathname: '/accounts/profile' } };
   const [errorText, setErrorText] = useState('');
   const [errorMsg, setErrorMsg] = useState(false);
   const [loading, setLoading] = useState(false);
-
-  const { from } = location.state || { from: { pathname: '/accounts/profile' } };
 
   const onFinish = async values => {
     try {

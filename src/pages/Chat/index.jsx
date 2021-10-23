@@ -1,13 +1,13 @@
-/* eslint-disable no-unused-vars */
 import { useContext, useEffect, useRef, useState } from 'react';
-import { Button, Input, Spin, Tooltip } from 'antd';
-import { EllipsisOutlined, SendOutlined, SmileOutlined } from '@ant-design/icons';
 import AuthContext from '../../context/Auth';
-import { GetMyChatsService } from '../../services/Chat';
 import TokenStorage from '../../config/TokenStorage';
+import { GetMyChatsService } from '../../services/Chat';
 import Dashboard from '../../components/Dashboard';
-import Message from '../../components/Chat/Message';
-import ListUserConversation from '../../components/Chat/ListUserConversation';
+import ConversationList from '../../components/Chat/ConversationList';
+import Form from '../../components/Chat/Form';
+import MessageList from '../../components/Chat/MessageList';
+import TitleBar from '../../components/Chat/TitleBar';
+import ConversationSearch from '../../components/Chat/ConversationSearch';
 import S from '../../components/Dashboard/styles';
 import StyledGlobal from '../../styles/Global';
 import Styled from './styles';
@@ -17,12 +17,13 @@ const Chat = ({ location }) => {
   const { user, chatUser, setChatUser } = useContext(AuthContext);
   const [loadingChats, setLoadingChats] = useState(false);
   const [loadingMessages, setLoadingMessages] = useState(false);
-  const [chats, setChats] = useState([]);
   const [waitingToReconnect, setWaitingToReconnect] = useState(null);
+  const [chats, setChats] = useState([]);
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState([]);
   const clientRef = useRef(null);
   const messagesEndRef = useRef(null);
+  const roomName = location.pathname.substring('/chat/'.length);
 
   const addMessage = msg => {
     if (msg instanceof Array) {
@@ -30,10 +31,6 @@ const Chat = ({ location }) => {
     } else {
       setMessages(prev => [...prev, msg]);
     }
-  };
-
-  const onChange = e => {
-    if (e.target.value !== ' ') setMessage(e.target.value);
   };
 
   const scrollToBottom = () => {
@@ -62,6 +59,8 @@ const Chat = ({ location }) => {
           chatList.unshift(chatRoom);
         }
         setChatUser(chatRoom);
+      } else {
+        chatUser.roomName = roomName;
       }
 
       setChats(chatList);
@@ -82,8 +81,7 @@ const Chat = ({ location }) => {
     // Only set up the websocket once
     if (!clientRef.current) {
       const accessToken = TokenStorage.getAccessToken();
-      const roomName = location.pathname.substring('/chat/'.length);
-      const client = new WebSocket(`ws://localhost:8000/ws/v1/chat/${roomName}/?token=${accessToken}`);
+      const client = new WebSocket(`${process.env.REACT_APP_WS_URL}/${roomName}/?token=${accessToken}`);
       clientRef.current = client;
 
       client.onerror = e => console.error(e);
@@ -149,33 +147,17 @@ const Chat = ({ location }) => {
       if (chat.roomName === chatUser.roomName) {
         chat.description = lastMsg?.content;
         chat.messageTime = lastMsg?.created_at;
+        chatUser.title = chat.title;
+        chatUser.username = chat.username;
       }
       return chat;
     });
-    return <ListUserConversation data={chats} loading={loadingChats} chatUser={chatUser} setChatUser={setChatUser} />;
+    return <ConversationList data={chats} loading={loadingChats} chatUser={chatUser} setChatUser={setChatUser} />;
   };
 
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
-
-  const sendMessage = () => {
-    if (clientRef.current?.readyState === 1) {
-      if (message.trim()) {
-        clientRef.current.send(
-          JSON.stringify({
-            command: 'create_message',
-            data: {
-              room_name: window.location.pathname.substring('/chat/'.length),
-              user_receiver: chatUser.username,
-              content: message.trim(),
-            },
-          }),
-        );
-      }
-      setMessage('');
-    }
-  };
 
   return (
     <Dashboard>
@@ -184,54 +166,24 @@ const Chat = ({ location }) => {
         <Styled.ChatContainer>
           <Styled.ChatUserList>
             <Styled.ChatMessageTitleBar>
-              <div style={{ margin: '8px 12px' }}>
-                <Input.Search placeholder="Buscar un chat" />
-              </div>
+              <ConversationSearch />
             </Styled.ChatMessageTitleBar>
             {renderChatList()}
           </Styled.ChatUserList>
 
           <Styled.ChatMessageContainer>
             <Styled.ChatMessageTitleBar>
-              <div className="user-profile">
-                <Styled.Paragraph ellipsis strong>
-                  {chatUser.title}
-                </Styled.Paragraph>
-              </div>
-              <EllipsisOutlined />
+              <TitleBar chatUser={chatUser} />
             </Styled.ChatMessageTitleBar>
 
-            <Styled.ChatMessageList>
-              <Spin spinning={loadingMessages}>
-                {messages.map(msg => (
-                  <Message
-                    key={msg.id}
-                    receiver={msg.user !== user.username}
-                    text={msg.content}
-                    time={msg.created_at}
-                  />
-                ))}
-                <Styled.MessagesEnd ref={messagesEndRef} />
-              </Spin>
-            </Styled.ChatMessageList>
+            <MessageList
+              messages={messages}
+              loadingMessages={loadingMessages}
+              messagesEndRef={messagesEndRef}
+              user={user}
+            />
 
-            <Styled.ChatMessageReply>
-              <Tooltip title="Emojis">
-                <Button size="large" icon={<SmileOutlined />} />
-              </Tooltip>
-              <Input.TextArea
-                autoSize={{
-                  minRows: 1,
-                }}
-                size="large"
-                placeholder="Escribe un mensaje..."
-                value={message}
-                onChange={onChange}
-              />
-              <Tooltip title="Enviar">
-                <Button size="large" icon={<SendOutlined />} onClick={sendMessage} disabled={message === ''} />
-              </Tooltip>
-            </Styled.ChatMessageReply>
+            <Form message={message} setMessage={setMessage} clientRef={clientRef} chatUser={chatUser} />
           </Styled.ChatMessageContainer>
         </Styled.ChatContainer>
       </StyledGlobal.Wrapper800>

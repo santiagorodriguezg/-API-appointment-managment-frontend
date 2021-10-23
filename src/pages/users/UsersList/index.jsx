@@ -186,28 +186,30 @@ export default class UsersList extends TableBase {
         render: record => (
           <Space size="middle">
             <Button href={`/users/${record.username}`}>Detalles</Button>
-            {user.role === userRoles[0].value && (
-              <Dropdown
-                overlay={
-                  <Menu>
+            <Dropdown
+              overlay={
+                <Menu>
+                  {user.role === userRoles[0].value && (
                     <Menu.Item key="1" icon={<EditOutlined />}>
                       <Link to={`/users/${record.username}/edit`}>Editar</Link>
                     </Menu.Item>
-                    {this.getChatLink(record)}
+                  )}
+                  {this.getChatLink(record)}
+                  {user.role === userRoles[0].value && (
                     <Menu.Item key="3" icon={<LinkOutlined />} onClick={() => this.showModal(record)}>
                       Restablecer contraseña
                     </Menu.Item>
-                  </Menu>
-                }
-                trigger={['click']}
-                placement="bottomRight"
-                arrow
-              >
-                <Button>
-                  <SettingOutlined /> <DownOutlined />
-                </Button>
-              </Dropdown>
-            )}
+                  )}
+                </Menu>
+              }
+              trigger={['click']}
+              placement="bottomRight"
+              arrow
+            >
+              <Button>
+                <SettingOutlined /> <DownOutlined />
+              </Button>
+            </Dropdown>
           </Space>
         ),
       },
