@@ -12,7 +12,7 @@ S.MessageList = styled.div`
 
 S.MessageEmpty = styled.div`
   padding: 10px;
-  background: rgba(${Colors.primaryRGB}, 0.2);
+  background: rgba(${Colors.primaryRGB}, 0.15);
   border-radius: ${Variables.borderRadiusBase};
   font-weight: 600;
   font-size: 85%;

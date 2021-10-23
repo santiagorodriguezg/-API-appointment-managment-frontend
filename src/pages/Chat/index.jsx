@@ -3,10 +3,11 @@ import AuthContext from '../../context/Auth';
 import TokenStorage from '../../config/TokenStorage';
 import { GetMyChatsService } from '../../services/Chat';
 import Dashboard from '../../components/Dashboard';
-import ConversationList from '../../components/Chat/ConversationList';
 import Form from '../../components/Chat/Form';
-import MessageList from '../../components/Chat/MessageList';
 import TitleBar from '../../components/Chat/TitleBar';
+import MessageList from '../../components/Chat/MessageList';
+import NoConversations from '../../components/Chat/NoConversations';
+import ConversationList from '../../components/Chat/ConversationList';
 import ConversationSearch from '../../components/Chat/ConversationSearch';
 import S from '../../components/Dashboard/styles';
 import StyledGlobal from '../../styles/Global';
@@ -163,35 +164,39 @@ const Chat = ({ location }) => {
     <Dashboard>
       <StyledGlobal.Wrapper800>
         <S.Title level={3}>Chat</S.Title>
-        <Styled.ChatContainer>
-          <Styled.ChatUserList>
-            <Styled.ChatMessageTitleBar>
-              <ConversationSearch />
-            </Styled.ChatMessageTitleBar>
-            {renderChatList()}
-          </Styled.ChatUserList>
+        {!chats.length ? (
+          <NoConversations />
+        ) : (
+          <Styled.ChatContainer>
+            <Styled.ChatUserList>
+              <Styled.ChatMessageTitleBar>
+                <ConversationSearch />
+              </Styled.ChatMessageTitleBar>
+              {renderChatList()}
+            </Styled.ChatUserList>
 
-          <Styled.ChatMessageContainer>
-            {roomName === 'listing' ? (
-              <Styled.SelectChatMessage>
-                <div>Selecciona un chat para comenzar</div>
-              </Styled.SelectChatMessage>
-            ) : (
-              <>
-                <Styled.ChatMessageTitleBar>
-                  <TitleBar chatUser={chatUser} />
-                </Styled.ChatMessageTitleBar>
-                <MessageList
-                  messages={messages}
-                  loadingMessages={loadingMessages}
-                  messagesEndRef={messagesEndRef}
-                  user={user}
-                />
-                <Form message={message} setMessage={setMessage} clientRef={clientRef} chatUser={chatUser} />
-              </>
-            )}
-          </Styled.ChatMessageContainer>
-        </Styled.ChatContainer>
+            <Styled.ChatMessageContainer>
+              {roomName === 'listing' ? (
+                <Styled.SelectChatMessage>
+                  <div>Selecciona un chat para comenzar</div>
+                </Styled.SelectChatMessage>
+              ) : (
+                <>
+                  <Styled.ChatMessageTitleBar>
+                    <TitleBar chatUser={chatUser} />
+                  </Styled.ChatMessageTitleBar>
+                  <MessageList
+                    messages={messages}
+                    loadingMessages={loadingMessages}
+                    messagesEndRef={messagesEndRef}
+                    user={user}
+                  />
+                  <Form message={message} setMessage={setMessage} clientRef={clientRef} chatUser={chatUser} />
+                </>
+              )}
+            </Styled.ChatMessageContainer>
+          </Styled.ChatContainer>
+        )}
       </StyledGlobal.Wrapper800>
     </Dashboard>
   );
