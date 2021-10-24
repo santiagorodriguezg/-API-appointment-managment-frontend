@@ -1,4 +1,5 @@
 import { useContext, useEffect, useRef, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import AuthContext from '../../context/Auth';
 import TokenStorage from '../../config/TokenStorage';
 import { GetMyChatsService } from '../../services/Chat';
@@ -14,6 +15,7 @@ import StyledGlobal from '../../styles/Global';
 import Styled from './styles';
 
 const Chat = ({ location }) => {
+  const history = useHistory();
   const { chatRoom } = (location && location.state) || {};
   const { user, setUser, chatUser, setChatUser } = useContext(AuthContext);
   const [loadingChats, setLoadingChats] = useState(false);
@@ -25,6 +27,7 @@ const Chat = ({ location }) => {
   const clientRef = useRef(null);
   const messagesEndRef = useRef(null);
   const roomName = location.pathname.substring('/chat/'.length);
+  const chatResetURL = 'listing';
 
   const addMessage = msg => {
     if (msg instanceof Array) {
@@ -44,11 +47,13 @@ const Chat = ({ location }) => {
       const chatList = [];
       const res = await GetMyChatsService(user.username);
 
+      let isOwner = false;
       const { rooms } = res.data.results;
 
       if (rooms.length) {
         setUser({ chat: true, ...user });
         rooms.forEach(chat => {
+          if (roomName !== chatResetURL && roomName === chat.name) isOwner = true;
           chatList.push({
             roomName: chat.name,
             username: chat?.user_owner?.username || chat?.user_receiver?.username,
@@ -60,7 +65,8 @@ const Chat = ({ location }) => {
         });
       }
 
-      if (roomName !== 'listing') {
+      if (roomName !== chatResetURL) {
+        if (!isOwner) history.push(`/chat/${chatResetURL}`);
         if (chatRoom) {
           if (chatRoom.isNewChat) {
             chatList.unshift(chatRoom);
@@ -73,9 +79,7 @@ const Chat = ({ location }) => {
           setChatUser({ roomName, ...chatUser });
         }
       } else {
-        if (chatUser?.isNewChat) {
-          chatList.unshift(chatUser);
-        }
+        if (chatUser?.isNewChat) chatList.unshift(chatUser);
         setChatUser({});
       }
 
@@ -191,7 +195,7 @@ const Chat = ({ location }) => {
             </Styled.ChatUserList>
 
             <Styled.ChatMessageContainer>
-              {roomName === 'listing' ? (
+              {roomName === chatResetURL ? (
                 <Styled.SelectChatMessage>
                   <div>Selecciona un chat para comenzar</div>
                 </Styled.SelectChatMessage>
