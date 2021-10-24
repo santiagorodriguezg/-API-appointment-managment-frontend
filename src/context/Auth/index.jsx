@@ -23,6 +23,7 @@ export const AuthProvider = ({ children }) => {
     setRefreshToken(null);
     setUser(null);
     setSideBarCollapsed(null);
+    setChatUser(null);
 
     TokenStorage.clear();
   };

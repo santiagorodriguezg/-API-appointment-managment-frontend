@@ -99,12 +99,12 @@ export default class UsersList extends TableBase {
     const linkProps = {
       pathname: `/chat/${roomName}`,
       state: {
-        isNewChat,
         chatRoom: {
           roomName,
           username: record.username,
           title: record.full_name,
           avatar: record.picture,
+          isNewChat,
         },
       },
     };

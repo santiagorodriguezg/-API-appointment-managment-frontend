@@ -6,7 +6,7 @@ const TitleBar = ({ chatUser }) => {
     <>
       <div className="user-profile">
         <S.Paragraph ellipsis strong>
-          {chatUser.title}
+          {chatUser?.title}
         </S.Paragraph>
       </div>
       <EllipsisOutlined />

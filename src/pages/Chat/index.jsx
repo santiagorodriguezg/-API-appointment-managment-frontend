@@ -14,8 +14,8 @@ import StyledGlobal from '../../styles/Global';
 import Styled from './styles';
 
 const Chat = ({ location }) => {
-  const { isNewChat, chatRoom } = (location && location.state) || {};
-  const { user, chatUser, setChatUser } = useContext(AuthContext);
+  const { chatRoom } = (location && location.state) || {};
+  const { user, setUser, chatUser, setChatUser } = useContext(AuthContext);
   const [loadingChats, setLoadingChats] = useState(false);
   const [loadingMessages, setLoadingMessages] = useState(false);
   const [waitingToReconnect, setWaitingToReconnect] = useState(null);
@@ -44,24 +44,39 @@ const Chat = ({ location }) => {
       const chatList = [];
       const res = await GetMyChatsService(user.username);
 
-      res.data.results.rooms.forEach(chat => {
-        chatList.push({
-          roomName: chat.name,
-          username: chat?.user_owner?.username || chat?.user_receiver?.username,
-          title: chat?.user_owner?.full_name || chat?.user_receiver?.full_name,
-          avatar: chat?.user_owner?.picture || chat?.user_receiver?.picture,
-          description: chat.last_message.content,
-          messageTime: chat.last_message.created_at,
-        });
-      });
+      const { rooms } = res.data.results;
 
-      if (chatRoom) {
-        if (isNewChat) {
-          chatList.unshift(chatRoom);
+      if (rooms.length) {
+        setUser({ chat: true, ...user });
+        rooms.forEach(chat => {
+          chatList.push({
+            roomName: chat.name,
+            username: chat?.user_owner?.username || chat?.user_receiver?.username,
+            title: chat?.user_owner?.full_name || chat?.user_receiver?.full_name,
+            avatar: chat?.user_owner?.picture || chat?.user_receiver?.picture,
+            description: chat.last_message.content,
+            messageTime: chat.last_message.created_at,
+          });
+        });
+      }
+
+      if (roomName !== 'listing') {
+        if (chatRoom) {
+          if (chatRoom.isNewChat) {
+            chatList.unshift(chatRoom);
+            setUser({ chat: true, ...user });
+          }
+          setChatUser(chatRoom);
+        } else if (chatUser?.isNewChat) {
+          chatList.unshift(chatUser);
+        } else {
+          setChatUser({ roomName, ...chatUser });
         }
-        setChatUser(chatRoom);
       } else {
-        chatUser.roomName = roomName;
+        if (chatUser?.isNewChat) {
+          chatList.unshift(chatUser);
+        }
+        setChatUser({});
       }
 
       setChats(chatList);
@@ -145,7 +160,7 @@ const Chat = ({ location }) => {
   const renderChatList = () => {
     const lastMsg = messages[messages.length - 1];
     chats.map(chat => {
-      if (chat.roomName === chatUser.roomName) {
+      if (chat.roomName === chatUser?.roomName) {
         chat.description = lastMsg?.content;
         chat.messageTime = lastMsg?.created_at;
         chatUser.title = chat.title;
@@ -164,7 +179,7 @@ const Chat = ({ location }) => {
     <Dashboard>
       <StyledGlobal.Wrapper800>
         <S.Title level={3}>Chat</S.Title>
-        {!chats.length ? (
+        {!user?.chat ? (
           <NoConversations />
         ) : (
           <Styled.ChatContainer>
