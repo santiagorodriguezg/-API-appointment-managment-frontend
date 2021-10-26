@@ -12,6 +12,10 @@ S.Descriptions = styled(Descriptions)`
   .ant-descriptions-item-label {
     font-weight: 600;
   }
+
+  .ant-descriptions-item-container {
+    align-items: center;
+  }
 `;
 
 export default S;

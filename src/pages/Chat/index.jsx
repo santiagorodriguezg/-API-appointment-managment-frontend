@@ -47,8 +47,8 @@ const Chat = ({ location }) => {
       const chatList = [];
       const res = await GetMyChatsService(user.username);
 
-      let isOwner = false;
       const { rooms } = res.data.results;
+      let isOwner = chatRoom?.isNewChat || chatUser?.isNewChat || false;
 
       if (rooms.length) {
         setUser({ chat: true, ...user });

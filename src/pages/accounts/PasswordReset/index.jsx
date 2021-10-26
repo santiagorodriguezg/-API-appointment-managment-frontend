@@ -13,7 +13,7 @@ const PasswordReset = () => {
   const [errorMsg, setErrorMsg] = useState(false);
   const [loading, setLoading] = useState(false);
   const [userNotFound, setUserNotFound] = useState('');
-  const [email, setEmail] = useState('');
+  const [data, setData] = useState('');
   const [redirect, setRedirect] = useState(false);
 
   const onFinish = async values => {
@@ -24,18 +24,17 @@ const PasswordReset = () => {
 
       const res = await PasswordResetService(values);
 
-      setEmail(res.data.email);
+      setData(res.data);
       setRedirect(true);
     } catch (e) {
       if (e.response) {
-        setLoading(false);
         setErrorMsg(false);
         setUserNotFound(e.response.data.detail);
       } else {
-        setLoading(false);
         setErrorMsg(true);
         setUserNotFound('');
       }
+      setLoading(false);
     }
   };
 
@@ -43,7 +42,7 @@ const PasswordReset = () => {
     <Redirect
       to={{
         pathname: '/accounts/password/reset/done',
-        state: { email },
+        state: { data },
       }}
     />
   ) : (
