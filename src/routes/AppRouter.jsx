@@ -37,6 +37,7 @@ import { userRoles } from '../config/utils/enums';
 
 const AppRouter = () => {
   const ROLES_ADMIN_DOCTOR = [userRoles[0].value, userRoles[1].value];
+  const ROLES_ADMIN_USER = [userRoles[0].value, userRoles[2].value];
   return (
     <ConfigProvider locale={esES}>
       <AuthProvider>
@@ -62,7 +63,7 @@ const AppRouter = () => {
             <PrivateRoute exact path="/users/:username" component={UsersDetail} roles={ROLES_ADMIN_DOCTOR} />
             <PrivateRoute exact path="/users/:username/edit" component={UsersEdit} roles={ROLES_ADMIN_DOCTOR[0]} />
 
-            <PrivateRoute exact path="/appointments/create" component={AppointmentsCreate} />
+            <PrivateRoute exact path="/appointments/create" component={AppointmentsCreate} roles={ROLES_ADMIN_USER} />
             <PrivateRoute exact path="/appointments/historic" component={AppointmentsHistoric} />
 
             <PrivateRoute exact path="/chat/:roomName" component={Chat} />

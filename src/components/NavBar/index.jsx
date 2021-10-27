@@ -22,7 +22,7 @@ const NavBar = ({ toggle }) => {
 
         <Col xs={10} sm={20}>
           <S.NavContainer>
-            <MenuItems mode="horizontal" expandIcon={<MoreOutlined />} />
+            <MenuItems mode="horizontal" expandIcon={<MoreOutlined />} user={user} />
             <Dropdown arrow overlay={<UserMenu fullName={user.fullName} />} trigger={['click']} placement="bottomRight">
               <S.UserMenu type="text">
                 <Avatar icon={<UserOutlined />} src={user.picture} />

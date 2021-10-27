@@ -19,9 +19,11 @@ const MenuItems = () => {
   return (
     <S.Menu theme="light" mode="inline" selectedKeys={[location.pathname]}>
       <Menu.SubMenu key="/appointments" icon={<DiffOutlined />} title="Citas">
-        <Menu.Item key="/appointments/create">
-          <Link to="/appointments/create">Solicitar</Link>
-        </Menu.Item>
+        {user.role !== userRoles[1].value && (
+          <Menu.Item key="/appointments/create">
+            <Link to="/appointments/create">Solicitar</Link>
+          </Menu.Item>
+        )}
         <Menu.Item key="/appointments/historic">
           <Link to="/appointments/historic">Histórico</Link>
         </Menu.Item>

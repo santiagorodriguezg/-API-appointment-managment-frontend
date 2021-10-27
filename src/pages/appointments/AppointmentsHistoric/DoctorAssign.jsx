@@ -90,12 +90,12 @@ const DoctorAssign = ({ appointment }) => {
   };
 
   return (
-    <Spin size="large" spinning={loading}>
+    <>
       <Title level={5}>Asignar doctores</Title>
       {errorMsg ? (
         <ErrorMessage />
       ) : (
-        <>
+        <Spin size="large" spinning={loading}>
           {!loading && successMsg && (
             <Result status="success" title={<Title level={5}>Los doctores se asignaron correctamente.</Title>} />
           )}
@@ -119,9 +119,9 @@ const DoctorAssign = ({ appointment }) => {
               </Button>
             </>
           )}
-        </>
+        </Spin>
       )}
-    </Spin>
+    </>
   );
 };
 

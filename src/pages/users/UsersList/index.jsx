@@ -153,12 +153,14 @@ export default class UsersList extends TableBase {
         dataIndex: 'email',
         key: 'email',
         width: 150,
+        render: email => <>{email !== null ? email : '-'}</>,
       },
       {
         title: 'Teléfono',
         dataIndex: 'phone',
         key: 'phone',
         width: 130,
+        render: phone => <>{phone !== null ? phone : '-'}</>,
       },
       {
         title: 'Rol',

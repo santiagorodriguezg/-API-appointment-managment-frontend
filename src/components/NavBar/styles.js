@@ -57,6 +57,7 @@ S.Menu = styled(Menu)`
 S.DropdownMenu = styled(Menu)`
   border: none !important;
   justify-content: end;
+  width: 32px;
 
   .ant-menu-horizontal,
   .ant-menu-item::after,
@@ -70,7 +71,7 @@ S.DropdownMenu = styled(Menu)`
     transform: rotate(90deg);
   }
 
-  @media (min-width: 992px) {
+  @media (min-width: 576px) {
     width: 100%;
   }
 `;
