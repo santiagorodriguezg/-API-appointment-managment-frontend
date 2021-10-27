@@ -60,8 +60,8 @@ const AppointmentsCreate = () => {
 
       await AppointmentUserCreateService(user.username, formData);
 
-      setLoading(false);
       setResult(true);
+      setLoading(false);
     } catch (e) {
       if (e.response) {
         setLoading(false);

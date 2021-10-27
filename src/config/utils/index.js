@@ -37,3 +37,10 @@ export const validateFileBeforeUpload = (fileTypes, file) => {
   if (!isAllowedFile) message.error(`${file.name} no es un archivo permitido`);
   return isAllowedFile ? false : Upload.LIST_IGNORE;
 };
+
+export const arraysEquals = (array1, array2) => {
+  const array1Sorted = array1.slice().sort();
+  const array2Sorted = array2.slice().sort();
+  return array1.length === array2.length && array1Sorted.every((value, index) => value === array2Sorted[index]);
+  // return array1.length === array2.length && array1.every((value, index) => value === array2[index]);
+};

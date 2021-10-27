@@ -16,3 +16,7 @@ export const AppointmentUserListService = (username, role, params) => {
     params,
   });
 };
+
+export const AppointmentUserUpdateService = (username, id, data) => {
+  return axiosWithToken.patch(`/users/${username}/appointments/${id}/`, data);
+};

@@ -1,10 +1,18 @@
-import { Space, Table, Tag } from 'antd';
-import { ClearOutlined, PlayCircleOutlined } from '@ant-design/icons';
+import { Dropdown, Menu, Space, Table, Tag } from 'antd';
+import {
+  ClearOutlined,
+  DownOutlined,
+  MedicineBoxOutlined,
+  PlayCircleOutlined,
+  SettingOutlined,
+} from '@ant-design/icons';
 import AuthContext from '../../../context/Auth';
 import { AppointmentUserListService } from '../../../services/Appointments';
+import { getShortDate } from '../../../config/utils';
+import TableBase from '../../../config/utils/TableBase';
 import Button from '../../../components/Button';
 import Dashboard from '../../../components/Dashboard';
-import { getShortDate } from '../../../config/utils';
+import ErrorMessage from '../../../components/ErrorMessage';
 import S from '../../../components/Dashboard/styles';
 import {
   appointmentTypes,
@@ -13,8 +21,6 @@ import {
   userRoles,
 } from '../../../config/utils/enums';
 import ModalContent from './ModalContent';
-import ErrorMessage from '../../../components/ErrorMessage';
-import TableBase from '../../../config/utils/TableBase';
 
 export default class AppointmentsHistoric extends TableBase {
   static contextType = AuthContext;
@@ -152,7 +158,34 @@ export default class AppointmentsHistoric extends TableBase {
         width: 200,
         render: (text, record) => (
           <Space size="middle">
-            <Button onClick={() => this.showModal(record)}>Ver detalles</Button>
+            <Button onClick={() => this.showModal(record)}>Detalles</Button>
+            {user.role === userRoles[0].value && (
+              <Dropdown
+                overlay={
+                  <Menu>
+                    <Menu.Item
+                      key="1"
+                      icon={<MedicineBoxOutlined />}
+                      onClick={() =>
+                        this.showModal({
+                          doctor: true,
+                          record,
+                        })
+                      }
+                    >
+                      Doctores
+                    </Menu.Item>
+                  </Menu>
+                }
+                trigger={['click']}
+                placement="bottomRight"
+                arrow
+              >
+                <Button>
+                  <SettingOutlined /> <DownOutlined />
+                </Button>
+              </Dropdown>
+            )}
           </Space>
         ),
       },
