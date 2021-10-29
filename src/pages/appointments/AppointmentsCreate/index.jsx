@@ -41,12 +41,12 @@ const AppointmentsCreate = () => {
       const formData = new FormData();
 
       formData.append('type', values.type);
+      formData.append('audio', values.audio[0].originFileObj);
       formData.append('description', values.description || '');
       formData.append('children', values.children ? JSON.stringify(values.children) : null);
       formData.append('aggressor', values.aggressor ? JSON.stringify(values.aggressor[0]) : null);
-      formData.append('audio', values.audio ? values.audio[0].originFileObj : '');
 
-      if (values.multimedia.length) {
+      if (values.multimedia?.length) {
         values.multimedia.map((file, i) => {
           const fileExtension = IMAGE_EXTENSIONS.includes(file.originFileObj.type)
             ? appointmentMultimedia[0].value
