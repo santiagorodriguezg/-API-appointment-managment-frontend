@@ -184,7 +184,7 @@ const Chat = ({ location }) => {
       <StyledGlobal.Wrapper800>
         <DashboardStyles.Title level={3}>Chat</DashboardStyles.Title>
         {!user?.chat ? (
-          <NoConversations />
+          <NoConversations user={user} />
         ) : (
           <Styles.ChatContainer>
             <Styles.ChatUserList>

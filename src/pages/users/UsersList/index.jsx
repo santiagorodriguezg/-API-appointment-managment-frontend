@@ -1,4 +1,3 @@
-import crypto from 'crypto';
 import { Link } from 'react-router-dom';
 import { Dropdown, Menu, Space, Table, Tag } from 'antd';
 import {
@@ -12,7 +11,7 @@ import {
 } from '@ant-design/icons';
 import AuthContext from '../../../context/Auth';
 import { UsersListService } from '../../../services/Users';
-import { getShortDate } from '../../../config/utils';
+import { getChatLink, getShortDate } from '../../../config/utils';
 import TableBase from '../../../config/utils/TableBase';
 import { getRoleColor, getRoleName, userRoles } from '../../../config/utils/enums';
 import Button from '../../../components/Button';
@@ -81,45 +80,8 @@ export default class UsersList extends TableBase {
     this.getUsersData({ pagination });
   };
 
-  getChatLink = record => {
-    const { rooms } = this.state;
-    const { user } = this.context;
-    let isNewChat = false;
-    let roomName = null;
-
-    rooms.forEach(room => {
-      if (room?.user_owner?.username === record.username || room?.user_receiver?.username === record.username) {
-        roomName = room.name;
-      }
-    });
-
-    if (!roomName) {
-      roomName = crypto.randomBytes(16).toString('hex');
-      isNewChat = true;
-    }
-
-    const linkProps = {
-      pathname: `/chat/${roomName}`,
-      state: {
-        chatRoom: {
-          roomName,
-          username: record.username,
-          title: record.full_name,
-          avatar: record.picture,
-          isNewChat,
-        },
-      },
-    };
-
-    return (
-      <Menu.Item key="2" icon={<MessageOutlined />} disabled={record.username === user.username}>
-        <Link to={linkProps}>Chat</Link>
-      </Menu.Item>
-    );
-  };
-
   render() {
-    const { loading, errorMsg, isModalVisible, modalInfo, data, pagination } = this.state;
+    const { loading, errorMsg, isModalVisible, modalInfo, data, pagination, rooms } = this.state;
     let { sortedInfo, filteredInfo } = this.state;
     const { user } = this.context;
 
@@ -198,7 +160,9 @@ export default class UsersList extends TableBase {
                       <Link to={`/users/${record.username}/edit`}>Editar</Link>
                     </Menu.Item>
                   )}
-                  {this.getChatLink(record)}
+                  <Menu.Item key="2" icon={<MessageOutlined />} disabled={record.username === user.username}>
+                    <Link to={getChatLink(record, rooms)}>Chat</Link>
+                  </Menu.Item>
                   {user.role === userRoles[0].value && (
                     <Menu.Item key="3" icon={<LinkOutlined />} onClick={() => this.showModal(record)}>
                       Restablecer contraseña

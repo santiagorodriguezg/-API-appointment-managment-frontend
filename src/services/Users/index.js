@@ -14,6 +14,8 @@ export const UsersDetailService = username => axiosWithToken.get(`users/${userna
 
 export const UsersUpdateService = (username, data) => axiosWithToken.put(`users/${username}/`, data);
 
+export const DoctorsListService = (params = {}) => axiosWithToken.get('users/doctors/', { params });
+
 export const UsersListService = params => {
   return axiosWithToken.get('users/', {
     params,

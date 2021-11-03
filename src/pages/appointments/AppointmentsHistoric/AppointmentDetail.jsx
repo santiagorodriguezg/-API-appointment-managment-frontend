@@ -20,7 +20,7 @@ const AppointmentDetail = ({ appointment }) => {
         <Row gutter={8} style={{ width: '100%' }}>
           {appointment.doctors.length ? (
             appointment.doctors.map(doctor => (
-              <Col key={doctor.username} span={12} style={{ marginBottom: 8 }}>
+              <Col key={doctor.username} xs={24} sm={12} style={{ marginBottom: 8 }}>
                 <Chip
                   avatar={<Avatar src={doctor.picture} icon={<UserOutlined />} />}
                   label={doctor.full_name}

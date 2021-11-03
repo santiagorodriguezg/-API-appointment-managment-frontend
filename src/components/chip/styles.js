@@ -1,5 +1,7 @@
 import { Badge, Typography } from 'antd';
+import { Link } from 'react-router-dom';
 import styled, { css } from 'styled-components';
+import { Colors } from '../../styles/Variables';
 
 const { Paragraph } = Typography;
 
@@ -16,9 +18,24 @@ S.Chip = styled(Badge)`
   ${props =>
     props.$outlined &&
     css`
-      border: 1px solid rgb(189, 189, 189);
+      //border: 1px solid rgb(189, 189, 189);
+      border: 1px solid rgba(${Colors.primaryRGB}, 0.3);
       background: #fff;
     `};
+
+  ${props =>
+    props.$href &&
+    css`
+      &:hover {
+        background: rgba(${Colors.primaryRGB}, 0.15);
+      }
+    `};
+`;
+
+S.Link = styled(Link)`
+  width: 100%;
+  display: flex;
+  align-items: center;
 `;
 
 S.Label = styled(Paragraph)`
