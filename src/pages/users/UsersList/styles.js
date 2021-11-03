@@ -14,4 +14,9 @@ S.Paragraph = styled(Paragraph)`
   word-break: break-all;
 `;
 
+S.Buttons = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
 export default S;

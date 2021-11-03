@@ -1,6 +1,7 @@
 import { Form, Input } from 'antd';
 
-const InputIdentificationNumber = ({ required }) => {
+const InputIdentificationNumber = ({ required, adminMsg }) => {
+  const requiredMsg = adminMsg ? 'Ingresa el número de identificación' : 'Ingresa tu número de identificación';
   const rules = [
     {
       pattern: /^([0-9])*$/,
@@ -11,7 +12,7 @@ const InputIdentificationNumber = ({ required }) => {
   if (required) {
     rules.push({
       required: true,
-      message: 'Ingresa tu número de identificación',
+      message: requiredMsg,
     });
   }
 

@@ -25,6 +25,7 @@ import Identification from '../pages/accounts/Identification';
 import UsersList from '../pages/users/UsersList';
 import UsersEdit from '../pages/users/UsersEdit';
 import UsersDetail from '../pages/users/UsersDetail';
+import UsersCreate from '../pages/users/UsersCreate';
 
 import AppointmentsCreate from '../pages/appointments/AppointmentsCreate';
 import AppointmentsHistoric from '../pages/appointments/AppointmentsHistoric';
@@ -61,6 +62,7 @@ const AppRouter = () => {
             <PrivateRoute exact path="/accounts/location" component={Location} />
 
             <PrivateRoute exact path="/users" component={UsersList} roles={ROLES_ADMIN_DOCTOR} />
+            <PrivateRoute exact path="/users/create" component={UsersCreate} roles={ROLES_ADMIN_DOCTOR[0]} />
             <PrivateRoute exact path="/users/:username" component={UsersDetail} roles={ROLES_ADMIN_DOCTOR} />
             <PrivateRoute exact path="/users/:username/edit" component={UsersEdit} roles={ROLES_ADMIN_DOCTOR[0]} />
 

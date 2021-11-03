@@ -1,6 +1,8 @@
 import { Form, Input } from 'antd';
 
-const InputEmail = ({ required }) => {
+const InputEmail = ({ required, adminMsg }) => {
+  const requiredMsg = adminMsg ? 'Ingresa el correo electrónico' : 'Ingresa tu correo electrónico';
+
   const rules = [
     {
       type: 'email',
@@ -11,7 +13,7 @@ const InputEmail = ({ required }) => {
   if (required) {
     rules.push({
       required: true,
-      message: 'Ingresa tu correo electrónico',
+      message: requiredMsg,
     });
   }
 

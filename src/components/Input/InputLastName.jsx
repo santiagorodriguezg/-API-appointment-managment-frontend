@@ -1,6 +1,7 @@
 import { Form, Input } from 'antd';
 
-const InputLastName = () => {
+const InputLastName = ({ adminMsg }) => {
+  const message = adminMsg ? 'Ingresa los apellidos' : 'Ingresa tus apellidos';
   return (
     <Form.Item
       name="last_name"
@@ -8,11 +9,11 @@ const InputLastName = () => {
       rules={[
         {
           required: true,
-          message: 'Ingresa tus apellidos',
+          message,
         },
         {
           whitespace: true,
-          message: 'Ingresa tus apellidos',
+          message,
         },
       ]}
     >

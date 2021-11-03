@@ -8,6 +8,7 @@ import {
   LinkOutlined,
   MessageOutlined,
   SettingOutlined,
+  UserAddOutlined,
 } from '@ant-design/icons';
 import AuthContext from '../../../context/Auth';
 import { UsersListService } from '../../../services/Users';
@@ -20,6 +21,7 @@ import ErrorMessage from '../../../components/ErrorMessage';
 import DashboardStyles from '../../../components/Dashboard/styles';
 import ModalContent from './ModalContent';
 import { GetMyChatsService } from '../../../services/Chat';
+import S from './styles';
 
 export default class UsersList extends TableBase {
   static contextType = AuthContext;
@@ -231,14 +233,21 @@ export default class UsersList extends TableBase {
           <ErrorMessage retryBtn />
         ) : (
           <>
-            <Button
-              icon={<ClearOutlined />}
-              onClick={this.clearAllFilters}
-              style={{ marginBottom: 16 }}
-              loading={loading}
-            >
-              Limpiar filtros
-            </Button>
+            <S.Buttons>
+              <Button
+                icon={<ClearOutlined />}
+                onClick={this.clearAllFilters}
+                style={{ marginBottom: 16 }}
+                loading={loading}
+              >
+                Limpiar filtros
+              </Button>
+              {user.role === userRoles[0].value && (
+                <Button icon={<UserAddOutlined />} style={{ marginBottom: 16 }} href="/users/create">
+                  Crear usuario
+                </Button>
+              )}
+            </S.Buttons>
             <Table
               rowKey="id"
               childrenColumnName="childrenTable"

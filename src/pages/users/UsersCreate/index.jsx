@@ -1,75 +1,43 @@
-import { Redirect, useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import { Col, Form, Input, Row, Skeleton } from 'antd';
-import { UsersDetailService, UsersUpdateService } from '../../../services/Users';
+import { useState } from 'react';
+import { Redirect } from 'react-router-dom';
+import { Alert, Col, Form, Row } from 'antd';
+import { UsersCreateService } from '../../../services/Users';
 import { getFieldErrors } from '../../../config/utils';
-import { ButtonCancelAndSave } from '../../../components/Button';
 import DashboardPage from '../../../components/Dashboard/DashboardPage';
 import InputFirstName from '../../../components/Input/InputFirstName';
 import InputLastName from '../../../components/Input/InputLastName';
 import InputIdentificationType from '../../../components/Input/InputIdentificationType';
 import InputIdentificationNumber from '../../../components/Input/InputIdentificationNumber';
-import InputEmail from '../../../components/Input/InputEmail';
 import InputPhone from '../../../components/Input/InputPhone';
+import InputEmail from '../../../components/Input/InputEmail';
 import InputCity from '../../../components/Input/InputCity';
 import InputNeighborhood from '../../../components/Input/InputNeighborhood';
 import InputAddress from '../../../components/Input/InputAddress';
-import ErrorMessage, { UserNotFound } from '../../../components/ErrorMessage';
-import StyledGlobal from '../../../styles/Global';
+import { ButtonCancelAndSave } from '../../../components/Button';
+import InputPassword from '../../../components/Input/InputPassword';
+import InputUsername from '../../../components/Input/InputUsername';
+import InputUserType from '../../../components/Input/InputUserType';
+import ErrorMessage from '../../../components/ErrorMessage';
 import { userRoles } from '../../../config/utils/enums';
+import StyledGlobal from '../../../styles/Global';
 
-const UsersEdit = () => {
+const UsersCreate = () => {
   const [form] = Form.useForm();
-  const { username } = useParams();
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState(false);
-  const [error404, setError404] = useState(false);
   const [redirect, setRedirect] = useState(false);
-  const [initialValues, setInitialValues] = useState({});
   const [requiredEmail, setRequiredEmail] = useState(false);
-
-  useEffect(() => {
-    const getUserInfo = async () => {
-      try {
-        setLoading(true);
-        setErrorMsg(false);
-        setRequiredEmail(false);
-
-        const res = await UsersDetailService(username);
-        setInitialValues({
-          username: res.data.username,
-          first_name: res.data.first_name,
-          last_name: res.data.last_name,
-          identification_type: res.data.identification_type,
-          identification_number: res.data.identification_number,
-          email: res.data.email,
-          phone: res.data.phone,
-          city: res.data.city,
-          neighborhood: res.data.neighborhood,
-          address: res.data.address,
-        });
-
-        if (res.data.role !== userRoles[2].value) setRequiredEmail(true);
-
-        setLoading(false);
-      } catch (e) {
-        setLoading(false);
-        if (e.response) {
-          if (e.response.status === 404) setError404(true);
-          setErrorMsg(false);
-        } else {
-          setErrorMsg(true);
-        }
-      }
-    };
-    getUserInfo();
-  }, [username]);
+  const [username, setUsername] = useState('');
 
   const onFinish = async values => {
     try {
       setErrorMsg(false);
       setLoading(true);
-      await UsersUpdateService(username, values);
+      setUsername('');
+
+      await UsersCreateService(values);
+
+      setUsername(values.username);
       setRedirect(true);
     } catch (e) {
       setLoading(false);
@@ -82,33 +50,47 @@ const UsersEdit = () => {
     }
   };
 
+  const handleChange = value => {
+    if (value !== userRoles[2].value) {
+      setRequiredEmail(true);
+    } else {
+      setRequiredEmail(false);
+    }
+  };
+
   return redirect ? (
     <Redirect
       to={{
         pathname: `/users/${username}`,
         state: {
-          successMsg: 'Información del usuario actualizada correctamente',
+          successMsg: 'El usuario ha sido creado correctamente',
         },
       }}
     />
   ) : (
-    <DashboardPage title="Editar usuario" path="/users">
+    <DashboardPage title="Crear usuario" path="/users">
       <StyledGlobal.WrapperInner style={{ padding: '48px 24px 24px 24px' }}>
-        {errorMsg && <ErrorMessage retryBtn />}
-        {!errorMsg && error404 && <UserNotFound />}
-        {!errorMsg && !error404 && (
-          <Skeleton active loading={loading} paragraph={{ rows: 5 }}>
-            <Form
-              form={form}
-              name="edit_user"
-              layout="vertical"
-              requiredMark="optional"
-              initialValues={initialValues}
-              onFinish={onFinish}
-            >
-              <Form.Item name="username" noStyle>
-                <Input type="hidden" />
-              </Form.Item>
+        {errorMsg ? (
+          <ErrorMessage retryBtn />
+        ) : (
+          <>
+            <Alert
+              message={
+                <>
+                  Si se asigna un correo electrónico al usuario se le envía el <strong>usuario</strong> y{' '}
+                  <strong>contraseña</strong> para que acceda a la plataforma.
+                </>
+              }
+              type="info"
+              showIcon
+              style={{ marginBottom: 24 }}
+            />
+            <Form form={form} name="create_user" layout="vertical" requiredMark="optional" onFinish={onFinish}>
+              <Row gutter={16}>
+                <Col xs={24} md={12}>
+                  <InputUserType onChange={handleChange} />
+                </Col>
+              </Row>
 
               <Row gutter={16}>
                 <Col xs={24} md={12}>
@@ -132,27 +114,41 @@ const UsersEdit = () => {
 
               <Row gutter={16}>
                 <Col xs={24} md={12}>
-                  <InputPhone required adminMsg />
+                  <InputUsername adminMsg />
                 </Col>
 
+                <Col xs={24} md={12}>
+                  <InputPhone required adminMsg />
+                </Col>
+              </Row>
+
+              <Row gutter={16}>
                 <Col xs={24} md={12}>
                   <InputEmail required={requiredEmail} adminMsg />
                 </Col>
-              </Row>
 
-              <Row gutter={16}>
                 <Col xs={24} md={12}>
                   <InputCity />
                 </Col>
+              </Row>
 
+              <Row gutter={16}>
                 <Col xs={24} md={12}>
                   <InputNeighborhood />
+                </Col>
+
+                <Col xs={24} md={12}>
+                  <InputAddress />
                 </Col>
               </Row>
 
               <Row gutter={16}>
                 <Col xs={24} md={12}>
-                  <InputAddress />
+                  <InputPassword adminMsg />
+                </Col>
+
+                <Col xs={24} md={12}>
+                  <InputPassword confirmPassword adminMsg />
                 </Col>
               </Row>
 
@@ -160,11 +156,11 @@ const UsersEdit = () => {
                 <ButtonCancelAndSave loading={loading} path="/users" />
               </Form.Item>
             </Form>
-          </Skeleton>
+          </>
         )}
       </StyledGlobal.WrapperInner>
     </DashboardPage>
   );
 };
 
-export default UsersEdit;
+export default UsersCreate;

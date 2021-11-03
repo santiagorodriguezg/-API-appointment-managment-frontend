@@ -1,6 +1,8 @@
 import { Form, Input } from 'antd';
 
-const InputPhone = ({ required }) => {
+const InputPhone = ({ required, adminMsg }) => {
+  const requiredMsg = adminMsg ? 'Ingresa el número de teléfono' : 'Ingresa tu número de teléfono';
+
   const rules = [
     {
       pattern: /^3[0-9]{2} ?[0-9]{3} ?[0-9]{4}$/,
@@ -11,7 +13,7 @@ const InputPhone = ({ required }) => {
   if (required) {
     rules.push({
       required: true,
-      message: 'Ingresa tu número de teléfono',
+      message: requiredMsg,
     });
   }
 

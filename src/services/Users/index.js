@@ -8,6 +8,8 @@ export const PasswordChangeService = data => axiosWithToken.patch('users/passwor
 
 export const PasswordResetService = username => axiosWithToken.get(`users/${username}/password/reset/`);
 
+export const UsersCreateService = data => axiosWithToken.post('users/', data);
+
 export const UsersDetailService = username => axiosWithToken.get(`users/${username}/`);
 
 export const UsersUpdateService = (username, data) => axiosWithToken.put(`users/${username}/`, data);

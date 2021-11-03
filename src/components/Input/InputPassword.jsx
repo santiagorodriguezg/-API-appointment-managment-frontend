@@ -1,6 +1,7 @@
 import { Form, Input } from 'antd';
 
-const OldPassword = () => {
+const OldPassword = ({ adminMsg }) => {
+  const message = adminMsg ? 'Ingresa la contraseña actual' : 'Ingresa tu contraseña actual';
   return (
     <Form.Item
       name="password_old"
@@ -8,7 +9,7 @@ const OldPassword = () => {
       rules={[
         {
           required: true,
-          message: 'Ingresa tu contraseña actual',
+          message,
         },
       ]}
     >
@@ -17,7 +18,8 @@ const OldPassword = () => {
   );
 };
 
-const NewPassword = ({ rules }) => {
+const NewPassword = ({ rules, adminMsg }) => {
+  const message = adminMsg ? 'Ingresa la contraseña nueva' : 'Ingresa tu contraseña nueva';
   return (
     <Form.Item
       name="password"
@@ -25,7 +27,7 @@ const NewPassword = ({ rules }) => {
       rules={[
         {
           required: true,
-          message: 'Ingresa tu contraseña nueva',
+          message,
         },
         ...rules,
       ]}
@@ -35,7 +37,11 @@ const NewPassword = ({ rules }) => {
   );
 };
 
-const ConfirmPassword = ({ newConfirm }) => {
+const ConfirmPassword = ({ newConfirm, adminMsg }) => {
+  const message = adminMsg
+    ? `Confirma la contraseña ${newConfirm ? 'nueva' : ''}`
+    : `Confirma tu contraseña ${newConfirm ? 'nueva' : ''}`;
+
   return (
     <Form.Item
       name="password2"
@@ -44,11 +50,11 @@ const ConfirmPassword = ({ newConfirm }) => {
       rules={[
         {
           required: true,
-          message: `Confirma tu contraseña ${newConfirm ? 'nueva' : ''}`,
+          message,
         },
         {
           whitespace: true,
-          message: `Confirma tu contraseña ${newConfirm ? 'nueva' : ''}`,
+          message,
         },
         ({ getFieldValue }) => ({
           validator(_, value) {
@@ -65,11 +71,13 @@ const ConfirmPassword = ({ newConfirm }) => {
   );
 };
 
-const InputPassword = ({ requiredOnly, oldPassword, newPassword, confirmPassword }) => {
+const InputPassword = ({ requiredOnly, oldPassword, newPassword, confirmPassword, adminMsg }) => {
+  const requiredMsg = adminMsg ? 'Ingresa la contraseña' : 'Ingresa tu contraseña';
+
   const rules = [
     {
       required: true,
-      message: 'Ingresa tu contraseña',
+      message: requiredMsg,
     },
     {
       min: 8,
@@ -83,14 +91,14 @@ const InputPassword = ({ requiredOnly, oldPassword, newPassword, confirmPassword
 
   if (requiredOnly) rules.splice(1, 2);
 
-  if (oldPassword) return <OldPassword />;
+  if (oldPassword) return <OldPassword adminMsg={adminMsg} />;
 
   if (newPassword) {
     rules.shift();
-    return <NewPassword rules={rules} />;
+    return <NewPassword rules={rules} adminMsg={adminMsg} />;
   }
 
-  if (confirmPassword) return <ConfirmPassword newConfirm={confirmPassword?.new} />;
+  if (confirmPassword) return <ConfirmPassword newConfirm={confirmPassword?.new} adminMsg={adminMsg} />;
 
   return (
     <Form.Item name="password" label="Contraseña" rules={rules}>

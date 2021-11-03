@@ -13,7 +13,7 @@ const InputIdentificationType = () => {
         },
       ]}
     >
-      <Select placeholder="Selecciona un tipo de identificación">
+      <Select placeholder="Selecciona el tipo de identificación">
         {identificationTypes.map(obj => (
           <Select.Option key={obj.value} value={obj.value}>
             {obj.text}

@@ -1,18 +1,24 @@
 import { Form, Input } from 'antd';
 
-const InputUsername = () => {
+const InputUsername = ({ adminMsg }) => {
+  const message = adminMsg ? 'Ingresa el usuario' : 'Ingresa tu usuario';
+  const tooltip = adminMsg
+    ? 'Una secuencia única de caracteres utilizada para identificar el usuario y permitirle el acceso al sistema'
+    : null;
+
   return (
     <Form.Item
       name="username"
       label="Usuario"
+      tooltip={tooltip}
       rules={[
         {
           required: true,
-          message: 'Ingresa tu usuario',
+          message,
         },
         {
           whitespace: true,
-          message: 'Ingresa tu usuario',
+          message,
         },
         {
           min: 3,
