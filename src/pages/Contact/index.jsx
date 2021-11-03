@@ -10,7 +10,7 @@ const Contact = () => {
       <DashboardStyles.Title level={3}>Contacto</DashboardStyles.Title>
       <Card>
         <CardStyles.Text>
-          Si necesitas ayuda o tienes alguna duda puedes comunícate con nosotros a través de:
+          Si necesitas ayuda o tienes alguna duda puedes comunicarte con nosotros a través de:
         </CardStyles.Text>
         <ContactInfo />
       </Card>
