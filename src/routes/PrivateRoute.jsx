@@ -4,6 +4,7 @@ import TokenStorage from '../config/TokenStorage';
 
 const PrivateRoute = ({ component: Component, roles, ...rest }) => {
   const accessToken = TokenStorage.getAccessToken();
+  const currentLocation = rest.location.pathname;
 
   return (
     <Route
@@ -14,8 +15,9 @@ const PrivateRoute = ({ component: Component, roles, ...rest }) => {
           return (
             <Redirect
               to={{
-                pathname: '/accounts/login',
-                state: { from: rest.location.pathname },
+                pathname: '/accounts/login/',
+                search: `?next=${currentLocation}`,
+                state: { from: currentLocation },
               }}
             />
           );

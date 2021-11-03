@@ -17,7 +17,7 @@ import { getRoleColor, getRoleName, userRoles } from '../../../config/utils/enum
 import Button from '../../../components/Button';
 import Dashboard from '../../../components/Dashboard';
 import ErrorMessage from '../../../components/ErrorMessage';
-import S from '../../../components/Dashboard/styles';
+import DashboardStyles from '../../../components/Dashboard/styles';
 import ModalContent from './ModalContent';
 import { GetMyChatsService } from '../../../services/Chat';
 
@@ -219,7 +219,7 @@ export default class UsersList extends TableBase {
 
     return (
       <Dashboard>
-        <S.Title level={3}>Usuarios</S.Title>
+        <DashboardStyles.Title level={3}>Usuarios</DashboardStyles.Title>
         {isModalVisible && (
           <ModalContent
             isModalVisible={isModalVisible}

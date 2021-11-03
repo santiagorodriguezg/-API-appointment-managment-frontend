@@ -10,9 +10,9 @@ import MessageList from '../../components/Chat/MessageList';
 import NoConversations from '../../components/Chat/NoConversations';
 import ConversationList from '../../components/Chat/ConversationList';
 import ConversationSearch from '../../components/Chat/ConversationSearch';
-import S from '../../components/Dashboard/styles';
+import DashboardStyles from '../../components/Dashboard/styles';
 import StyledGlobal from '../../styles/Global';
-import Styled from './styles';
+import Styles from './styles';
 
 const Chat = ({ location }) => {
   const history = useHistory();
@@ -182,28 +182,28 @@ const Chat = ({ location }) => {
   return (
     <Dashboard>
       <StyledGlobal.Wrapper800>
-        <S.Title level={3}>Chat</S.Title>
+        <DashboardStyles.Title level={3}>Chat</DashboardStyles.Title>
         {!user?.chat ? (
           <NoConversations />
         ) : (
-          <Styled.ChatContainer>
-            <Styled.ChatUserList>
-              <Styled.ChatMessageTitleBar>
+          <Styles.ChatContainer>
+            <Styles.ChatUserList>
+              <Styles.ChatMessageTitleBar>
                 <ConversationSearch />
-              </Styled.ChatMessageTitleBar>
+              </Styles.ChatMessageTitleBar>
               {renderChatList()}
-            </Styled.ChatUserList>
+            </Styles.ChatUserList>
 
-            <Styled.ChatMessageContainer>
+            <Styles.ChatMessageContainer>
               {roomName === chatResetURL ? (
-                <Styled.SelectChatMessage>
+                <Styles.SelectChatMessage>
                   <div>Selecciona un chat para comenzar</div>
-                </Styled.SelectChatMessage>
+                </Styles.SelectChatMessage>
               ) : (
                 <>
-                  <Styled.ChatMessageTitleBar>
+                  <Styles.ChatMessageTitleBar>
                     <TitleBar chatUser={chatUser} />
-                  </Styled.ChatMessageTitleBar>
+                  </Styles.ChatMessageTitleBar>
                   <MessageList
                     messages={messages}
                     loadingMessages={loadingMessages}
@@ -213,8 +213,8 @@ const Chat = ({ location }) => {
                   <Form message={message} setMessage={setMessage} clientRef={clientRef} chatUser={chatUser} />
                 </>
               )}
-            </Styled.ChatMessageContainer>
-          </Styled.ChatContainer>
+            </Styles.ChatMessageContainer>
+          </Styles.ChatContainer>
         )}
       </StyledGlobal.Wrapper800>
     </Dashboard>

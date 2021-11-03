@@ -75,6 +75,9 @@ const Login = () => {
                 <StyledGlobal.PForm>
                   ¿No tienes una cuenta? <Link to="/accounts/signup">Regístrate</Link>
                 </StyledGlobal.PForm>
+                <StyledGlobal.PForm>
+                  <Link to="/contact">Contacto</Link>
+                </StyledGlobal.PForm>
               </Form.Item>
             </Form>
           </StyledGlobal.ContainerForm>

@@ -11,6 +11,11 @@ export const GlobalStyle = createGlobalStyle`
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     color: #262626;
+
+    @media (min-width: 992px) {
+      width: 100% !important;
+      overflow: auto !important;
+    }
   }
 
   code {

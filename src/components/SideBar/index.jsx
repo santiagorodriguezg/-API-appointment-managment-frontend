@@ -39,8 +39,8 @@ const MenuItems = () => {
       <Menu.Item key="/accounts/profile" icon={<UserOutlined />}>
         <Link to="/accounts/profile">Mi cuenta</Link>
       </Menu.Item>
-      <Menu.Item key="4" icon={<InfoCircleOutlined />}>
-        Contacto
+      <Menu.Item key="/contact" icon={<InfoCircleOutlined />}>
+        <Link to="/contact">Contacto</Link>
       </Menu.Item>
     </S.Menu>
   );

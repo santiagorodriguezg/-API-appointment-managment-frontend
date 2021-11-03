@@ -13,7 +13,7 @@ import TableBase from '../../../config/utils/TableBase';
 import Button from '../../../components/Button';
 import Dashboard from '../../../components/Dashboard';
 import ErrorMessage from '../../../components/ErrorMessage';
-import S from '../../../components/Dashboard/styles';
+import DashboardStyles from '../../../components/Dashboard/styles';
 import {
   appointmentTypes,
   getAppointmentTypeColor,
@@ -197,7 +197,7 @@ export default class AppointmentsHistoric extends TableBase {
 
     return (
       <Dashboard>
-        <S.Title level={3}>Histórico de citas</S.Title>
+        <DashboardStyles.Title level={3}>Histórico de citas</DashboardStyles.Title>
         {isModalVisible && (
           <ModalContent
             isModalVisible={isModalVisible}

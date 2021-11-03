@@ -4,7 +4,7 @@ import { GetMyProfileService } from '../../../services/Users';
 import Dashboard from '../../../components/Dashboard';
 import ProfileCard from '../../../components/ProfileCard';
 import ErrorMessage from '../../../components/ErrorMessage';
-import S from '../../../components/Dashboard/styles';
+import DashboardStyles from '../../../components/Dashboard/styles';
 import ProfileCardItem, { ProfileCardItemPhoto } from '../../../components/ProfileCard/ProfileCardItem';
 import StyledGlobal from '../../../styles/Global';
 
@@ -40,7 +40,7 @@ const Profile = ({ location }) => {
   return (
     <Dashboard>
       <StyledGlobal.Wrapper800>
-        <S.Title level={3}>Mi cuenta</S.Title>
+        <DashboardStyles.Title level={3}>Mi cuenta</DashboardStyles.Title>
         {errorMsg ? (
           <ErrorMessage retryBtn />
         ) : (

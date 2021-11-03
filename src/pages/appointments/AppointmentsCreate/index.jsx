@@ -9,7 +9,7 @@ import Dashboard from '../../../components/Dashboard';
 import InputNumber from '../../../components/Input/InputNumber';
 import ErrorMessage from '../../../components/ErrorMessage';
 import Button from '../../../components/Button';
-import S from '../../../components/Dashboard/styles';
+import DashboardStyles from '../../../components/Dashboard/styles';
 import StyledGlobal from '../../../styles/Global';
 
 const AppointmentsCreate = () => {
@@ -77,7 +77,7 @@ const AppointmentsCreate = () => {
   return (
     <Dashboard>
       <StyledGlobal.Wrapper800>
-        <S.Title level={3}>Solicitar cita</S.Title>
+        <DashboardStyles.Title level={3}>Solicitar cita</DashboardStyles.Title>
         <StyledGlobal.WrapperInner>
           <StyledGlobal.ContainerForm center width={600} marginTop={16}>
             {result ? (

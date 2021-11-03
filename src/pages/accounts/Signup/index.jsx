@@ -119,6 +119,9 @@ const Signup = () => {
                     <StyledGlobal.PForm>
                       ¿Ya tienes cuenta? <Link to="/accounts/login">Ingresa aquí</Link>
                     </StyledGlobal.PForm>
+                    <StyledGlobal.PForm>
+                      <Link to="/contact">Contacto</Link>
+                    </StyledGlobal.PForm>
                   </Form.Item>
                 </Col>
               </Row>
