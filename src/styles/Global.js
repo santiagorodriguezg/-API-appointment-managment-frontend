@@ -1,3 +1,4 @@
+import { Card } from 'antd';
 import styled, { createGlobalStyle, css } from 'styled-components';
 import Variables, { Colors } from './Variables';
 
@@ -151,6 +152,11 @@ StyledGlobal.CancelAndSaveBtn = styled.div`
   button {
     margin-left: ${Variables.marginBase};
   }
+`;
+
+StyledGlobal.CardBase = styled(Card)`
+  border-radius: ${Variables.borderRadiusBase};
+  box-shadow: ${Variables.boxShadowBase};
 `;
 
 StyledGlobal.TextSecondary = styled.p`

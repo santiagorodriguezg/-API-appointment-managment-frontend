@@ -1,14 +1,14 @@
 import { useContext, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import { Col, Form, Layout, Row } from 'antd';
+import { Col, Form, Row } from 'antd';
 import AuthContext from '../../../context/Auth';
 import { SignupService } from '../../../services/Auth';
-import Logo from '../../../components/Logo';
-import ErrorMessage from '../../../components/ErrorMessage';
-import Button from '../../../components/Button';
 import StyledGlobal from '../../../styles/Global';
 import { getFieldErrors } from '../../../config/utils';
 import { identificationTypes } from '../../../config/utils/enums';
+import Logo from '../../../components/Logo';
+import ErrorMessage from '../../../components/ErrorMessage';
+import Button from '../../../components/Button';
 import InputIdentificationNumber from '../../../components/Input/InputIdentificationNumber';
 import InputFirstName from '../../../components/Input/InputFirstName';
 import InputLastName from '../../../components/Input/InputLastName';
@@ -16,6 +16,7 @@ import InputIdentificationType from '../../../components/Input/InputIdentificati
 import InputUsername from '../../../components/Input/InputUsername';
 import InputEmail from '../../../components/Input/InputEmail';
 import InputPassword from '../../../components/Input/InputPassword';
+import Footer from '../../../components/Footer';
 
 const Signup = () => {
   const history = useHistory();
@@ -54,82 +55,81 @@ const Signup = () => {
   };
 
   return (
-    <Layout.Content>
-      <Row>
-        <Col span={24}>
-          <StyledGlobal.ContainerForm width={600} center>
-            <Logo />
-            <StyledGlobal.TitleForm>Crear cuenta</StyledGlobal.TitleForm>
-            {errorMsg && <ErrorMessage />}
-            <Form
-              form={form}
-              name="signup"
-              layout="vertical"
-              requiredMark="optional"
-              initialValues={{
-                identification_type: identificationTypes[0].value,
-              }}
-              onFinish={onFinish}
-            >
-              <Row gutter={16}>
-                <Col xs={24} md={12}>
-                  <InputFirstName />
-                </Col>
+    <StyledGlobal.Wrapper style={{ height: '100%' }}>
+      <StyledGlobal.WrapperContent>
+        <StyledGlobal.ContainerForm width={600} center shadow>
+          <Logo />
+          <StyledGlobal.TitleForm>Crear cuenta</StyledGlobal.TitleForm>
+          {errorMsg && <ErrorMessage />}
+          <Form
+            form={form}
+            name="signup"
+            layout="vertical"
+            requiredMark="optional"
+            initialValues={{
+              identification_type: identificationTypes[0].value,
+            }}
+            onFinish={onFinish}
+          >
+            <Row gutter={16}>
+              <Col xs={24} md={12}>
+                <InputFirstName />
+              </Col>
 
-                <Col xs={24} md={12}>
-                  <InputLastName />
-                </Col>
-              </Row>
+              <Col xs={24} md={12}>
+                <InputLastName />
+              </Col>
+            </Row>
 
-              <Row gutter={16}>
-                <Col xs={24} md={12}>
-                  <InputIdentificationType />
-                </Col>
+            <Row gutter={16}>
+              <Col xs={24} md={12}>
+                <InputIdentificationType />
+              </Col>
 
-                <Col xs={24} md={12}>
-                  <InputIdentificationNumber required />
-                </Col>
-              </Row>
+              <Col xs={24} md={12}>
+                <InputIdentificationNumber required />
+              </Col>
+            </Row>
 
-              <Row gutter={16}>
-                <Col xs={24} md={12}>
-                  <InputUsername />
-                </Col>
+            <Row gutter={16}>
+              <Col xs={24} md={12}>
+                <InputUsername />
+              </Col>
 
-                <Col xs={24} md={12}>
-                  <InputEmail />
-                </Col>
-              </Row>
+              <Col xs={24} md={12}>
+                <InputEmail />
+              </Col>
+            </Row>
 
-              <Row gutter={16}>
-                <Col xs={24} md={12}>
-                  <InputPassword />
-                </Col>
+            <Row gutter={16}>
+              <Col xs={24} md={12}>
+                <InputPassword />
+              </Col>
 
-                <Col xs={24} md={12}>
-                  <InputPassword confirmPassword />
-                </Col>
-              </Row>
-              <Row gutter={16}>
-                <Col span={24}>
-                  <Form.Item noStyle>
-                    <Button center $marginTop type="primary" htmlType="submit" loading={loading}>
-                      Registrarme
-                    </Button>
-                    <StyledGlobal.PForm>
-                      ¿Ya tienes cuenta? <Link to="/accounts/login">Ingresa aquí</Link>
-                    </StyledGlobal.PForm>
-                    <StyledGlobal.PForm>
-                      <Link to="/contact">Contacto</Link>
-                    </StyledGlobal.PForm>
-                  </Form.Item>
-                </Col>
-              </Row>
-            </Form>
-          </StyledGlobal.ContainerForm>
-        </Col>
-      </Row>
-    </Layout.Content>
+              <Col xs={24} md={12}>
+                <InputPassword confirmPassword />
+              </Col>
+            </Row>
+            <Row gutter={16}>
+              <Col span={24}>
+                <Form.Item noStyle>
+                  <Button center $marginTop type="primary" htmlType="submit" loading={loading}>
+                    Registrarme
+                  </Button>
+                  <StyledGlobal.PForm>
+                    ¿Ya tienes cuenta? <Link to="/accounts/login">Ingresa aquí</Link>
+                  </StyledGlobal.PForm>
+                  <StyledGlobal.PForm>
+                    <Link to="/contact">Contacto</Link>
+                  </StyledGlobal.PForm>
+                </Form.Item>
+              </Col>
+            </Row>
+          </Form>
+        </StyledGlobal.ContainerForm>
+      </StyledGlobal.WrapperContent>
+      <Footer />
+    </StyledGlobal.Wrapper>
   );
 };
 

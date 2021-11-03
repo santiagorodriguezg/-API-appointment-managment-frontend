@@ -1,6 +1,6 @@
 import { useContext, useState } from 'react';
 import { Link, useHistory, useLocation } from 'react-router-dom';
-import { Col, Form, Layout, Row } from 'antd';
+import { Form } from 'antd';
 import AuthContext from '../../../context/Auth';
 import { LoginService } from '../../../services/Auth';
 import Logo from '../../../components/Logo';
@@ -9,6 +9,7 @@ import Button from '../../../components/Button';
 import ErrorMessage from '../../../components/ErrorMessage';
 import InputUsername from '../../../components/Input/InputUsername';
 import InputPassword from '../../../components/Input/InputPassword';
+import Footer from '../../../components/Footer';
 import StyledGlobal from '../../../styles/Global';
 
 const Login = () => {
@@ -52,38 +53,37 @@ const Login = () => {
   };
 
   return (
-    <Layout.Content>
-      <Row>
-        <Col span={24}>
-          <StyledGlobal.ContainerForm width={400} center>
-            <Logo />
-            <StyledGlobal.TitleForm>Iniciar sesión</StyledGlobal.TitleForm>
-            {errorText !== '' && <Alert message={errorText} type="error" showIcon />}
-            {errorMsg && <ErrorMessage />}
-            <Form layout="vertical" name="login" className="form-box" onFinish={onFinish} hideRequiredMark>
-              <InputUsername />
+    <StyledGlobal.Wrapper style={{ height: '100%' }}>
+      <StyledGlobal.WrapperContent>
+        <StyledGlobal.ContainerForm width={400} center shadow>
+          <Logo />
+          <StyledGlobal.TitleForm>Iniciar sesión</StyledGlobal.TitleForm>
+          {errorText !== '' && <Alert message={errorText} type="error" showIcon />}
+          {errorMsg && <ErrorMessage />}
+          <Form layout="vertical" name="login" className="form-box" onFinish={onFinish} hideRequiredMark>
+            <InputUsername />
 
-              <InputPassword requiredOnly />
+            <InputPassword requiredOnly />
 
-              <Form.Item noStyle>
-                <StyledGlobal.PForm>
-                  <Link to="/accounts/password/reset">¿Has olvidado tu contraseña?</Link>
-                </StyledGlobal.PForm>
-                <Button block type="primary" htmlType="submit" loading={loading}>
-                  Iniciar sesión
-                </Button>
-                <StyledGlobal.PForm>
-                  ¿No tienes una cuenta? <Link to="/accounts/signup">Regístrate</Link>
-                </StyledGlobal.PForm>
-                <StyledGlobal.PForm>
-                  <Link to="/contact">Contacto</Link>
-                </StyledGlobal.PForm>
-              </Form.Item>
-            </Form>
-          </StyledGlobal.ContainerForm>
-        </Col>
-      </Row>
-    </Layout.Content>
+            <Form.Item noStyle>
+              <StyledGlobal.PForm>
+                <Link to="/accounts/password/reset">¿Has olvidado tu contraseña?</Link>
+              </StyledGlobal.PForm>
+              <Button block type="primary" htmlType="submit" loading={loading}>
+                Iniciar sesión
+              </Button>
+              <StyledGlobal.PForm>
+                ¿No tienes una cuenta? <Link to="/accounts/signup">Regístrate</Link>
+              </StyledGlobal.PForm>
+              <StyledGlobal.PForm>
+                <Link to="/contact">Contacto</Link>
+              </StyledGlobal.PForm>
+            </Form.Item>
+          </Form>
+        </StyledGlobal.ContainerForm>
+      </StyledGlobal.WrapperContent>
+      <Footer />
+    </StyledGlobal.Wrapper>
   );
 };
 

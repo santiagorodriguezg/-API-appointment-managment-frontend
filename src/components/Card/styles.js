@@ -3,7 +3,8 @@ import styled from 'styled-components';
 const S = {};
 
 S.Container = styled.div`
-  width: 500px;
+  width: auto;
+  max-width: 500px;
   padding-top: 5em;
   margin: 0 auto;
 `;

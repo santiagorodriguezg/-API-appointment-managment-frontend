@@ -1,12 +1,13 @@
 import { useState } from 'react';
 import { Link, useHistory, useParams } from 'react-router-dom';
-import { Col, Form, Layout, Row } from 'antd';
+import { Form } from 'antd';
 import { PasswordResetCompleteService } from '../../../services/Auth';
 import Logo from '../../../components/Logo';
 import Button from '../../../components/Button';
 import Alert from '../../../components/Alert';
 import ErrorMessage from '../../../components/ErrorMessage';
 import InputPassword from '../../../components/Input/InputPassword';
+import Footer from '../../../components/Footer';
 import StyledGlobal from '../../../styles/Global';
 
 const PasswordResetConfirm = () => {
@@ -37,32 +38,29 @@ const PasswordResetConfirm = () => {
   };
 
   return (
-    <Layout.Content>
-      <Row>
-        <Col span={24}>
-          <StyledGlobal.ContainerForm width={400} center margin>
-            <Logo />
-            <StyledGlobal.TitleForm>Cambiar contraseña</StyledGlobal.TitleForm>
-            {errorText !== '' && <Alert message={errorText} type="error" showIcon />}
-            {errorMsg && <ErrorMessage />}
-            <Form layout="vertical" name="password_reset_confirm" onFinish={onFinish} hideRequiredMark>
-              <InputPassword />
-
-              <InputPassword confirmPassword />
-
-              <Form.Item>
-                <Button block $marginTop type="primary" htmlType="submit" loading={loading}>
-                  Cambiar mi contraseña
-                </Button>
-                <StyledGlobal.PForm>
-                  <Link to="/accounts/password/reset">Solicitar un nuevo enlace</Link>
-                </StyledGlobal.PForm>
-              </Form.Item>
-            </Form>
-          </StyledGlobal.ContainerForm>
-        </Col>
-      </Row>
-    </Layout.Content>
+    <StyledGlobal.Wrapper style={{ height: '100%' }}>
+      <StyledGlobal.WrapperContent>
+        <StyledGlobal.ContainerForm width={400} center margin shadow>
+          <Logo />
+          <StyledGlobal.TitleForm>Cambiar contraseña</StyledGlobal.TitleForm>
+          {errorText !== '' && <Alert message={errorText} type="error" showIcon />}
+          {errorMsg && <ErrorMessage />}
+          <Form layout="vertical" name="password_reset_confirm" onFinish={onFinish} hideRequiredMark>
+            <InputPassword />
+            <InputPassword confirmPassword />
+            <Form.Item>
+              <Button block $marginTop type="primary" htmlType="submit" loading={loading}>
+                Cambiar mi contraseña
+              </Button>
+              <StyledGlobal.PForm>
+                <Link to="/accounts/password/reset">Solicitar un nuevo enlace</Link>
+              </StyledGlobal.PForm>
+            </Form.Item>
+          </Form>
+        </StyledGlobal.ContainerForm>
+      </StyledGlobal.WrapperContent>
+      <Footer />
+    </StyledGlobal.Wrapper>
   );
 };
 
