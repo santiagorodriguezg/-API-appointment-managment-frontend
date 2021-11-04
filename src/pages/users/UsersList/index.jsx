@@ -26,8 +26,7 @@ export default class UsersList extends TableBase {
   static contextType = AuthContext;
 
   componentDidMount() {
-    const { pagination } = this.state;
-    this.getUsersData({ pagination });
+    this.getUsersData();
   }
 
   getUsersData = async (params = {}) => {
@@ -63,7 +62,7 @@ export default class UsersList extends TableBase {
     const ordering = sorter.column ? `${sorter.order === 'descend' ? '-' : ''}${sorter.field}` : null;
     this.getUsersData({
       limit: pag.pageSize,
-      offset: pag.current - 1,
+      offset: (pag.current - 1) * pag.pageSize,
       role: filters.role?.[0],
       username: filters.username?.[0],
       full_name: filters.fullName?.[0],

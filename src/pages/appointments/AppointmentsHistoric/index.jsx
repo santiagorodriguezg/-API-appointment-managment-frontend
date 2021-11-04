@@ -26,8 +26,7 @@ export default class AppointmentsHistoric extends TableBase {
   static contextType = AuthContext;
 
   componentDidMount() {
-    const { pagination } = this.state;
-    this.getAppointmentsData({ pagination });
+    this.getAppointmentsData();
   }
 
   getAppointmentsData = async (params = {}) => {
@@ -61,7 +60,7 @@ export default class AppointmentsHistoric extends TableBase {
     const ordering = sorter.column ? `${sorter.order === 'descend' ? '-' : ''}${sorter.field}` : null;
     this.getAppointmentsData({
       limit: pag.pageSize,
-      offset: pag.current - 1,
+      offset: (pag.current - 1) * pag.pageSize,
       type: filters.type?.[0],
       id: filters.id?.[0],
       user__identification_number: filters.identificationNumber?.[0],

@@ -12,7 +12,9 @@ export default class TableBase extends Component {
       loading: false,
       errorMsg: false,
       data: [],
-      pagination: {},
+      pagination: {
+        pageSize: process.env.REACT_APP_PAGE_SIZE,
+      },
       searchText: '',
       searchedColumn: '',
       filteredInfo: null,
