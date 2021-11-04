@@ -1,5 +1,5 @@
 import { Button, Input, Tooltip } from 'antd';
-import { SendOutlined, SmileOutlined } from '@ant-design/icons';
+import { SendOutlined } from '@ant-design/icons';
 import S from './styles';
 
 const Form = ({ message, setMessage, clientRef, chatUser }) => {
@@ -27,9 +27,9 @@ const Form = ({ message, setMessage, clientRef, chatUser }) => {
 
   return (
     <S.ChatForm>
-      <Tooltip title="Emojis">
-        <Button size="large" icon={<SmileOutlined />} />
-      </Tooltip>
+      {/* <Tooltip title="Emojis"> */}
+      {/*  <Button size="large" icon={<SmileOutlined />} /> */}
+      {/* </Tooltip> */}
       <Input.TextArea
         autoSize={{
           minRows: 1,

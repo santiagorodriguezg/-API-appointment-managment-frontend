@@ -189,7 +189,7 @@ const Chat = ({ location }) => {
           <Styles.ChatContainer>
             <Styles.ChatUserList>
               <Styles.ChatMessageTitleBar>
-                <ConversationSearch />
+                <ConversationSearch user={user} />
               </Styles.ChatMessageTitleBar>
               {renderChatList()}
             </Styles.ChatUserList>
