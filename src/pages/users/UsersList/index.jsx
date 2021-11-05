@@ -1,7 +1,9 @@
 import { Link } from 'react-router-dom';
-import { Dropdown, Menu, Space, Table, Tag } from 'antd';
+import { Badge, Dropdown, Menu, Space, Table, Tag, Tooltip } from 'antd';
 import {
+  CheckCircleOutlined,
   ClearOutlined,
+  CloseCircleOutlined,
   DownOutlined,
   EditOutlined,
   LinkOutlined,
@@ -149,7 +151,20 @@ export default class UsersList extends TableBase {
         key: 'action',
         width: 200,
         render: record => (
-          <Space size="middle">
+          <Space>
+            {user.role === userRoles[0].value && (
+              <Tooltip title="Indica si la cuenta del usuario está activa">
+                <Badge
+                  count={
+                    record.is_active ? (
+                      <CheckCircleOutlined style={{ color: '#52c41a' }} />
+                    ) : (
+                      <CloseCircleOutlined style={{ color: '#f5222d' }} />
+                    )
+                  }
+                />
+              </Tooltip>
+            )}
             <Button onClick={() => this.props.history.push(`/users/${record.username}`)}>Detalles</Button>
             <Dropdown
               overlay={

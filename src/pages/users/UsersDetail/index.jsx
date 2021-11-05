@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { Avatar, Col, message, Spin, Tag } from 'antd';
-import { EditOutlined, UserOutlined } from '@ant-design/icons';
+import { CheckCircleOutlined, CloseCircleOutlined, EditOutlined, UserOutlined } from '@ant-design/icons';
 import AuthContext from '../../../context/Auth';
 import { UsersDetailService } from '../../../services/Users';
 import Button from '../../../components/Button';
@@ -9,6 +9,7 @@ import ErrorMessage, { UserNotFound } from '../../../components/ErrorMessage';
 import DashboardPage from '../../../components/Dashboard/DashboardPage';
 import { getFullDate } from '../../../config/utils';
 import { getIdentificationTypeName, getRoleColor, getRoleName, userRoles } from '../../../config/utils/enums';
+import StyledGlobal from '../../../styles/Global';
 import S from './styles';
 
 const UsersDetail = ({ location }) => {
@@ -149,15 +150,37 @@ const UsersDetail = ({ location }) => {
                 </Col>
               </S.Row>
               {user.role === userRoles[0].value && (
-                <Button
-                  type="primary"
-                  onClick={() => history.push(`/users/${userInfo.username}/edit`)}
-                  icon={<EditOutlined />}
-                  ghost
-                  $marginTop
-                >
-                  Editar
-                </Button>
+                <>
+                  <S.Row>
+                    <S.Col xs={24} sm={8} md={10}>
+                      Activo:
+                      <StyledGlobal.TextSecondary>
+                        Indica que la cuenta del usuario está activa.
+                      </StyledGlobal.TextSecondary>
+                    </S.Col>
+                    <Col xs={24} sm={16} md={14}>
+                      {userInfo.is_active ? (
+                        <>
+                          Si <CheckCircleOutlined style={{ color: '#52c41a' }} />
+                        </>
+                      ) : (
+                        <>
+                          No <CloseCircleOutlined style={{ color: '#f5222d' }} />
+                        </>
+                      )}
+                    </Col>
+                  </S.Row>
+
+                  <Button
+                    type="primary"
+                    onClick={() => history.push(`/users/${userInfo.username}/edit`)}
+                    icon={<EditOutlined />}
+                    ghost
+                    $marginTop
+                  >
+                    Editar
+                  </Button>
+                </>
               )}
             </S.LowerContainer>
           </S.Card>
