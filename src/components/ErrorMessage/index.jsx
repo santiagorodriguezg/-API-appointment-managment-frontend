@@ -1,3 +1,4 @@
+import { useHistory } from 'react-router-dom';
 import { Alert, Result } from 'antd';
 import Button from '../Button';
 
@@ -21,12 +22,14 @@ const ErrorMessage = ({ retryBtn }) => {
 };
 
 export const UserNotFound = () => {
+  const history = useHistory();
+
   return (
     <Result
       status="404"
       title="Usuario no encontrado"
       extra={
-        <Button type="primary" href="/users">
+        <Button type="primary" onClick={() => history.push('/users')}>
           Regresar a Usuarios
         </Button>
       }
