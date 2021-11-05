@@ -7,9 +7,9 @@ import { UpdateMyProfileService } from '../../services/Users';
 import { IMAGE_EXTENSIONS, validateFileBeforeUpload } from '../../config/utils';
 import S from './styles';
 
-const ProfileCardItem = ({ title, content, showIcon = true, ...props }) => {
+const ProfileCardItem = ({ title, content, showIcon = true, href }) => {
   return (
-    <S.ListItem {...props}>
+    <S.ListItem $href={href} to={href}>
       <Row>
         <Col xs={24} md={8}>
           <S.Title>{title}</S.Title>

@@ -86,7 +86,6 @@ const Chat = ({ location }) => {
       setChats(chatList);
       setLoadingChats(false);
     } catch (e) {
-      console.log('ERROR', e);
       setLoadingChats(false);
     }
   };
@@ -108,17 +107,17 @@ const Chat = ({ location }) => {
 
       client.onopen = () => {
         setLoadingMessages(true);
-        console.log('ws opened');
+        // console.log('ws opened');
         client.send(JSON.stringify({ command: 'fetch_messages' }));
       };
 
       client.onclose = () => {
         if (clientRef.current) {
           // Connection failed
-          console.log('ws closed by server');
+          // console.log('ws closed by server');
         } else {
           // Cleanup initiated from app side, can return here, to not attempt a reconnect
-          console.log('ws closed by app component unmount');
+          // console.log('ws closed by app component unmount');
           return;
         }
 
@@ -126,7 +125,7 @@ const Chat = ({ location }) => {
           return;
         }
         // Parse event code and log
-        console.log('ws closed');
+        // console.log('ws closed');
 
         // Setting this will trigger a re-run of the effect,
         // cleaning up the current websocket, but not setting
@@ -141,7 +140,7 @@ const Chat = ({ location }) => {
       client.onmessage = msg => {
         const data = JSON.parse(msg.data);
 
-        console.log('received message', data);
+        // console.log('received message', data);
         if (data.command === 'fetch_messages') {
           addMessage(data.messages);
         } else if (data.command === 'create_message') {
@@ -152,7 +151,7 @@ const Chat = ({ location }) => {
 
       // eslint-disable-next-line consistent-return
       return () => {
-        console.log('Cleanup');
+        // console.log('Cleanup');
         // Dereference, so it will set up next time
         clientRef.current = null;
 

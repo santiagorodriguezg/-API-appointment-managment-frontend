@@ -13,8 +13,8 @@ const AppointmentDetail = ({ appointment }) => {
 
   return (
     <Description column={1} layout="vertical">
+      <Descriptions.Item label="Código">{appointment.id}</Descriptions.Item>
       <Descriptions.Item label="Fecha de solicitud">{getFullDate(appointment.created_at)}</Descriptions.Item>
-
       <Descriptions.Item label="Fecha de actualización">{getFullDate(appointment.updated_at)}</Descriptions.Item>
       <Descriptions.Item label="Doctores">
         <Row gutter={8} style={{ width: '100%' }}>

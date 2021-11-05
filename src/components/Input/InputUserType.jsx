@@ -5,7 +5,7 @@ const InputUserType = ({ ...props }) => {
   return (
     <Form.Item
       name="role"
-      label="Tipo de Usuario"
+      label="Tipo de usuario"
       rules={[
         {
           required: true,

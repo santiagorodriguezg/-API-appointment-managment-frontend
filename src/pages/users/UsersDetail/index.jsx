@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { Avatar, Col, message, Spin, Tag } from 'antd';
 import { EditOutlined, UserOutlined } from '@ant-design/icons';
 import AuthContext from '../../../context/Auth';
@@ -13,6 +13,7 @@ import S from './styles';
 
 const UsersDetail = ({ location }) => {
   const { username } = useParams();
+  const history = useHistory();
   const { user } = useContext(AuthContext);
   const { successMsg } = (location && location.state) || {};
   const [errorMsg, setErrorMsg] = useState(false);
@@ -150,7 +151,7 @@ const UsersDetail = ({ location }) => {
               {user.role === userRoles[0].value && (
                 <Button
                   type="primary"
-                  href={`/users/${userInfo.username}/edit`}
+                  onClick={() => history.push(`/users/${userInfo.username}/edit`)}
                   icon={<EditOutlined />}
                   ghost
                   $marginTop

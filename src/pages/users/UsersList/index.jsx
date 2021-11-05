@@ -150,7 +150,7 @@ export default class UsersList extends TableBase {
         width: 200,
         render: record => (
           <Space size="middle">
-            <Button href={`/users/${record.username}`}>Detalles</Button>
+            <Button onClick={() => this.props.history.push(`/users/${record.username}`)}>Detalles</Button>
             <Dropdown
               overlay={
                 <Menu>
@@ -206,7 +206,11 @@ export default class UsersList extends TableBase {
                 Limpiar filtros
               </Button>
               {user.role === userRoles[0].value && (
-                <Button icon={<UserAddOutlined />} style={{ marginBottom: 16 }} href="/users/create">
+                <Button
+                  icon={<UserAddOutlined />}
+                  onClick={() => this.props.history.push('/users/create')}
+                  style={{ marginBottom: 16 }}
+                >
                   Crear usuario
                 </Button>
               )}

@@ -1,21 +1,21 @@
+import { useHistory } from 'react-router-dom';
 import StyledGlobal from '../../styles/Global';
 import { StyledButton, StyledButtonCenter } from './styles';
 
 const Button = ({ children, center, ...props }) => {
-  if (center) {
-    return (
-      <StyledButtonCenter>
-        <StyledButton {...props}>{children}</StyledButton>
-      </StyledButtonCenter>
-    );
-  }
-  return <StyledButton {...props}>{children}</StyledButton>;
+  const renderButton = () => {
+    return <StyledButton {...props}>{children}</StyledButton>;
+  };
+
+  return center ? <StyledButtonCenter>{renderButton()}</StyledButtonCenter> : renderButton();
 };
 
 export const ButtonCancelAndSave = ({ loading, path }) => {
+  const history = useHistory();
+
   return (
     <StyledGlobal.CancelAndSaveBtn>
-      <StyledButton href={path} size="large" type="text">
+      <StyledButton size="large" type="text" onClick={() => history.push(path)}>
         Cancelar
       </StyledButton>
       <StyledButton type="primary" size="large" htmlType="submit" loading={loading}>

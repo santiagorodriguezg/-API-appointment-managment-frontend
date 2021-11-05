@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { Card } from 'antd';
 import { CameraOutlined } from '@ant-design/icons';
 import styled, { css } from 'styled-components';
@@ -27,13 +28,18 @@ S.Card = styled(Card)`
   }
 `;
 
-S.ListItem = styled.a`
+S.ListItem = styled(Link)`
   display: block;
   text-decoration: none;
   padding: 20px;
-  cursor: ${props => (props.href ? 'pointer' : 'default')};
   color: initial;
   ${sharedStylesListItem}
+
+  ${props =>
+    props.$href === '#' &&
+    css`
+      cursor: default;
+    `}
 `;
 
 S.Title = styled.p`

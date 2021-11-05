@@ -78,7 +78,7 @@ const Profile = ({ location }) => {
             </ProfileCard>
 
             <ProfileCard title="Datos de cuenta">
-              <ProfileCardItem title="Usuario" content={user.username} showIcon={false} />
+              <ProfileCardItem title="Usuario" href="#" content={user.username} showIcon={false} />
             </ProfileCard>
 
             <ProfileCard title="Seguridad">

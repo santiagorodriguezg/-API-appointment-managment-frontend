@@ -14,7 +14,7 @@ const NavBar = ({ toggle }) => {
         <Col xs={14} sm={4}>
           <S.LogoContainer>
             {toggle && <S.IconMenu onClick={toggle} />}
-            <S.Logo href="/accounts/profile" title="Página principal">
+            <S.Logo to="/accounts/profile" title="Página principal">
               <img src={logo} alt="Casa de la Mujer UPTC" />
             </S.Logo>
           </S.LogoContainer>

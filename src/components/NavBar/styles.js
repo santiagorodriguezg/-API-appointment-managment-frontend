@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { Button, Layout, Menu } from 'antd';
 import { MenuOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
@@ -34,7 +35,7 @@ S.NavContainer = styled.div`
   height: 100%;
 `;
 
-S.Logo = styled.a`
+S.Logo = styled(Link)`
   height: 100%;
   display: flex;
   align-items: center;

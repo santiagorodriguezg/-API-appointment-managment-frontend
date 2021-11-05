@@ -102,7 +102,10 @@ const DoctorAssign = ({ appointment }) => {
 
           {!loading && !successMsg && (
             <>
-              <Paragraph>A continuación seleccione uno o mas doctores que estarán a cargo del caso.</Paragraph>
+              <Paragraph>
+                A continuación seleccione uno o mas doctores que estarán a cargo de la cita con el código
+                <strong> {appointment.id}</strong>.
+              </Paragraph>
               <Select
                 mode="multiple"
                 showArrow
