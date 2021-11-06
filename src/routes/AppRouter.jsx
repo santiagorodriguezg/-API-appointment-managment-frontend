@@ -3,6 +3,8 @@ import { ConfigProvider } from 'antd';
 import esES from 'antd/lib/locale/es_ES';
 
 import { AuthProvider } from '../context/Auth';
+import ScrollToTop from '../config/ScrollToTop';
+import { userRoles } from '../config/utils/enums';
 import PublicRoute from './PublicRoute';
 import PrivateRoute from './PrivateRoute';
 
@@ -35,7 +37,6 @@ import Chat from '../pages/Chat';
 import Contact from '../pages/Contact';
 
 import Error404 from '../pages/errors/404';
-import { userRoles } from '../config/utils/enums';
 
 const AppRouter = () => {
   const ROLES_ADMIN_DOCTOR = [userRoles[0].value, userRoles[1].value];
@@ -44,6 +45,7 @@ const AppRouter = () => {
     <ConfigProvider locale={esES}>
       <AuthProvider>
         <Router>
+          <ScrollToTop />
           <Switch>
             <PublicRoute exact path="/accounts/login" component={Login} />
             <PublicRoute exact path="/accounts/signup" component={Signup} />

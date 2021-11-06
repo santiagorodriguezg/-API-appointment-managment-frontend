@@ -4,7 +4,7 @@ import S from './styles';
 
 const MessageList = ({ messages, loadingMessages, messagesEndRef, user }) => {
   return (
-    <S.MessageList>
+    <S.MessageList ref={messagesEndRef}>
       <Spin spinning={loadingMessages}>
         {messages.length ? (
           messages.map(msg => (
@@ -13,7 +13,6 @@ const MessageList = ({ messages, loadingMessages, messagesEndRef, user }) => {
         ) : (
           <S.MessageEmpty>Envía un mensaje...</S.MessageEmpty>
         )}
-        <S.MessagesEnd ref={messagesEndRef} />
       </Spin>
     </S.MessageList>
   );

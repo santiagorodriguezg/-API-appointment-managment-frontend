@@ -38,7 +38,10 @@ const Chat = ({ location }) => {
   };
 
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    if (messagesEndRef.current) {
+      const { scrollHeight } = messagesEndRef.current;
+      messagesEndRef.current.scrollTop = scrollHeight;
+    }
   };
 
   const getChats = async () => {

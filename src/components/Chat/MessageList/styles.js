@@ -18,9 +18,4 @@ S.MessageEmpty = styled.div`
   font-size: 85%;
 `;
 
-S.MessagesEnd = styled.div`
-  float: left;
-  clear: both;
-`;
-
 export default S;

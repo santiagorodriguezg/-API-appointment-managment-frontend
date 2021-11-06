@@ -1,24 +1,23 @@
-/* eslint-disable no-unused-vars */
 import { Redirect, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { Alert, Checkbox, Col, Form, Input, Row, Skeleton } from 'antd';
 import { CheckCircleOutlined, CloseCircleOutlined } from '@ant-design/icons';
 import { UsersDetailService, UsersUpdateService } from '../../../services/Users';
 import { getFieldErrors } from '../../../config/utils';
+import { userRoles } from '../../../config/utils/enums';
 import { ButtonCancelAndSave } from '../../../components/Button';
 import DashboardPage from '../../../components/Dashboard/DashboardPage';
-import InputFirstName from '../../../components/Input/InputFirstName';
-import InputLastName from '../../../components/Input/InputLastName';
-import InputIdentificationType from '../../../components/Input/InputIdentificationType';
-import InputIdentificationNumber from '../../../components/Input/InputIdentificationNumber';
+import InputCity from '../../../components/Input/InputCity';
 import InputEmail from '../../../components/Input/InputEmail';
 import InputPhone from '../../../components/Input/InputPhone';
-import InputCity from '../../../components/Input/InputCity';
-import InputNeighborhood from '../../../components/Input/InputNeighborhood';
 import InputAddress from '../../../components/Input/InputAddress';
+import InputFirstName from '../../../components/Input/InputFirstName';
+import InputLastName from '../../../components/Input/InputLastName';
+import InputNeighborhood from '../../../components/Input/InputNeighborhood';
 import ErrorMessage, { UserNotFound } from '../../../components/ErrorMessage';
+import InputIdentificationType from '../../../components/Input/InputIdentificationType';
+import InputIdentificationNumber from '../../../components/Input/InputIdentificationNumber';
 import StyledGlobal from '../../../styles/Global';
-import { userRoles } from '../../../config/utils/enums';
 
 const UsersEdit = () => {
   const [form] = Form.useForm();
@@ -30,7 +29,6 @@ const UsersEdit = () => {
   const [initialValues, setInitialValues] = useState({});
   const [requiredEmail, setRequiredEmail] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
-  const [isActive, setIsActive] = useState(false);
 
   useEffect(() => {
     const getUserInfo = async () => {
@@ -55,7 +53,7 @@ const UsersEdit = () => {
         });
 
         if (res.data.role !== userRoles[2].value) setRequiredEmail(true);
-        if (res.data.is_active) setIsActive(true);
+        if (!res.data.is_active) setShowAlert(true);
 
         setLoading(false);
       } catch (e) {
@@ -91,10 +89,8 @@ const UsersEdit = () => {
   const isActiveOnChange = e => {
     if (!e.target.checked) {
       setShowAlert(true);
-      setIsActive(false);
     } else {
       setShowAlert(false);
-      setIsActive(true);
     }
   };
 
@@ -179,7 +175,7 @@ const UsersEdit = () => {
                   >
                     <Checkbox onChange={isActiveOnChange}>
                       Activo:
-                      {isActive ? (
+                      {!showAlert ? (
                         <>
                           <CheckCircleOutlined
                             style={{
@@ -205,7 +201,6 @@ const UsersEdit = () => {
                       message="Si desactiva la cuenta el usuario NO tendrá acceso a la plataforma."
                       type="warning"
                       showIcon
-                      closable
                     />
                   )}
                 </Col>
