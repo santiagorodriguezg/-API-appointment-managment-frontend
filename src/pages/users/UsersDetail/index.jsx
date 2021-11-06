@@ -155,7 +155,7 @@ const UsersDetail = ({ location }) => {
                     <S.Col xs={24} sm={8} md={10}>
                       Activo:
                       <StyledGlobal.TextSecondary>
-                        Indica que la cuenta del usuario está activa.
+                        Indica si la cuenta del usuario está activa.
                       </StyledGlobal.TextSecondary>
                     </S.Col>
                     <Col xs={24} sm={16} md={14}>

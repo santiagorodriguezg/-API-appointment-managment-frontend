@@ -1,6 +1,8 @@
+/* eslint-disable no-unused-vars */
 import { Redirect, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { Col, Form, Input, Row, Skeleton } from 'antd';
+import { Alert, Checkbox, Col, Form, Input, Row, Skeleton } from 'antd';
+import { CheckCircleOutlined, CloseCircleOutlined } from '@ant-design/icons';
 import { UsersDetailService, UsersUpdateService } from '../../../services/Users';
 import { getFieldErrors } from '../../../config/utils';
 import { ButtonCancelAndSave } from '../../../components/Button';
@@ -27,6 +29,8 @@ const UsersEdit = () => {
   const [redirect, setRedirect] = useState(false);
   const [initialValues, setInitialValues] = useState({});
   const [requiredEmail, setRequiredEmail] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
+  const [isActive, setIsActive] = useState(false);
 
   useEffect(() => {
     const getUserInfo = async () => {
@@ -38,6 +42,7 @@ const UsersEdit = () => {
         const res = await UsersDetailService(username);
         setInitialValues({
           username: res.data.username,
+          is_active: res.data.is_active,
           first_name: res.data.first_name,
           last_name: res.data.last_name,
           identification_type: res.data.identification_type,
@@ -50,6 +55,7 @@ const UsersEdit = () => {
         });
 
         if (res.data.role !== userRoles[2].value) setRequiredEmail(true);
+        if (res.data.is_active) setIsActive(true);
 
         setLoading(false);
       } catch (e) {
@@ -79,6 +85,16 @@ const UsersEdit = () => {
       } else {
         setErrorMsg(true);
       }
+    }
+  };
+
+  const isActiveOnChange = e => {
+    if (!e.target.checked) {
+      setShowAlert(true);
+      setIsActive(false);
+    } else {
+      setShowAlert(false);
+      setIsActive(true);
     }
   };
 
@@ -150,9 +166,48 @@ const UsersEdit = () => {
                 </Col>
               </Row>
 
-              <Row gutter={16}>
+              <Row gutter={16} align="middle">
                 <Col xs={24} md={12}>
                   <InputAddress />
+                </Col>
+                <Col xs={24} md={12}>
+                  <Form.Item
+                    required
+                    name="is_active"
+                    valuePropName="checked"
+                    label="Indica si la cuenta del usuario está activa"
+                  >
+                    <Checkbox onChange={isActiveOnChange}>
+                      Activo:
+                      {isActive ? (
+                        <>
+                          <CheckCircleOutlined
+                            style={{
+                              color: '#52c41a',
+                              marginLeft: 5,
+                            }}
+                          />
+                        </>
+                      ) : (
+                        <>
+                          <CloseCircleOutlined
+                            style={{
+                              color: '#f5222d',
+                              marginLeft: 5,
+                            }}
+                          />
+                        </>
+                      )}
+                    </Checkbox>
+                  </Form.Item>
+                  {showAlert && (
+                    <Alert
+                      message="Si desactiva la cuenta el usuario NO tendrá acceso a la plataforma."
+                      type="warning"
+                      showIcon
+                      closable
+                    />
+                  )}
                 </Col>
               </Row>
 
