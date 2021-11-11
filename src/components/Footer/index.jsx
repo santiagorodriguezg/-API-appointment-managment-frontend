@@ -83,7 +83,7 @@ const Footer = () => {
             </Col>
             <Col span={24} style={{ marginTop: 32 }}>
               <S.UniversityLink to={{ pathname: 'https://www.ustatunja.edu.co/' }} target="_blank">
-                Universidad Santo Tomás - Tunja, Colombia
+                Universidad Santo Tomás - Tunja
               </S.UniversityLink>
             </Col>
           </Row>
