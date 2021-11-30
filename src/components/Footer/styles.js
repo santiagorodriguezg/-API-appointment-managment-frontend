@@ -40,11 +40,6 @@ S.SocialButton = styled(Button)`
     background: #a7a7a7;
     border-color: ${FooterColors.backgroundSocialButton};
   }
-
-  & > .anticon {
-    align-items: center;
-    height: 100%;
-  }
 `;
 
 S.UniversityLink = styled(Link)`
